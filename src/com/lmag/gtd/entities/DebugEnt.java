@@ -6,11 +6,11 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 
 public class DebugEnt extends Entity {
-
-	public DebugEnt() {
+	public Entity smallBox;
+	public DebugEnt(Entity attachTo) {
 		super("redd.png", 0,0);
-		/*
-		this.addChild(new Entity("greend.png", 60,60) {
+		attachTo.addChild(this);
+		this.addChild(smallBox=new Entity("greend.png", 60,60) {
 			public void update(int dt) {
 				//super.update(dt);
 				
@@ -27,7 +27,7 @@ public class DebugEnt extends Entity {
 					offset.add(new Vector2f(1,0));
 				}
 			}
-		});*/
+		});
 		// TODO Auto-generated constructor stub
 	}
 
