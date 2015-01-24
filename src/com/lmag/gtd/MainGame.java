@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.lmag.gtd.entities.DebugEnemy;
 import com.lmag.gtd.entities.DebugEnt;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.util.Renderable;
@@ -39,12 +40,9 @@ public class MainGame extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
 
-    	root = new Entity("", 0, 0).setVisible(false);
-    	DebugEnt x=new DebugEnt(root);
-    	x=new DebugEnt(x.smallBox);
-    	x=new DebugEnt(x.smallBox);
-    	x=new DebugEnt(x.smallBox);
-    	x=new DebugEnt(x.smallBox);
+    	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
+    	root.addChild(new DebugEnt());
+    	root.addChild(new DebugEnemy(new Vector2f(100,100)));
     	root.setPos(new Vector2f(WIDTH/2, HEIGHT/2));
     }
  
@@ -61,6 +59,8 @@ public class MainGame extends BasicGame {
     }
 
 	public static void main(String[] args) {
+		
+		System.err.println("If there's a 'closest entities' issue, it's Bren's bad code and his fault.");
 		
 		// Load natives from lib/native folder
 		System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "lib/native"), LWJGLUtil.getPlatformName()).getAbsolutePath());

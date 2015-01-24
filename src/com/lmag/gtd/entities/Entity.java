@@ -25,16 +25,24 @@ public class Entity {
 	
 	public Entity parent;
 
-	public Entity(String sprite, float x, float y) {
-		this(sprite, new Vector2f(x,y));
-		
-	}
-
 	public Entity(String sprite, Vector2f position) {
 		
 		if(sprite!=null && !sprite.trim().matches(""))
 			this.sprite = Utils.getImageFromPath(sprite);
 		
+		
+		setPos(position);
+		
+		updateRate = UPDATE_FAST;
+		
+		children = new ArrayList<Entity>();
+	}
+
+	public Entity(Vector2f position) {
+		
+		this.sprite = null;
+		
+		visible = false;
 		
 		setPos(position);
 		
@@ -156,5 +164,40 @@ public class Entity {
 		this.visible = visible;
 		
 		return this;
+	}
+	
+	/**
+	 * Not preferred - use getCopyOfChildren() instead.
+	 * @return The actual children
+	 */
+	public ArrayList<Entity> getChildren() {
+		
+		return children;
+	}
+	
+	/**
+	 * 
+	 * Preferred - returns a copy of the children rather than the actual.
+	 * @return a clone of the children.
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Entity> getCopyOfChildren() {
+		
+		return (ArrayList<Entity>) children.clone();
+	}
+	
+	public String getType() {
+		
+		Class<?> enclosingClass = getClass().getEnclosingClass();
+		
+		if (enclosingClass != null) {
+			
+			return enclosingClass.getName().replaceFirst("com.lmag.gtd.", "");
+		}
+		
+		else {
+			
+			return getClass().getName().replaceFirst("com.lmag.gtd.", "");
+		}
 	}
 }
