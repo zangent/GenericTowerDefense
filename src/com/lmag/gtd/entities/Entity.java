@@ -18,8 +18,10 @@ public class Entity {
 	public boolean visible = true;
 	
 	public ArrayList<Entity> children;
+	private ArrayList<Entity> addChild;
+	private ArrayList<Entity> remChild;
 	
-	private Image sprite;
+	protected Image sprite;
 	
 	protected Vector2f offset;
 	
@@ -36,6 +38,8 @@ public class Entity {
 		updateRate = UPDATE_FAST;
 		
 		children = new ArrayList<Entity>();
+		addChild = new ArrayList<Entity>();
+		remChild = new ArrayList<Entity>();
 	}
 
 	public Entity(Vector2f position) {
@@ -57,8 +61,13 @@ public class Entity {
 	}
 	
 	public Entity addChild(Entity futureChildYo) {
-		children.add(futureChildYo);
+		addChild.add(futureChildYo);
 		futureChildYo._setParent(this);
+		return this;
+	}
+	
+	public Entity removeChild(Entity futureChildYo) {
+		remChild.add(futureChildYo);
 		return this;
 	}
 	
@@ -77,6 +86,16 @@ public class Entity {
 			
 			updateTime += delta;
 		}
+		
+
+		for (Entity ent : addChild) {
+			this.children.add(ent);
+		}
+		for (Entity ent : remChild) {
+			this.children.remove(ent);
+		}
+		addChild.clear();
+		remChild.clear();
 
 		
 		for (Entity ent : children) {
@@ -146,6 +165,14 @@ public class Entity {
 	
 	public int getHeight() {
 		return (sprite!=null)?sprite.getHeight():0;
+	}
+	
+	public Vector2f getCenterPos() {
+		return getPos().add(new Vector2f(getWidth()/2, getHeight()/2));
+	}
+	
+	public Vector2f getCenterOffset() {
+		return getOffset().add(new Vector2f(getWidth()/2, getHeight()/2));
 	}
 	
 	public void render(Graphics g) {

@@ -1,6 +1,7 @@
 package com.lmag.gtd.entities;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
@@ -12,15 +13,22 @@ public class DebugEnt extends Entity {
 	
 	Image turret;
 	
-	Entity target;
+	public Entity target;
 	
 	public DebugEnt() {
 		super("goodie.png", new Vector2f(0,0));
 		turret = Utils.getImageFromPath("canun.png");
 	}
-
+	public int t;
 	@Override
 	public void update(int delta) {
+		
+		t+=delta;
+		if(t>1000&&target!=null) {
+			t=0;
+			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), 3, getWidth()/2));
+		}
+		
 		//this.setOffset(MainGame.instance.getMousePos().sub(new Vector2f(MainGame.WIDTH/2, MainGame.HEIGHT/2)));
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			offset.add(new Vector2f(0,-10));
@@ -38,13 +46,16 @@ public class DebugEnt extends Entity {
 		//debug
 		//System.out.println(target==null);
 		
-		target = Utils.getNearestEntity(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "DebugEnemy"), this.getPos(), 500);
+		target = Utils.getNearestEntity(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "DebugEnemy"), this.getCenterPos(), 500);
 	}
 	
 	@Override public void render(Graphics g) {
 		super.render(g);
-		if(target != null) turret.setRotation(Utils.getAngle(this.getPos(), target.getPos()));
-		
+		if(target != null) {
+			turret.setRotation(Utils.getAngle(this.getPos(), target.getPos()));
+			g.setColor(Color.green);
+			g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
+		}
 		g.drawImage(turret, getX(), getY());
 	}
 }

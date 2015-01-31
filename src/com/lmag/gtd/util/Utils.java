@@ -37,9 +37,7 @@ public class Utils {
 		
 		ArrayList<Entity> newArray = new ArrayList<Entity>();
 		for(int i=0;i<in.size();i++) {
-			System.out.println(in.get(i).getType()+":"+type);
 			if(in.get(i).getType().contains(type)) {
-				System.out.println(i);
 				newArray.add(in.get(i));
 			}
 		}
@@ -49,8 +47,8 @@ public class Utils {
 	
 	public static float getDist(Vector2f a, Vector2f b) {
 		return (float)Math.sqrt(
-			(Math.pow(b.getY(), 2)-Math.pow(a.getY(), 2))+
-			(Math.pow(b.getX(), 2)-Math.pow(a.getX(), 2))
+			(Math.pow(b.getY()-a.getY(), 2))+
+			(Math.pow(b.getX()-a.getX(), 2))
 		);
 	}
 	
@@ -66,8 +64,7 @@ public class Utils {
 				
 			}*/
 			
-			float dist = getDist(pos, ent.getPos());
-			
+			float dist = getDist(pos, ent.getCenterPos());
 			if (dist >= maxDist) {
 				
 				continue;
@@ -86,22 +83,16 @@ public class Utils {
 			for (float compare : results) {
 
 				if (dist < compare) {
+
+					int index = results.indexOf(compare);
+				
+					results.add(index, dist);
+					entResults.add(index, ent);
 					
-					if (results.size() <= entLimit) {
+					if (results.size() > entLimit) {
 						
-						results.add(results.indexOf(compare), dist);
-						entResults.add(results.indexOf(compare), ent);
-					}
-					
-					else {
-						
-						int index = results.indexOf(compare);
-						
-						results.remove(index);
-						entResults.remove(index);
-					
-						results.add(index, dist);
-						entResults.add(index, ent);
+						results.remove(entLimit);
+						entResults.remove(entLimit);
 					}
 					
 					break;
@@ -115,7 +106,14 @@ public class Utils {
 				}
 			}
 		
-		return entResults;
+		return flipEntArray(entResults);
+	}
+	public static ArrayList<Entity> flipEntArray(ArrayList<Entity> in) {
+		ArrayList<Entity> n = new ArrayList<Entity>();
+		for(int i=in.size()-1;i>-1;i--) {
+			n.add(in.get(i));
+		}
+		return n;
 	}
 	public static Entity getNearestEntity(ArrayList<Entity> in, Vector2f pos, int maxDist) {
 		ArrayList<Entity> eArr = getNearestEntities(in, pos, maxDist, 1);

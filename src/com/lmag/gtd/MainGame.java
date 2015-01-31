@@ -41,9 +41,9 @@ public class MainGame extends BasicGame {
     public void init(GameContainer container) throws SlickException {
 
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
+    	root.addChild(new DebugController());
     	root.addChild(new DebugEnt());
-    	root.addChild(new DebugEnemy(new Vector2f(100,100)));
-    	root.setPos(new Vector2f(WIDTH/2, HEIGHT/2));
+    	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
     }
  
     @Override
