@@ -9,13 +9,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.entities.DebugEnemy;
 import com.lmag.gtd.entities.DebugEnt;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.util.Renderable;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class MainGame extends BasicGame {
 	
@@ -36,11 +34,11 @@ public class MainGame extends BasicGame {
 	public Vector2f getMousePos() {
 		return new Vector2f(Mouse.getX(), HEIGHT-Mouse.getY());
 	}
-	
     @Override
     public void init(GameContainer container) throws SlickException {
-
+    	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
+    	root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
     	root.addChild(new DebugController());
     	root.addChild(new DebugEnt());
     	//root.addChild(new DebugEnemy(new Vector2f(100,100)));

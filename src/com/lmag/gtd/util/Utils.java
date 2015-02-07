@@ -1,5 +1,7 @@
 package com.lmag.gtd.util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Image;
@@ -123,5 +125,35 @@ public class Utils {
 			return eArr.get(0);
 		}
 	}
+	public static Vector2f[] getLevelPath(String name) {
+		ArrayList<Vector2f> path = new ArrayList<Vector2f>();
+		
+	    try{
+	    	BufferedReader br = new BufferedReader(new FileReader("res/"+name));
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
 
+	        while (line != null) {
+	            sb.append(line);
+	            line = br.readLine();
+	        }
+	        
+	        br.close();
+	        
+	        String everything = sb.toString();
+	        
+	        for (String coords : everything.split(":")) {
+
+	        	String x = coords.split(",")[0];
+	        	String y = coords.split(",")[1];
+	        	
+	        	path.add(new Vector2f(Float.parseFloat(x), Float.parseFloat(y)));
+	        }
+	        
+	        return path.toArray(new Vector2f[path.size() - 1]);
+	        
+	    } catch(Exception e) {e.printStackTrace();}
+	    
+	    return new Vector2f[]{};
+	}
 }
