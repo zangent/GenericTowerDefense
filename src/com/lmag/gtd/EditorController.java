@@ -12,59 +12,31 @@ import com.lmag.gtd.entities.DebugEnemy;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.util.Utils;
 
-public class DebugController extends Entity {
-
-	boolean md0 = false;
-	boolean md1 = false;
-	boolean kdz = false;
-	boolean kdx = false;
+public class EditorController extends Entity {
 	
 	ArrayList<Vector2f> pathPoints = new ArrayList<Vector2f>();
 	
 	Vector2f[] path;
 	
-	public DebugController() {
+	public EditorController() {
 		super("", new Vector2f(0,0));
 		
 		this.setVisible(false);
 		
 		path = Utils.getLevelPath("maps/check.txt");
+		
+		this.addAsInputListener();
+	}
+	
+	@Override
+	public boolean isAcceptingInput() {
+		
+		return true;
 	}
 	
 	
 	@Override
 	public void update(int dt) {
-		
-		if(Mouse.isButtonDown(0)&&!md0) {
-			
-			MainGame.instance.root.addChild(new DebugEnemy(MainGame.instance.getMousePos()).setPath(path));
-		}
-		md0 = Mouse.isButtonDown(0);
-		
-		
-		if(Mouse.isButtonDown(1)&&!md1) {
-			
-			pathPoints.add(MainGame.instance.getMousePos());
-		}
-		md1 = Mouse.isButtonDown(1);
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_Z)&&!kdz) {
-			
-			pathPoints.remove(pathPoints.size()-1);
-		}
-		kdz = Keyboard.isKeyDown(Keyboard.KEY_Z);
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_X)&&!kdx) {
-			
-			for(int i=0;i<pathPoints.size();i++) {
-				System.err.print(pathPoints.get(i).x+","+pathPoints.get(i).y);
-				if(i<pathPoints.size()-1) {
-					System.err.print(":");
-				}
-			}
-			System.err.println("");
-		}
-		kdx = Keyboard.isKeyDown(Keyboard.KEY_X);
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)) {
 			pathPoints.get(pathPoints.size()-1).add(new Vector2f(0, -1));
@@ -77,6 +49,36 @@ public class DebugController extends Entity {
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
 			pathPoints.get(pathPoints.size()-1).add(new Vector2f(0, 1));
+		}
+	}
+
+	@Override
+	public void mouseReleased(int btn, int x, int y) {
+		
+		if(btn==0) {
+			MainGame.instance.root.addChild(new DebugEnemy(MainGame.instance.getMousePos()).setPath(path));
+		} else if(btn==1) {
+			pathPoints.add(MainGame.instance.getMousePos());
+		}
+	}
+	
+	@Override
+	public void keyReleased(int kc, char ch) {
+		
+		if(kc==Keyboard.KEY_Z) {
+			
+			pathPoints.remove(pathPoints.size()-1);
+			
+		} else if(kc==Keyboard.KEY_X) {
+			
+			for(int i=0;i<pathPoints.size();i++) {
+				System.err.print(pathPoints.get(i).x+","+pathPoints.get(i).y);
+				if(i<pathPoints.size()-1) {
+					System.err.print(":");
+				}
+			}
+			System.err.println("");
+			
 		}
 	}
 	
