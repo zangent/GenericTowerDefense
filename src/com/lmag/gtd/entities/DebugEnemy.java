@@ -1,7 +1,6 @@
 package com.lmag.gtd.entities;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.util.Utils;
@@ -12,17 +11,13 @@ public class DebugEnemy extends EntityLiving {
 	int currentSegment = 0;
 
 	float endTime = 0;
-	float speedMod = 1f;
+	float speedMod = 3f;
 	
 	Vector2f[] path;
 	
-	Image targetIcon;
 	
 	public DebugEnemy(Vector2f position) {
 		super("enemytst.png", position);
-		
-		targetIcon = Utils.getImageFromPath("trgit.png");
-		
 		// 800x600
 		path = new Vector2f[]{
 				new Vector2f(-50,300),
@@ -46,17 +41,11 @@ public class DebugEnemy extends EntityLiving {
 	public void render(Graphics g) {
 		
 		super.render(g);
-		
-		if(this.isTarget>0) {
-			g.drawImage(targetIcon, getX()-5, getY()-5);
-		}
 	}
 	
 	
 	@Override
 	public void update(int dt) {
-		
-		targetIcon.rotate(.1f*dt);
 		
 		t += dt;
 		

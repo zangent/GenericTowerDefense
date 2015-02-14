@@ -7,6 +7,5 @@ public class Node extends Entity {
 	public Node(Vector2f pos) {
 		super(pos);
 		
-		
 	}
 }

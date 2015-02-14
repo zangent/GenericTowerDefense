@@ -8,7 +8,6 @@ public abstract class EntityLiving extends Entity {
 	
 	protected int defaultHealth = 10;
 	protected int health = defaultHealth;
-	public int isTarget=0;
 
 	public EntityLiving(String sprite, Vector2f position) {
 		super(sprite, position);
