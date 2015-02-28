@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.InputListener;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class Entity {
+public class Entity implements InputListener {
 	
 	public static int UPDATE_EVERY_EON = 500, UPDATE_SLOW = 200, UPDATE_MEDIUM = 75, UPDATE_FAST = 20;
 	
@@ -58,6 +61,10 @@ public class Entity {
 	public Entity _setParent(Entity p) {
 		parent = p;
 		return this;
+	}
+	
+	public void addAsInputListener() {
+		MainGame.gc.getInput().addListener(this);
 	}
 	
 	public Entity addChild(Entity futureChildYo) {
@@ -202,6 +209,8 @@ public class Entity {
 		return children;
 	}
 	
+	
+	
 	/**
 	 * 
 	 * Preferred - returns a copy of the children rather than the actual.
@@ -226,5 +235,141 @@ public class Entity {
 			
 			return getClass().getName().replaceFirst("com.lmag.gtd.", "");
 		}
+	}
+	
+	public void kill() {
+		if(this.isAcceptingInput()) {
+			MainGame.gc.getInput().removeListener(this);
+		}
+		parent.removeChild(this);
+	}
+	
+	/**
+	 * 
+	 * I'm so, so sorry.
+	 * 
+	 * @param in point
+	 * @return is it in dawg
+	 */
+	
+	public boolean isPointInside(Vector2f in) {
+		return (in.x>getX()&&in.x<getX()+getWidth()&&in.y>getY()&&in.y<getY()+getHeight());
+	}
+
+	@Override
+	public boolean isAcceptingInput() {
+
+		return false;
+	}
+	
+	
+	
+	/*
+	 * YE OLDE INPUT LISTENER LIST O' INPUTS
+	 */
+
+	@Override
+	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+		
+	}
+
+	@Override
+	public void mouseDragged(int x1, int y1, int x2, int y2) {
+		
+	}
+
+	@Override
+	public void mouseMoved(int x1, int y1, int x2, int y2) {
+		
+	}
+
+	@Override
+	public void mousePressed(int btn, int x, int y) {
+		
+	}
+
+	@Override
+	public void mouseReleased(int btn, int x, int y) {
+		
+	}
+
+	@Override
+	public void mouseWheelMoved(int amt) {
+		
+	}
+
+	@Override
+	public void inputEnded() {
+		
+	}
+
+	@Override
+	public void inputStarted() {
+		
+	}
+
+	@Override
+	public void setInput(Input arg0) {
+		
+	}
+
+	@Override
+	public void keyPressed(int kc, char ch) {
+		
+	}
+
+	@Override
+	public void keyReleased(int kc, char ch) {
+		
+	}
+
+	@Override
+	public void controllerButtonPressed(int arg0, int arg1) {
+		
+	}
+
+	@Override
+	public void controllerButtonReleased(int arg0, int arg1) {
+		
+	}
+
+	@Override
+	public void controllerDownPressed(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerDownReleased(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerLeftPressed(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerLeftReleased(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerRightPressed(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerRightReleased(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerUpPressed(int arg0) {
+		
+	}
+
+	@Override
+	public void controllerUpReleased(int arg0) {
+		
 	}
 }

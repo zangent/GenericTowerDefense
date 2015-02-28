@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.entities.Entity;
 
 public class Utils {
@@ -155,5 +156,62 @@ public class Utils {
 	    } catch(Exception e) {e.printStackTrace();}
 	    
 	    return new Vector2f[]{};
+	}
+	public static Vector2f snapToGrid(Vector2f in) {
+		
+		float x = (float) (Math.floor(in.x/MainGame.GRID_SIZE));
+		float y = (float) (Math.floor(in.y/MainGame.GRID_SIZE));
+		
+		if (in.x >= MainGame.WIDTH - MainGame.GRID_SIZE) {
+			x--;
+		}
+		
+		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
+			y--;
+		}
+		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
+			y--;
+		}
+		
+		return new Vector2f(
+				(float) (MainGame.GRID_SIZE * x),
+				(float) (MainGame.GRID_SIZE * y)
+		);
+	}
+	/**
+	 * 
+	 * @param lp1 Line point 1
+	 * @param lp2 Line point 2
+	 * @param tp  Test point
+	 * @return Closest point on line to tp
+	 */
+	public static Vector2f GetClosestPoint(Vector2f lp1, Vector2f lp2, Vector2f tp) {
+		
+		double sx1 = lp1.x, sy1 = lp1.y, sx2 = lp2.x, sy2 = lp2.y, px = tp.x, py = tp.y;
+		double xDelta = sx2 - sx1;
+	    double yDelta = sy2 - sy1;
+
+	    if ((xDelta == 0) && (yDelta == 0))
+	    {
+	      throw new IllegalArgumentException("Segment start equals segment end");
+	    }
+
+	    double u = ((px - sx1) * xDelta + (py - sy1) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
+
+	    final Vector2f closestPoint;
+	    if (u < 0)
+	    {
+	      closestPoint = new Vector2f((float)sx1, (float)sy1);
+	    }
+	    else if (u > 1)
+	    {
+	      closestPoint = new Vector2f((float)sx2, (float)sy2);
+	    }
+	    else
+	    {
+	      closestPoint = new Vector2f((int) Math.round(sx1 + u * xDelta), (int) Math.round(sy1 + u * yDelta));
+	    }
+
+	    return closestPoint;
 	}
 }

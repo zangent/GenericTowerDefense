@@ -13,10 +13,14 @@ public class DebugEnt extends Entity {
 	
 	Image turret;
 	
-	public Entity target;
+	public EntityLiving target;
 	
 	public DebugEnt() {
-		super("goodie.png", new Vector2f(0,0));
+		this(new Vector2f(0,0));
+	}
+	
+	public DebugEnt(Vector2f pos) {
+		super("goodie.png", pos);
 		turret = Utils.getImageFromPath("canun.png");
 	}
 	public int t;
@@ -45,8 +49,17 @@ public class DebugEnt extends Entity {
 
 		//debug
 		//System.out.println(target==null);
+		if (target != null) {
+
+			target.isTarget--;
+		}
 		
-		target = Utils.getNearestEntity(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "DebugEnemy"), this.getCenterPos(), 500);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "DebugEnemy"), this.getCenterPos(), 500);
+
+		if (target != null) {
+			
+			target.isTarget++;
+		}
 	}
 	
 	@Override public void render(Graphics g) {
@@ -54,7 +67,7 @@ public class DebugEnt extends Entity {
 		if(target != null) {
 			turret.setRotation(Utils.getAngle(this.getPos(), target.getPos()));
 			g.setColor(Color.green);
-			g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
+			//g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
 		}
 		g.drawImage(turret, getX(), getY());
 	}

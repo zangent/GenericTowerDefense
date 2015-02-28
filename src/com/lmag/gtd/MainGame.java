@@ -11,6 +11,9 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.entities.DebugEnt;
 import com.lmag.gtd.entities.Entity;
+import com.lmag.gtd.entities.MouseTracker;
+import com.lmag.gtd.entities.menu.Button;
+import com.lmag.gtd.util.Executable;
 import com.lmag.gtd.util.Renderable;
 
 import java.io.File;
@@ -22,8 +25,13 @@ public class MainGame extends BasicGame {
 	public static final int TARGET_FPS = 60;
 	public static final int WIDTH  = 800;
 	public static final int HEIGHT = 600;
+	public static final int TOWER_SIZE = 32;
+	public static final int GRID_SIZE = TOWER_SIZE/2;
+	
+	public static GameContainer gc;
 	
 	public Entity root;
+	public LevelController lc;
 	
 	public static MainGame instance;
 	
@@ -37,10 +45,19 @@ public class MainGame extends BasicGame {
     @Override
     public void init(GameContainer container) throws SlickException {
     	
+    	gc = container;
+    	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
     	root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
-    	root.addChild(new DebugController());
+    	root.addChild(new EditorController());
+    	root.addChild(lc = new LevelController());
     	root.addChild(new DebugEnt());
+    	root.addChild(new Button("topkek2015.png", new Vector2f(420,420), new Executable(){
+
+			@Override
+			public void run() {
+				root.addChild(new MouseTracker(new DebugEnt(new Vector2f(0,0))));
+			}}));
     	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
     }
  
@@ -57,9 +74,7 @@ public class MainGame extends BasicGame {
     }
 
 	public static void main(String[] args) {
-		
-		System.err.println("If there's a 'closest entities' issue, it's Bren's bad code and his fault.");
-		
+				
 		// Load natives from lib/native folder
 		System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "lib/native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
 		System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
