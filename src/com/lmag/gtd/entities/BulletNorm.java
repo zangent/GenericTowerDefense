@@ -36,7 +36,7 @@ public class BulletNorm extends Entity{
 			parent.removeChild(this);
 		}
 		
-		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "DebugEnemy"), this.getCenterPos(), 50);
+		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 50);
 		
 		if(e!=null) {
 			e.damage(getDamage());

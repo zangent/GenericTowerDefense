@@ -8,32 +8,17 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.entities.DebugEnemy;
+import com.lmag.gtd.entities.Enemy;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.util.Utils;
 
-public class EditorController extends Entity {
+public class EditorController extends LevelController {
 	
 	ArrayList<Vector2f> pathPoints = new ArrayList<Vector2f>();
 	
-	Vector2f[] path;
-	
 	public EditorController() {
-		super("", new Vector2f(0,0));
-		
-		this.setVisible(false);
-		
-		path = Utils.getLevelPath("maps/check.txt");
-		
-		this.addAsInputListener();
-	}
-	
-	@Override
-	public boolean isAcceptingInput() {
-		
-		return true;
-	}
-	
+		super();
+	}	
 	
 	@Override
 	public void update(int dt) {
@@ -50,14 +35,14 @@ public class EditorController extends Entity {
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
 			pathPoints.get(pathPoints.size()-1).add(new Vector2f(0, 1));
 		}
+		
+		super.update(dt);
 	}
 
 	@Override
 	public void mouseReleased(int btn, int x, int y) {
 		
-		if(btn==0) {
-			MainGame.instance.root.addChild(new DebugEnemy(MainGame.instance.getMousePos()).setPath(path));
-		} else if(btn==1) {
+		if(btn==1) {
 			pathPoints.add(MainGame.instance.getMousePos());
 		}
 	}
@@ -84,6 +69,8 @@ public class EditorController extends Entity {
 	
 	@Override
 	public void render(Graphics g) {
+		
+		super.render(g);
 		
 		g.setColor(Color.orange);
 		

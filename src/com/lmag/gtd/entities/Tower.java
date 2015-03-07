@@ -9,17 +9,17 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class DebugEnt extends Entity {
+public class Tower extends Entity {
 	
 	Image turret;
 	
 	public EntityLiving target;
 	
-	public DebugEnt() {
+	public Tower() {
 		this(new Vector2f(0,0));
 	}
 	
-	public DebugEnt(Vector2f pos) {
+	public Tower(Vector2f pos) {
 		super("goodie.png", pos);
 		turret = Utils.getImageFromPath("canun.png");
 	}
@@ -54,7 +54,7 @@ public class DebugEnt extends Entity {
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "DebugEnemy"), this.getCenterPos(), 500);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 500);
 
 		if (target != null) {
 			

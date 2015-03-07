@@ -126,8 +126,15 @@ public class Utils {
 			return eArr.get(0);
 		}
 	}
-	public static Vector2f[] getLevelPath(String name) {
+	@SuppressWarnings("unchecked")
+	public static Object[] loadLevel(String name) {
+		
+		//An array of arrays (First enemy paths,
+		// second array enemy types.
+		Object[] result = {new ArrayList<String[]>(), null};
+		
 		ArrayList<Vector2f> path = new ArrayList<Vector2f>();
+		
 		
 	    try{
 	    	BufferedReader br = new BufferedReader(new FileReader("res/"+name));
@@ -143,7 +150,18 @@ public class Utils {
 	        
 	        String everything = sb.toString();
 	        
-	        for (String coords : everything.split(":")) {
+	        String enemyTypes, pathData;
+	        
+	        enemyTypes = everything.split("#")[0];
+	        pathData = everything.split("#")[1];
+	        
+	        
+	        for (String typeStr : enemyTypes.split(":")) {
+	        	
+	        	((ArrayList<String[]>)result[0]).add(typeStr.split(","));
+	        }
+	        
+	        for (String coords : pathData.split(":")) {
 
 	        	String x = coords.split(",")[0];
 	        	String y = coords.split(",")[1];
@@ -151,12 +169,16 @@ public class Utils {
 	        	path.add(new Vector2f(Float.parseFloat(x), Float.parseFloat(y)));
 	        }
 	        
-	        return path.toArray(new Vector2f[path.size() - 1]);
+	        result[1] = path.toArray(new Vector2f[path.size()]);
+	        
+	        return result;
 	        
 	    } catch(Exception e) {e.printStackTrace();}
 	    
-	    return new Vector2f[]{};
+	    return null;
 	}
+	
+	
 	public static Vector2f snapToGrid(Vector2f in) {
 		
 		float x = (float) (Math.floor(in.x/MainGame.GRID_SIZE));

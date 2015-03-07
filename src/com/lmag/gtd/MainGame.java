@@ -9,7 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.entities.DebugEnt;
+import com.lmag.gtd.entities.Tower;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.MouseTracker;
 import com.lmag.gtd.entities.menu.Button;
@@ -49,14 +49,14 @@ public class MainGame extends BasicGame {
     	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
     	root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
-    	root.addChild(new EditorController());
-    	root.addChild(lc = new LevelController());
-    	root.addChild(new DebugEnt());
+    	root.addChild(lc = new EditorController());
+    	//root.addChild(lc = new LevelController());
+    	root.addChild(new Tower());
     	root.addChild(new Button("topkek2015.png", new Vector2f(420,420), new Executable(){
 
 			@Override
 			public void run() {
-				root.addChild(new MouseTracker(new DebugEnt(new Vector2f(0,0))));
+				root.addChild(new MouseTracker(new Tower(new Vector2f(0,0))));
 			}}));
     	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
     }

@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.util.Utils;
 
-public class DebugEnemy extends EntityLiving {
+public abstract class Enemy extends EntityLiving {
 
 	int t = 0;
 	int currentSegment = 0;
@@ -18,8 +18,12 @@ public class DebugEnemy extends EntityLiving {
 	
 	Image targetIcon;
 	
-	public DebugEnemy(Vector2f position) {
-		super("enemytst.png", position);
+	public Enemy(Vector2f position) {
+		this("enemytst.png", position);
+	}
+	
+	protected Enemy(String spritePath, Vector2f position) {
+		super(spritePath, position);
 		
 		targetIcon = Utils.getImageFromPath("trgit.png");
 		
@@ -34,7 +38,7 @@ public class DebugEnemy extends EntityLiving {
 		endTime = Utils.getDist(path[0], path[1]) / speedMod * 10f;
 	}
 	
-	public DebugEnemy setPath(Vector2f[] p) {
+	public Enemy setPath(Vector2f[] p) {
 		path = p;
 		endTime = Utils.getDist(path[0], path[1]) / speedMod * 10f;
 		currentSegment = 0;
