@@ -1,11 +1,16 @@
 package com.lmag.gtd.entities;
 
+import java.util.ArrayList;
+
+import org.lwjgl.opengl.GL13;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class MouseTracker extends Entity {
 
@@ -23,9 +28,8 @@ public class MouseTracker extends Entity {
 	public void tick(int dt) {
 
 	}
-	public void render(Graphics g) {
-		
-		
+	
+	public boolean updatePos(Graphics g) {
 		Vector2f tp = (Utils.snapToGrid(MainGame.instance.getMousePos()));
 		boolean good = true;
 		Vector2f[] pth = MainGame.instance.lc.getPath();
@@ -33,22 +37,60 @@ public class MouseTracker extends Entity {
 			Vector2f a = pth[i];
 			Vector2f b = pth[i+1];
 			if(Utils.getDist(tp, Utils.GetClosestPoint(a, b, tp)) <= 50) {
-				g.setLineWidth(5);
-				g.setColor(Color.blue);
-				g.drawLine(a.x, a.y, b.x, b.y);
-				g.drawLine(Utils.GetClosestPoint(a, b, tp).x, Utils.GetClosestPoint(a, b, tp).y, tp.x, tp.y);
+				if(g != null) {
+					g.setLineWidth(5);
+					g.setColor(Color.blue);
+					g.drawLine(a.x, a.y, b.x, b.y);
+					g.drawLine(Utils.GetClosestPoint(a, b, tp).x, Utils.GetClosestPoint(a, b, tp).y, tp.x, tp.y);
+				}
 				good = false;
 				break;
 			}
 		}
+		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), MainGame.GRID_SIZE*4, 6);
+		
+		for(Entity e:neighbors) {
+			
+			int mx = (int)tp.x, my = (int)tp.y, mw = child.getWidth(), mh = child.getHeight();
+			Vector2f op = Utils.snapToGrid(e.getPos());
+			int ox = (int)op.x, oy = (int)op.y, ow = e.getWidth(), oh = e.getHeight();
+			System.out.println("T"+mx+","+my+","+mw+","+mh);
+			System.out.println("O"+ox+","+oy+","+ow+","+oh);
+			if(
+					//(mx+mw>ox||ox+ow<=mx) ||
+					//(my+mh<=oy||oy+oh<=my)
+					((mx<=ox&&mx+mw>ox)||
+					(ox<=mx&&ox+ow>mx))&&(
+					(my<=oy&&my+mh>oy)||
+					(oy<=my&&oy+oh>my))
+			   ) {
+				good = false;
+			}
+			
+		}
+		
 		if(good) {
 			lastPoint = tp;
 		}
+		return good;
+	}
+	
+	public void render(Graphics g) {
 		
-		
-		
-		this.setPos(lastPoint);
-		child.render(g);
+		if(!updatePos(g)) {
+			this.setPos(lastPoint);
+			//child.render(g);
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
+			child.sprite.setImageColor(20f, 0, 0, 1f);
+			child.render(g);
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+			//child.sprite.setImageColor(1f, 1f, 1f, .1f);
+			//child.render(g);
+			child.sprite.setImageColor(1f, 1f, 1f, 1f);
+		} else {
+			this.setPos(lastPoint);
+			child.render(g);
+		}
 	}
 	@Override
 	public boolean isAcceptingInput() {
@@ -56,9 +98,11 @@ public class MouseTracker extends Entity {
 	}
 	public void mousePressed(int btn, int x, int y) {
 		if(btn == 0) {
-			MainGame.instance.root.addChild(child);
-			child.setPos(lastPoint);
-			kill();
+			if(updatePos(null)) {
+				MainGame.instance.root.addChild(child);
+				child.setPos(lastPoint);
+				kill();
+			}
 		} else if(btn == 1) {
 			kill();
 		}

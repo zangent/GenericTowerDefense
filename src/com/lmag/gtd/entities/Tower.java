@@ -28,7 +28,7 @@ public class Tower extends Entity {
 	public void update(int delta) {
 		
 		t+=delta;
-		if(t>1000&&target!=null) {
+		if(t>100&&target!=null) {
 			t=0;
 			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), 3, getWidth()/2));
 		}
