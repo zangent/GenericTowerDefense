@@ -1,5 +1,6 @@
 package com.lmag.gtd.entities.menu;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.entities.Entity;
@@ -8,12 +9,16 @@ import com.lmag.gtd.util.Executable;
 public class Button extends Entity {
 	
 	protected Executable onPress;
+	
+	protected Entity renderEnt;
+	
 
 	public Button(Vector2f position, Executable func) {
 		super(position);
 
 		this.addAsInputListener();
 		onPress = func;
+		updateChildren = false;
 	}
 
 	public Button(String sprite, Vector2f position, Executable func) {
@@ -21,6 +26,7 @@ public class Button extends Entity {
 
 		this.addAsInputListener();
 		onPress = func;
+		updateChildren = false;
 	}
 
 	@Override
@@ -60,5 +66,13 @@ public class Button extends Entity {
 		}
 		
 		buttonDown = false;
+	}
+	
+	public int getWidth() {
+		return (children.size()!=0)?children.get(0).getWidth():((sprite!=null)?sprite.getWidth():0);
+	}
+	
+	public int getHeight() {
+		return (children.size()!=0)?children.get(0).getHeight():((sprite!=null)?sprite.getHeight():0);
 	}
 }

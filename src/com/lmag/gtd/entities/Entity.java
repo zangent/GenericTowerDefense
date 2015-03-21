@@ -29,12 +29,24 @@ public class Entity implements InputListener {
 	protected Vector2f offset;
 	
 	public Entity parent;
+	
+	public boolean updateChildren = true;
 
 	public Entity(String sprite, Vector2f position) {
 		
-		if(sprite!=null && !sprite.trim().matches(""))
-			this.sprite = Utils.getImageFromPath(sprite);
+		this(position, ((sprite!=null && !sprite.trim().matches(""))?Utils.getImageFromPath(sprite):null));
 		
+	}
+
+	public Entity(Vector2f position) {
+		
+		this(position, null);
+		visible = false;
+	}
+	
+	private Entity(Vector2f position, Image sprite) {
+
+		this.sprite = sprite;
 		
 		setPos(position);
 		
@@ -43,19 +55,6 @@ public class Entity implements InputListener {
 		children = new ArrayList<Entity>();
 		addChild = new ArrayList<Entity>();
 		remChild = new ArrayList<Entity>();
-	}
-
-	public Entity(Vector2f position) {
-		
-		this.sprite = null;
-		
-		visible = false;
-		
-		setPos(position);
-		
-		updateRate = UPDATE_FAST;
-		
-		children = new ArrayList<Entity>();
 	}
 	
 	public Entity _setParent(Entity p) {
@@ -104,7 +103,7 @@ public class Entity implements InputListener {
 		addChild.clear();
 		remChild.clear();
 
-		
+		if(updateChildren)
 		for (Entity ent : children) {
 			
 			ent.tick(delta);

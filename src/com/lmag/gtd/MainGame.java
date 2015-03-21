@@ -13,6 +13,7 @@ import com.lmag.gtd.entities.Tower;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.MouseTracker;
 import com.lmag.gtd.entities.menu.Button;
+import com.lmag.gtd.entities.menu.BuyMenu;
 import com.lmag.gtd.util.Executable;
 import com.lmag.gtd.util.Renderable;
 
@@ -27,6 +28,7 @@ public class MainGame extends BasicGame {
 	public static final int HEIGHT = 600;
 	public static final int TOWER_SIZE = 32;
 	public static final int GRID_SIZE = TOWER_SIZE/2;
+	public static FontRenderer badFont;
 	
 	public static GameContainer gc;
 	
@@ -47,17 +49,13 @@ public class MainGame extends BasicGame {
     	
     	gc = container;
     	
+    	badFont = new FontRenderer("badfont.png");
+    	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
     	root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
     	root.addChild(lc = new EditorController());
     	//root.addChild(lc = new LevelController());
-    	root.addChild(new Tower());
-    	root.addChild(new Button("topkek2015.png", new Vector2f(420,420), new Executable(){
-
-			@Override
-			public void run() {
-				root.addChild(new MouseTracker(new Tower(new Vector2f(0,0))));
-			}}));
+    	root.addChild(new BuyMenu());
     	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
     }
  
@@ -71,6 +69,7 @@ public class MainGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
     	
     	root.render(g);
+    	badFont.render(50, 50, g, "Ayyy lamooo");
     }
 
 	public static void main(String[] args) {

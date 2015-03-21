@@ -15,6 +15,8 @@ public class Tower extends Entity {
 	
 	public EntityLiving target;
 	
+	public static final int range = 500;
+	
 	public Tower() {
 		this(new Vector2f(0,0));
 	}
@@ -23,6 +25,11 @@ public class Tower extends Entity {
 		super("goodie.png", pos);
 		turret = Utils.getImageFromPath("canun.png");
 	}
+	
+	protected Tower(String spr, Vector2f pos) {
+		super(spr, pos);
+	}
+	
 	public int t;
 	@Override
 	public void update(int delta) {
@@ -30,7 +37,7 @@ public class Tower extends Entity {
 		t+=delta;
 		if(t>100&&target!=null) {
 			t=0;
-			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), 3, getWidth()/2));
+			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
 		}
 		
 		//this.setOffset(MainGame.instance.getMousePos().sub(new Vector2f(MainGame.WIDTH/2, MainGame.HEIGHT/2)));
@@ -54,7 +61,7 @@ public class Tower extends Entity {
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 500);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
 
 		if (target != null) {
 			
@@ -70,5 +77,45 @@ public class Tower extends Entity {
 			//g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
 		}
 		g.drawImage(turret, getX(), getY());
+	}
+}
+
+class BulletNorm extends Entity{
+	
+	Vector2f step;
+	
+	public static final int lifeTime = 5000;
+	private int life = 0;
+	public static final float speed = 15;
+	
+	public BulletNorm(Vector2f position, float anglo_saxon, float barrelLength) {
+		super("needasentryhere.png", position);
+		setPos(position.add(new Vector2f(-barrelLength/2+barrelLength*(float)Math.cos(Math.toRadians(anglo_saxon)), barrelLength*(float)Math.sin(Math.toRadians(anglo_saxon)))));
+		sprite.setRotation(anglo_saxon);
+		step = new Vector2f(speed*(float)Math.cos(Math.toRadians(anglo_saxon)), speed*(float)Math.sin(Math.toRadians(anglo_saxon)));
+	}
+	
+	public int getDamage() {
+		return 1;
+	}
+	
+	@Override
+	public void update(int dt) {
+		
+		setPos(getPos().add(step));
+		
+		life += dt;
+		
+		if(life>=lifeTime) {
+			
+			parent.removeChild(this);
+		}
+		
+		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 50);
+		
+		if(e!=null) {
+			e.damage(getDamage());
+			parent.removeChild(this);
+		}
 	}
 }
