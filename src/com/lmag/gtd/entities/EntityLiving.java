@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class EntityLiving extends Entity {
 	
-	protected int defaultHealth = 10;
+	protected int defaultHealth = 100;
 	protected int health = defaultHealth;
 	public int isTarget=0;
 
@@ -26,6 +26,10 @@ public abstract class EntityLiving extends Entity {
 		if(health != defaultHealth) {
 			
 			float per = ((float)health)/((float)defaultHealth);
+			
+			if(per < 0) per = 0;
+			
+			System.out.println(health + " " + defaultHealth);
 			
 			Vector2f p = this.getPos().add(new Vector2f(0,-15));
 			int width = getWidth(), height = 10, padding = 2;

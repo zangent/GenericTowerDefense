@@ -20,6 +20,8 @@ public abstract class Enemy extends EntityLiving {
 	
 	public Enemy(Vector2f position) {
 		this("enemytst.png", position);
+		defaultHealth = 30;
+		health = defaultHealth;
 	}
 	
 	protected Enemy(String spritePath, Vector2f position) {
@@ -36,6 +38,8 @@ public abstract class Enemy extends EntityLiving {
 		};
 		
 		endTime = Utils.getDist(path[0], path[1]) / speedMod * 10f;
+		defaultHealth = 30;
+		health = defaultHealth;
 	}
 	
 	public Enemy setPath(Vector2f[] p) {

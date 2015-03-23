@@ -88,10 +88,10 @@ public class MouseTracker extends Entity {
 			//child.render(g);
 			child.sprite.setImageColor(1f, 1f, 1f, 1f);
 		} else {
-			if(child instanceof Tower) {
+			if(child instanceof TowerMachineGun) {
 				g.setColor(new Color(0.7f, 1f, 0.7f, 0.5f));
 				Vector2f cp = child.getCenterPos();
-				g.fillOval(cp.x-((Tower)child).range, cp.y-((Tower)child).range, ((Tower)child).range*2, ((Tower)child).range*2);
+				g.fillOval(cp.x-((TowerMachineGun)child).range, cp.y-((TowerMachineGun)child).range, ((TowerMachineGun)child).range*2, ((TowerMachineGun)child).range*2);
 			}
 			this.setPos(lastPoint);
 			child.render(g);

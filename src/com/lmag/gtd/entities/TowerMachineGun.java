@@ -9,24 +9,24 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class Tower extends Entity {
+public class TowerMachineGun extends Entity {
 	
 	Image turret;
 	
 	public EntityLiving target;
 	
-	public static final int range = 500;
+	public static final int range = 500, fireRate = 50;
 	
-	public Tower() {
+	public TowerMachineGun() {
 		this(new Vector2f(0,0));
 	}
 	
-	public Tower(Vector2f pos) {
+	public TowerMachineGun(Vector2f pos) {
 		super("goodie.png", pos);
 		turret = Utils.getImageFromPath("canun.png");
 	}
 	
-	protected Tower(String spr, Vector2f pos) {
+	protected TowerMachineGun(String spr, Vector2f pos) {
 		super(spr, pos);
 	}
 	
@@ -35,7 +35,7 @@ public class Tower extends Entity {
 	public void update(int delta) {
 		
 		t+=delta;
-		if(t>100&&target!=null) {
+		if(t>fireRate && target!=null) {
 			t=0;
 			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
 		}
@@ -96,7 +96,7 @@ class BulletNorm extends Entity{
 	}
 	
 	public int getDamage() {
-		return 1;
+		return 2;
 	}
 	
 	@Override

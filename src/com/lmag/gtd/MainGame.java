@@ -9,11 +9,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.entities.Tower;
+import com.lmag.gtd.entities.TowerMachineGun;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.MouseTracker;
 import com.lmag.gtd.entities.menu.Button;
 import com.lmag.gtd.entities.menu.BuyMenu;
+import com.lmag.gtd.entities.menu.MainMenu;
 import com.lmag.gtd.util.Executable;
 import com.lmag.gtd.util.Renderable;
 
@@ -52,10 +53,11 @@ public class MainGame extends BasicGame {
     	badFont = new FontRenderer("badfont.png");
     	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
-    	root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
-    	root.addChild(lc = new EditorController());
+    	root.addChild(new MainMenu());
+    	//root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
+    	//root.addChild(lc = new EditorController());
     	//root.addChild(lc = new LevelController());
-    	root.addChild(new BuyMenu());
+    	//root.addChild(new BuyMenu());
     	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
     }
  
@@ -69,7 +71,7 @@ public class MainGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
     	
     	root.render(g);
-    	badFont.render(50, 50, g, "Ayyy lamooo");
+    	//badFont.render(50, 50, g, "Ayyy lamooo");
     }
 
 	public static void main(String[] args) {

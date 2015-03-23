@@ -31,6 +31,8 @@ public class Entity implements InputListener {
 	public Entity parent;
 	
 	public boolean updateChildren = true;
+	
+	public boolean killed = false;
 
 	public Entity(String sprite, Vector2f position) {
 		
@@ -99,6 +101,10 @@ public class Entity implements InputListener {
 		}
 		for (Entity ent : remChild) {
 			this.children.remove(ent);
+			if(!ent.killed) {
+				ent.killed = true;
+				ent.kill();
+			}
 		}
 		addChild.clear();
 		remChild.clear();
@@ -237,10 +243,16 @@ public class Entity implements InputListener {
 	}
 	
 	public void kill() {
+		
 		if(this.isAcceptingInput()) {
 			MainGame.gc.getInput().removeListener(this);
 		}
-		parent.removeChild(this);
+		if(!killed)
+			parent.removeChild(this);
+		for(Entity e : children) {
+			e.kill();
+		}
+		killed = true;
 	}
 	
 	/**

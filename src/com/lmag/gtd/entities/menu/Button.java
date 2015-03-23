@@ -12,6 +12,7 @@ public class Button extends Entity {
 	
 	protected Entity renderEnt;
 	
+	protected int forcedWidth=0, forcedHeight = 0;
 
 	public Button(Vector2f position, Executable func) {
 		super(position);
@@ -42,6 +43,18 @@ public class Button extends Entity {
 		
 		
 	}
+	
+	public Button forceSize(Vector2f size) {
+		forcedWidth = (int)size.x;
+		forcedHeight= (int)size.y;
+		return this;
+	}
+	
+	public Button forceSize(int x, int y) {
+		forcedWidth = x;
+		forcedHeight= y;
+		return this;
+	}
 
 	
 	public void execFunc(Object... args) {
@@ -69,10 +82,10 @@ public class Button extends Entity {
 	}
 	
 	public int getWidth() {
-		return (children.size()!=0)?children.get(0).getWidth():((sprite!=null)?sprite.getWidth():0);
+		return (forcedWidth!=0)?forcedWidth:(children.size()!=0)?children.get(0).getWidth():((sprite!=null)?sprite.getWidth():0);
 	}
 	
 	public int getHeight() {
-		return (children.size()!=0)?children.get(0).getHeight():((sprite!=null)?sprite.getHeight():0);
+		return (forcedHeight!=0)?forcedHeight:(children.size()!=0)?children.get(0).getHeight():((sprite!=null)?sprite.getHeight():0);
 	}
 }
