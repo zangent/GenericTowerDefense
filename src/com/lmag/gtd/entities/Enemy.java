@@ -8,15 +8,15 @@ import com.lmag.gtd.util.Utils;
 
 public abstract class Enemy extends EntityLiving {
 
-	int t = 0;
-	int currentSegment = 0;
+	protected int t = 0;
+	protected int currentSegment = 0;
 
-	float endTime = 0;
-	float speedMod = 1f;
+	protected float endTime = 0;
+	protected float speedMod = 1f;
 	
-	Vector2f[] path;
+	protected Vector2f[] path;
 	
-	Image targetIcon;
+	protected Image targetIcon;
 	
 	public Enemy(Vector2f position) {
 		this("enemytst.png", position);
@@ -28,14 +28,6 @@ public abstract class Enemy extends EntityLiving {
 		super(spritePath, position);
 		
 		targetIcon = Utils.getImageFromPath("trgit.png");
-		
-		// 800x600
-		path = new Vector2f[]{
-				new Vector2f(-50,300),
-				new Vector2f(400,300),
-				new Vector2f(0,550),
-				new Vector2f(400,550),
-		};
 		
 		endTime = Utils.getDist(path[0], path[1]) / speedMod * 10f;
 		defaultHealth = 30;

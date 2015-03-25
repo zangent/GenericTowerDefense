@@ -33,6 +33,10 @@ public class Entity implements InputListener {
 	public boolean updateChildren = true;
 	
 	public boolean killed = false;
+	
+	protected ArrayList<StatEffect> statEffects = new ArrayList<StatEffect>();
+	
+	
 
 	public Entity(String sprite, Vector2f position) {
 		
@@ -186,6 +190,31 @@ public class Entity implements InputListener {
 	public Vector2f getCenterOffset() {
 		return getOffset().add(new Vector2f(getWidth()/2, getHeight()/2));
 	}
+	
+	
+	public ArrayList<StatEffect> getStatEffects() {
+		
+		return statEffects;
+	}
+	
+	public void addStatEffect(StatEffect effect) {
+		
+		if (!statEffects.contains(effect)) {
+			
+			statEffects.add(effect);
+		}
+	}
+	
+	public void removeStatEffect(StatEffect effect) {
+		
+		statEffects.remove(effect);
+	}
+	
+	public boolean hasStatEffect(StatEffect effect) {
+		
+		return statEffects.contains(effect);
+	}
+	
 	
 	public void render(Graphics g) {
 		

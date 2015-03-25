@@ -55,6 +55,15 @@ public class Utils {
 		);
 	}
 	
+	
+	/**
+	 * 
+	 * @param in The list of entities to search
+	 * @param pos The position to search from
+	 * @param maxDist Search range
+	 * @param entLimit Set to -1 for all entities in range
+	 * @return
+	 */
 	public static ArrayList<Entity> getNearestEntities(ArrayList<Entity> in, Vector2f pos, int maxDist, int entLimit) {
 		
 		ArrayList<Float> results = new ArrayList<Float>();
@@ -101,7 +110,7 @@ public class Utils {
 					break;
 				}
 				
-				if (results.indexOf(compare) == results.size() && results.size() <= entLimit) {
+				if (results.indexOf(compare) == results.size() && (results.size() <= entLimit || entLimit == -1)) {
 						
 						results.add(results.indexOf(compare), dist);
 						entResults.add(results.indexOf(compare), ent);

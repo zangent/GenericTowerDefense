@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
-import com.lmag.gtd.entities.CopyOfTower2;
+import com.lmag.gtd.entities.TowerLaser;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.EntityLiving;
 import com.lmag.gtd.entities.MouseTracker;
@@ -36,7 +36,7 @@ public class BuyMenu extends Entity {
 		*/
 		addTower(new TowerMachineGun(new Vector2f(0,0)));
 		addTower(new Tower2(new Vector2f(0,0)));
-		addTower(new CopyOfTower2(new Vector2f(0,0)));
+		addTower(new TowerLaser(new Vector2f(0,0)));
 	}
 	
 	public void addTower(Entity add) {

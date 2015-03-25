@@ -6,15 +6,15 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class EntityLiving extends Entity {
 	
-	protected int defaultHealth = 100;
-	protected int health = defaultHealth;
+	protected float defaultHealth = 100;
+	protected float health = defaultHealth;
 	public int isTarget=0;
 
 	public EntityLiving(String sprite, Vector2f position) {
 		super(sprite, position);
 	}
 	
-	public int getHealth() {
+	public float getHealth() {
 		return health;
 	}
 	
@@ -28,8 +28,6 @@ public abstract class EntityLiving extends Entity {
 			float per = ((float)health)/((float)defaultHealth);
 			
 			if(per < 0) per = 0;
-			
-			System.out.println(health + " " + defaultHealth);
 			
 			Vector2f p = this.getPos().add(new Vector2f(0,-15));
 			int width = getWidth(), height = 10, padding = 2;
@@ -55,7 +53,7 @@ public abstract class EntityLiving extends Entity {
 	}
 
 	
-	public void setHealth(int health) {
+	public void setHealth(float health) {
 		this.health = health;
 		if(health <= 0) {
 			onDeath();
@@ -66,7 +64,7 @@ public abstract class EntityLiving extends Entity {
 	private void onDeath() {}
 
 
-	public void damage(int amt) {
+	public void damage(float amt) {
 		setHealth(health - amt);
 	}
 }

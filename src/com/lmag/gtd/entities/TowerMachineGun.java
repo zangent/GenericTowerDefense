@@ -95,8 +95,8 @@ class BulletNorm extends Entity{
 		step = new Vector2f(speed*(float)Math.cos(Math.toRadians(anglo_saxon)), speed*(float)Math.sin(Math.toRadians(anglo_saxon)));
 	}
 	
-	public int getDamage() {
-		return 2;
+	public float getDamage() {
+		return .25f;
 	}
 	
 	@Override
