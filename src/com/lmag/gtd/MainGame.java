@@ -36,6 +36,8 @@ public class MainGame extends BasicGame {
 	public Entity root;
 	public LevelController lc;
 	
+	public boolean debug = true;
+	
 	public static MainGame instance;
 	
 	public MainGame() {

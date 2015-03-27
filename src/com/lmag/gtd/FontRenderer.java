@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 
 public class FontRenderer {
 	private Image fontSheet;
-	private static final String fontMapping = "abcdefghijklmnopqrstuvwxyz";
+	private static final String fontMapping = "abcdefghijklmnopqrstuvwxyz0123456789. ";
 	public static final int charSize = 16;
 	public FontRenderer(String fontName) {
 		try {

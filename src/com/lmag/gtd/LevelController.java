@@ -107,7 +107,6 @@ public class LevelController extends Entity {
 	public EntityLiving addEnemy() {
 		String[] options = enemyData.get(waveCount);
 		EntityLiving enemy = null;
-
 		try {
 			enemy = ((EntityLiving) (Class.forName("com.lmag.gtd.entities.enemies."
 					+ options[(int) (Math.random() * (options.length))])

@@ -68,7 +68,6 @@ public class Button extends Entity {
 	public void mousePressed(int btn, int x, int y) {
 		
 		buttonDown = (btn==0)&&isPointInside(new Vector2f(x,y));
-		System.out.println(buttonDown);
 	}
 	
 	@Override

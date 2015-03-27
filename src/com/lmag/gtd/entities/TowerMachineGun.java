@@ -9,13 +9,13 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class TowerMachineGun extends Entity {
+public class TowerMachineGun extends EntityLiving {
 	
 	Image turret;
 	
 	public EntityLiving target;
 	
-	public static final int range = 500, fireRate = 50;
+	protected int fireRate = 50;
 	
 	public TowerMachineGun() {
 		this(new Vector2f(0,0));
@@ -24,6 +24,8 @@ public class TowerMachineGun extends Entity {
 	public TowerMachineGun(Vector2f pos) {
 		super("goodie.png", pos);
 		turret = Utils.getImageFromPath("canun.png");
+		
+		range = 500;
 	}
 	
 	protected TowerMachineGun(String spr, Vector2f pos) {
@@ -33,6 +35,14 @@ public class TowerMachineGun extends Entity {
 	public int t;
 	@Override
 	public void update(int delta) {
+		
+		if (statEffects.contains(StatEffect.EMP)) {
+			
+			target = null;
+			
+			return;
+		}
+		
 		
 		t+=delta;
 		if(t>fireRate && target!=null) {

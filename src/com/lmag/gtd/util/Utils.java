@@ -101,7 +101,7 @@ public class Utils {
 					results.add(index, dist);
 					entResults.add(index, ent);
 					
-					if (results.size() > entLimit) {
+					if (results.size() >= entLimit && entLimit != -1) {
 						
 						results.remove(entLimit);
 						entResults.remove(entLimit);
@@ -246,5 +246,8 @@ public class Utils {
 	    }
 
 	    return closestPoint;
+	}
+	public static void printStackTrace() {
+		(new Throwable()).printStackTrace();
 	}
 }

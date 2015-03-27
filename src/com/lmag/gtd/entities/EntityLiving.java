@@ -4,11 +4,15 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.lmag.gtd.MainGame;
+
 public abstract class EntityLiving extends Entity {
 	
 	protected float defaultHealth = 100;
 	protected float health = defaultHealth;
-	public int isTarget=0;
+	public short isTarget=0;
+	
+	protected int range = 500;
 
 	public EntityLiving(String sprite, Vector2f position) {
 		super(sprite, position);
@@ -49,6 +53,13 @@ public abstract class EntityLiving extends Entity {
 			}
 			
 			g.fillRect(p.x+padding, p.y+padding, width*per, height);
+		}
+		
+		if (MainGame.instance.debug) {
+			
+			g.setColor(Color.green);
+			
+			g.drawOval(this.getX()-range, this.getY()-range, range*2, range*2);
 		}
 	}
 

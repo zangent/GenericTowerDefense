@@ -9,13 +9,11 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class TowerLaser extends Entity {
+public class TowerLaser extends EntityLiving {
 	
 	Image turret;
 	
 	public EntityLiving target;
-	
-	public static int range = 500;
 	
 	public int timeSinceLastUpdate = 0;
 	
@@ -36,6 +34,8 @@ public class TowerLaser extends Entity {
 	public TowerLaser(Vector2f pos) {
 		super("edgeymemes.png", pos);
 		turret = Utils.getImageFromPath("canun2.png");
+		
+		range = 500;
 	}
 	
 	protected TowerLaser(String spr, Vector2f pos) {
@@ -45,6 +45,14 @@ public class TowerLaser extends Entity {
 	
 	@Override
 	public void update(int delta) {
+
+		if (statEffects.contains(StatEffect.EMP)) {
+			
+			target = null;
+			
+			return;
+		}
+		
 		
 		int dmg = 3;
 		
@@ -134,7 +142,5 @@ public class TowerLaser extends Entity {
 			g.setLineWidth(0.5f+((float)intensity/(float)warmup)*2.5f);
 			g.drawLine(from.x, from.y, t.getX(), t.getY());
 		}
-		
-		
 	}
 }

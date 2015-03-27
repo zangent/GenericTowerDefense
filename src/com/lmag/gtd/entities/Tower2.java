@@ -9,13 +9,13 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class Tower2 extends Entity {
+public class Tower2 extends EntityLiving {
 	
 	Image turret;
 	
 	public EntityLiving target;
 	
-	public static int range = 500, fireRate = 1500;
+	public int fireRate = 1500;
 	
 	public boolean firing = false;
 	
@@ -28,7 +28,10 @@ public class Tower2 extends Entity {
 	
 	public Tower2(Vector2f pos) {
 		super("swaglord420.png", pos);
+		
 		turret = Utils.getImageFromPath("canun2.png");
+		
+		range = 500;
 	}
 	
 	protected Tower2(String spr, Vector2f pos) {
@@ -38,6 +41,15 @@ public class Tower2 extends Entity {
 	public int t;
 	@Override
 	public void update(int delta) {
+	
+		
+		if (statEffects.contains(StatEffect.EMP)) {
+			
+			target = null;
+			
+			return;
+		}
+		
 		
 		t+=delta;
 		if((firing && t > burstFireRate || t > fireRate) && target!=null) {
@@ -121,6 +133,12 @@ class BulletPulse extends Entity{
 	
 	@Override
 	public void update(int dt) {
+
+		
+		if (statEffects.contains(StatEffect.EMP)) {
+			
+			return;
+		}
 		
 		setPos(getPos().add(step));
 		

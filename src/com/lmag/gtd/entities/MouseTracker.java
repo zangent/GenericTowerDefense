@@ -47,15 +47,22 @@ public class MouseTracker extends Entity {
 				break;
 			}
 		}
-		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), MainGame.GRID_SIZE*4, 6);
+
+		//TODO: There is a clipping issue here.
+		// If you place towers like this:
+		// 				  X
+		//
+		//				    X
+		// and try to place a tower between them, you
+		// can clip into the bottom-right tower's top-left corner.
+
+		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), MainGame.GRID_SIZE*4, -1);
 		
 		for(Entity e:neighbors) {
 			
 			int mx = (int)tp.x, my = (int)tp.y, mw = child.getWidth(), mh = child.getHeight();
 			Vector2f op = Utils.snapToGrid(e.getPos());
 			int ox = (int)op.x, oy = (int)op.y, ow = e.getWidth(), oh = e.getHeight();
-			System.out.println("T"+mx+","+my+","+mw+","+mh);
-			System.out.println("O"+ox+","+oy+","+ow+","+oh);
 			if(
 					//(mx+mw>ox||ox+ow<=mx) ||
 					//(my+mh<=oy||oy+oh<=my)

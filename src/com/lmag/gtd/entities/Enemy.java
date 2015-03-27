@@ -29,7 +29,7 @@ public abstract class Enemy extends EntityLiving {
 		
 		targetIcon = Utils.getImageFromPath("trgit.png");
 		
-		endTime = Utils.getDist(path[0], path[1]) / speedMod * 10f;
+		//endTime = 0; //Utils.getDist(path[0], path[1]) / speedMod * 10f;
 		defaultHealth = 30;
 		health = defaultHealth;
 	}
@@ -44,6 +44,8 @@ public abstract class Enemy extends EntityLiving {
 	
 	@Override
 	public void render(Graphics g) {
+
+		if(path==null) return;
 		
 		super.render(g);
 		
@@ -55,6 +57,8 @@ public abstract class Enemy extends EntityLiving {
 	
 	@Override
 	public void update(int dt) {
+		
+		if(path==null) return;
 		
 		targetIcon.rotate(.1f*dt);
 		
