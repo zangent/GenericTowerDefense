@@ -55,6 +55,7 @@ public class LevelController extends Entity {
 			waveData.add(data);
 		}
 		
+		
 		path = (Vector2f[]) map[1];
 		
 		this.addAsInputListener();

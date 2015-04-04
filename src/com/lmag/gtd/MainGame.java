@@ -72,7 +72,7 @@ public class MainGame extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
     	
-    	root.render(g);
+    	root.renderAll(g);
     	//badFont.render(50, 50, g, "Ayyy lamooo");
     }
 

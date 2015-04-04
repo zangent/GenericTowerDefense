@@ -12,7 +12,7 @@ import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.EntityLiving;
 import com.lmag.gtd.entities.MouseTracker;
 import com.lmag.gtd.entities.TowerMachineGun;
-import com.lmag.gtd.entities.Tower2;
+import com.lmag.gtd.entities.TowerPulseCannon;
 import com.lmag.gtd.util.Executable;
 
 public class BuyMenu extends Entity {
@@ -35,7 +35,7 @@ public class BuyMenu extends Entity {
 		}}));
 		*/
 		addTower(new TowerMachineGun(new Vector2f(0,0)));
-		addTower(new Tower2(new Vector2f(0,0)));
+		addTower(new TowerPulseCannon(new Vector2f(0,0)));
 		addTower(new TowerLaser(new Vector2f(0,0)));
 	}
 	

@@ -36,6 +36,12 @@ public class Entity implements InputListener {
 	
 	protected ArrayList<StatEffect> statEffects = new ArrayList<StatEffect>();
 	
+	protected int EMPTimer = 0;
+	
+	public short EMPEndTime = 1500;
+	
+	protected Entity EMPIndicator;
+	
 	
 
 	public Entity(String sprite, Vector2f position) {
@@ -87,8 +93,29 @@ public class Entity implements InputListener {
 	
 	public void tick(int delta) {
 		
+		if(EMPIndicator != null)
+		EMPIndicator.tick(delta);
+		
+		if (statEffects.contains(StatEffect.EMP)) {
+			
+			if (EMPTimer < EMPEndTime) {
+				
+				System.out.println("Timer: " + EMPTimer);
+				
+				EMPTimer += delta;
+				return;
+			}
+			
+			if (EMPTimer >= EMPEndTime) {
+				
+				EMPTimer = 0;
+				removeStatEffect(StatEffect.EMP);
+			}
+		}
+		
 		if (updateTime + delta >= updateRate) {
 			
+				
 			update(updateTime + delta);
 			
 			updateTime = 0;
@@ -116,7 +143,8 @@ public class Entity implements InputListener {
 		if(updateChildren)
 		for (Entity ent : children) {
 			
-			ent.tick(delta);
+			if(ent != EMPIndicator)
+				ent.tick(delta);
 		}
 	}
 	
@@ -199,6 +227,14 @@ public class Entity implements InputListener {
 	
 	public void addStatEffect(StatEffect effect) {
 		
+		if(effect == StatEffect.EMP) {
+			EMPTimer = 0;
+			EMPEndTime = (short) (1500 + (Math.random()*1000f));
+			
+			if(EMPIndicator == null)
+				addChild(EMPIndicator = new com.lmag.gtd.util.Animation("spark.png", new Vector2f(0,0), 32, 32, 50, true));
+		}
+		
 		if (!statEffects.contains(effect)) {
 			
 			statEffects.add(effect);
@@ -206,7 +242,11 @@ public class Entity implements InputListener {
 	}
 	
 	public void removeStatEffect(StatEffect effect) {
-		
+		if(effect == StatEffect.EMP) {
+			
+			removeChild(EMPIndicator);
+			EMPIndicator = null;
+		}
 		statEffects.remove(effect);
 	}
 	
@@ -220,12 +260,16 @@ public class Entity implements InputListener {
 		
 		if(visible&&sprite!=null) g.drawImage(sprite, getX(), getY());
 		
-		for (Entity ent : children) {
-			
-			ent.render(g);
-		}
 	}
-	
+	public void renderAll(Graphics g) {
+		render(g);
+		for (Entity ent : children) {
+			if(ent != EMPIndicator)
+				ent.renderAll(g);
+		}
+		if(EMPIndicator != null)
+			EMPIndicator.renderAll(g);
+	}
 	
 	public Entity setVisible(boolean visible) {
 		

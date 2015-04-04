@@ -42,23 +42,26 @@ public class TowerLaser extends EntityLiving {
 		super(spr, pos);
 	}
 	
+	@Override
+	public void tick(int dt) {
+		super.tick(dt);
+		
+		if(EMPTimer != 0) {
+			target = null;
+		}
+	}
 	
 	@Override
 	public void update(int delta) {
-
-		if (statEffects.contains(StatEffect.EMP)) {
-			
-			target = null;
-			
-			return;
-		}
-		
 		
 		int dmg = 3;
 		
 		timeSinceLastUpdate += delta;
 		
 		if(target != null) {
+			if(EMPTimer != 0) {
+				target = null;
+			}
 			
 			if (!firing) {
 				
@@ -127,7 +130,7 @@ public class TowerLaser extends EntityLiving {
 		
 		g.drawImage(turret, getX(), getY());
 		
-		if(target != null) {
+		if(target != null && EMPTimer==0) {
 
 			Vector2f from = this.getCenterPos();
 			Vector2f t = target.getCenterPos();

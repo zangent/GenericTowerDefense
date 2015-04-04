@@ -33,15 +33,18 @@ public class TowerMachineGun extends EntityLiving {
 	}
 	
 	public int t;
+	
+	@Override
+	public void tick(int dt) {
+		super.tick(dt);
+		
+		if(EMPTimer != 0) {
+			target = null;
+		}
+	}
+	
 	@Override
 	public void update(int delta) {
-		
-		if (statEffects.contains(StatEffect.EMP)) {
-			
-			target = null;
-			
-			return;
-		}
 		
 		
 		t+=delta;
