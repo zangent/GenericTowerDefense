@@ -8,7 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.util.Utils;
 
 public class Entity implements InputListener {
@@ -75,7 +75,7 @@ public class Entity implements InputListener {
 	}
 	
 	public void addAsInputListener() {
-		MainGame.gc.getInput().addListener(this);
+		MainGAme.gc.getInput().addListener(this);
 	}
 	
 	public Entity addChild(Entity futureChildYo) {
@@ -318,7 +318,7 @@ public class Entity implements InputListener {
 	public void kill() {
 		
 		if(this.isAcceptingInput()) {
-			MainGame.gc.getInput().removeListener(this);
+			MainGAme.gc.getInput().removeListener(this);
 		}
 		if(!killed)
 			parent.removeChild(this);

@@ -6,7 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.entities.Enemy;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.StatEffect;
@@ -28,12 +28,12 @@ public class EnemyEMP extends Enemy {
 	
 	private void resetEMPCooldown() {
 		
-		EMPCooldown = (int) (1500 + 2500d * Math.random());
+		EMPCooldown = (int) (2500 + 2500d * Math.random());
 		
 		//TODO debug
 		System.out.println(EMPCooldown);
 		
-		range = 350;
+		range = 150;
 	}
 	
 	
@@ -48,7 +48,7 @@ public class EnemyEMP extends Enemy {
 			//TODO debug
 			System.out.println("Cooldown is over!");
 		
-			ArrayList<Entity> targets = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), range, -1);
+			ArrayList<Entity> targets = Utils.getNearestEntities(Utils.sortByType(MainGAme.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), range, -1);
 			
 			if (targets != null) {
 				
@@ -73,15 +73,15 @@ public class EnemyEMP extends Enemy {
 		
 		g.setColor(new Color(.4f, .4f, 1f, EMPAlpha));
 		EMPAlpha *= EMPAlphaDecay;
-		g.fillRect(0, 0, MainGame.WIDTH, MainGame.HEIGHT);
+		g.fillRect(0, 0, MainGAme.WIDTH, MainGAme.HEIGHT);
 		
 		
 		
 		super.render(g);
 
-		if (MainGame.instance.debug) {
+		if (MainGAme.instance.debug) {
 			
-			MainGame.badFont.render((int)this.getX(), (int)this.getY() - 8, g, " "+String.valueOf(sinceLastEMP)+" ");
+			MainGAme.badFont.render((int)this.getX(), (int)this.getY() - 8, g, " "+String.valueOf(sinceLastEMP)+" ");
 		}
 	}
 }

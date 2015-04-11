@@ -7,7 +7,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.util.Utils;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -16,13 +16,20 @@ public class MouseTracker extends Entity {
 
 	private Entity child;
 	Vector2f lastPoint;
+	int price=0;
 	
 	public MouseTracker(Entity e) {
+		this(e, 0);
+	}
+	
+	public MouseTracker(Entity e, int fisher_price) {
+
 		super("", new Vector2f(0,0));
 		child = e;
 		this.addChild(child);
 		addAsInputListener();
-		lastPoint = MainGame.instance.getMousePos();
+		lastPoint = MainGAme.instance.getMousePos();
+		price = fisher_price;
 	}
 	
 	public void tick(int dt) {
@@ -30,9 +37,9 @@ public class MouseTracker extends Entity {
 	}
 	
 	public boolean updatePos(Graphics g) {
-		Vector2f tp = (Utils.snapToGrid(MainGame.instance.getMousePos()));
+		Vector2f tp = (Utils.snapToGrid(MainGAme.instance.getMousePos()));
 		boolean good = true;
-		Vector2f[] pth = MainGame.instance.lc.getPath();
+		Vector2f[] pth = MainGAme.instance.lc.getPath();
 		for(int i=0;i<pth.length-1;i++) {
 			Vector2f a = pth[i];
 			Vector2f b = pth[i+1];
@@ -56,7 +63,7 @@ public class MouseTracker extends Entity {
 		// and try to place a tower between them, you
 		// can clip into the bottom-right tower's top-left corner.
 
-		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), MainGame.GRID_SIZE*4, -1);
+		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(MainGAme.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), MainGAme.GRID_SIZE*4, -1);
 		
 		for(Entity e:neighbors) {
 			
@@ -110,9 +117,10 @@ public class MouseTracker extends Entity {
 	}
 	public void mousePressed(int btn, int x, int y) {
 		if(btn == 0) {
-			if(updatePos(null)) {
-				MainGame.instance.root.addChild(child);
+			if(updatePos(null) && MainGAme.currency >= price) {
+				MainGAme.instance.root.addChild(child);
 				child.setPos(lastPoint);
+				MainGAme.currency -= price;
 				kill();
 			}
 		} else if(btn == 1) {

@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 
 public abstract class EntityLiving extends Entity {
 	
@@ -55,7 +55,7 @@ public abstract class EntityLiving extends Entity {
 			g.fillRect(p.x+padding, p.y+padding, width*per, height);
 		}
 		
-		if (MainGame.instance.debug) {
+		if (MainGAme.instance.debug) {
 			
 			g.setColor(Color.green);
 			
@@ -72,7 +72,7 @@ public abstract class EntityLiving extends Entity {
 		}
 	}
 	
-	private void onDeath() {}
+	protected void onDeath() {}
 
 
 	public void damage(float amt) {

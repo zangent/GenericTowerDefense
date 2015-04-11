@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.util.Utils;
 
 public abstract class Enemy extends EntityLiving {
@@ -13,6 +14,7 @@ public abstract class Enemy extends EntityLiving {
 
 	protected float endTime = 0;
 	protected float speedMod = 1f;
+	public int xXx_cashMonAy_dropped_xXx = 420;
 	
 	protected Vector2f[] path;
 	
@@ -113,5 +115,11 @@ public abstract class Enemy extends EntityLiving {
 		setPos(np);
 		
 		*/
+	}
+	
+	@Override
+	protected void onDeath() {
+		
+		MainGAme.currency += xXx_cashMonAy_dropped_xXx;
 	}
 }

@@ -8,7 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.entities.Entity;
 
 public class Utils {
@@ -192,23 +192,23 @@ public class Utils {
 	
 	public static Vector2f snapToGrid(Vector2f in) {
 		
-		float x = (float) (Math.floor(in.x/MainGame.GRID_SIZE));
-		float y = (float) (Math.floor(in.y/MainGame.GRID_SIZE));
+		float x = (float) (Math.floor(in.x/MainGAme.GRID_SIZE));
+		float y = (float) (Math.floor(in.y/MainGAme.GRID_SIZE));
 		
-		if (in.x >= MainGame.WIDTH - MainGame.GRID_SIZE) {
+		if (in.x >= MainGAme.WIDTH - MainGAme.GRID_SIZE) {
 			x--;
 		}
 		
-		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
+		if (y >= Math.floor(MainGAme.HEIGHT/MainGAme.GRID_SIZE) - 1) {
 			y--;
 		}
-		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
+		if (y >= Math.floor(MainGAme.HEIGHT/MainGAme.GRID_SIZE) - 1) {
 			y--;
 		}
 		
 		return new Vector2f(
-				(float) (MainGame.GRID_SIZE * x),
-				(float) (MainGame.GRID_SIZE * y)
+				(float) (MainGAme.GRID_SIZE * x),
+				(float) (MainGAme.GRID_SIZE * y)
 		);
 	}
 	/**

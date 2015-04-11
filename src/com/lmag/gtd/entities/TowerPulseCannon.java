@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.util.Utils;
 
 public class TowerPulseCannon extends EntityLiving {
@@ -71,7 +71,7 @@ public class TowerPulseCannon extends EntityLiving {
 				firing = false;
 			}
 			
-			MainGame.instance.root.addChild(new BulletPulse(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
+			MainGAme.instance.root.addChild(new BulletPulse(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
 		}
 		
 		//this.setOffset(MainGame.instance.getMousePos().sub(new Vector2f(MainGame.WIDTH/2, MainGame.HEIGHT/2)));
@@ -95,7 +95,7 @@ public class TowerPulseCannon extends EntityLiving {
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGAme.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
 
 		if (target != null) {
 			
@@ -151,7 +151,7 @@ class BulletPulse extends Entity{
 			parent.removeChild(this);
 		}
 		
-		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 50);
+		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGAme.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 50);
 		
 		if(e!=null) {
 			e.damage(getDamage());

@@ -75,6 +75,9 @@ public class LevelController extends Entity {
 		lifetime += dt;
 		lastUpdate += dt;
 		
+		MainGAme.currency += dt*0.001;
+		System.out.println(MainGAme.currency);
+		
 		if(lastUpdate > theAmountOfTicksThatItTakesToSpawnAnEnemyDuringTheCurrentWave) {
 			
 			lastUpdate = 0;

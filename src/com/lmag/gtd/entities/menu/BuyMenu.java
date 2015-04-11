@@ -6,7 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGame;
+import com.lmag.gtd.MainGAme;
 import com.lmag.gtd.entities.TowerLaser;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.EntityLiving;
@@ -18,12 +18,12 @@ import com.lmag.gtd.util.Executable;
 public class BuyMenu extends Entity {
 	
 	public static final int width = 200;
-	public static final int height = MainGame.HEIGHT;
-	int size = MainGame.TOWER_SIZE, step=4;
+	public static final int height = MainGAme.HEIGHT;
+	int size = MainGAme.TOWER_SIZE, step=4;
 	int bpx=step, bpy=step;
 	
 	public BuyMenu() {
-		super(new Vector2f(MainGame.WIDTH-width, 0));
+		super(new Vector2f(MainGAme.WIDTH-width, 0));
 		
 		/*
 		this.addChild(new Button("topkek2015.png", new Vector2f(0,0), new Executable(){
@@ -34,12 +34,12 @@ public class BuyMenu extends Entity {
 				MainGame.instance.root.addChild(new MouseTracker(new Tower(new Vector2f(0,0))));
 		}}));
 		*/
-		addTower(new TowerMachineGun(new Vector2f(0,0)));
-		addTower(new TowerPulseCannon(new Vector2f(0,0)));
-		addTower(new TowerLaser(new Vector2f(0,0)));
+		addTower(new TowerMachineGun(new Vector2f(0,0)), 50);
+		addTower(new TowerPulseCannon(new Vector2f(0,0)), 100);
+		addTower(new TowerLaser(new Vector2f(0,0)), 150);
 	}
 	
-	public void addTower(Entity add) {
+	public void addTower(Entity add, int price) {
 		
 		Executable e = new Executable() {
 			
@@ -47,19 +47,25 @@ public class BuyMenu extends Entity {
 			@Override
 			public void run() {
 				
-				try {
-					MainGame.instance.root.addChild(new MouseTracker((Entity) (((Class)params.get("class"))
-							.getConstructor(Vector2f.class).newInstance(new Vector2f(0,0)))));
+				if (MainGAme.currency >= (int)params.get("price")) {
+				
+					try {
+						
+						MainGAme.instance.root.addChild(new MouseTracker((Entity) (((Class)params.get("class"))
+								.getConstructor(Vector2f.class).newInstance(new Vector2f(0,0))), (int)params.get("price")));
+						
 
-				} catch (InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException e) {
+					} catch (InstantiationException | IllegalAccessException
+							| IllegalArgumentException | InvocationTargetException
+							| NoSuchMethodException | SecurityException e) {
 
-					e.printStackTrace();
+						e.printStackTrace();
+					}
 				}
 			}
 		};
 		e.params.put("class", add.getClass());
+		e.params.put("price", price);
 		
 		this.addChild(new Button(new Vector2f(bpx, bpy), e).addChild(add));
 		bpx+=size+step;

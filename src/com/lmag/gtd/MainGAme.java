@@ -20,7 +20,7 @@ import com.lmag.gtd.util.Renderable;
 
 import java.io.File;
 
-public class MainGame extends BasicGame {
+public class MainGAme extends BasicGame {
 	
 	// Constants.
 	public static final String GAME_NAME = "Generic TD";
@@ -30,17 +30,19 @@ public class MainGame extends BasicGame {
 	public static final int TOWER_SIZE = 32;
 	public static final int GRID_SIZE = TOWER_SIZE/2;
 	public static FontRenderer badFont;
-	
+
+	public static float currency = 90;
 	public static GameContainer gc;
 	
 	public Entity root;
 	public LevelController lc;
 	
+	
 	public boolean debug = true;
 	
-	public static MainGame instance;
+	public static MainGAme instance;
 	
-	public MainGame() {
+	public MainGAme() {
 		super(GAME_NAME);
 	}
 	
@@ -75,6 +77,7 @@ public class MainGame extends BasicGame {
     	root.renderAll(g);
     	//badFont.render(50, 50, g, "Ayyy lamooo");
     }
+    
 
 	public static void main(String[] args) {
 				
@@ -84,7 +87,7 @@ public class MainGame extends BasicGame {
 		
 		// Start game
 		try {
-			AppGameContainer app = new AppGameContainer(instance = new MainGame());
+			AppGameContainer app = new AppGameContainer(instance = new MainGAme());
 	        app.setDisplayMode(WIDTH, HEIGHT, false);
 	        app.setTargetFrameRate(TARGET_FPS);
 	        app.start();
