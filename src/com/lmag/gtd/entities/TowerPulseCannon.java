@@ -7,6 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
 
 public class TowerPulseCannon extends EntityLiving {
@@ -27,11 +28,13 @@ public class TowerPulseCannon extends EntityLiving {
 	}
 	
 	public TowerPulseCannon(Vector2f pos) {
-		super("swaglord420.png", pos);
+		super("tower_pulsecannon.png", pos);
 		
 		turret = Utils.getImageFromPath("canun2.png");
 		
 		range = 500;
+		
+		addAsInputListener();
 	}
 	
 	protected TowerPulseCannon(String spr, Vector2f pos) {
@@ -111,6 +114,13 @@ public class TowerPulseCannon extends EntityLiving {
 			//g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
 		}
 		g.drawImage(turret, getX(), getY());
+	}
+
+
+	@Override
+	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+		
+		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(this));
 	}
 }
 

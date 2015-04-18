@@ -9,6 +9,9 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.entities.Enemy;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.EntityLiving;
+import com.lmag.gtd.entities.Node;
+import com.lmag.gtd.entities.menu.BuyMenu;
+import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
 
 public class LevelController extends Entity {
@@ -28,12 +31,21 @@ public class LevelController extends Entity {
 	ArrayList<int[]> waveData = new ArrayList<int[]>();
 	ArrayList<String[]> enemyData = new ArrayList<String[]>();
 	
+	public BuyMenu buyMenuRight;
+	public EntityMenu entityMenuRight;
+	
+	protected Entity selectedEntity;
+	
 	
 	@SuppressWarnings("unchecked")
 	public LevelController() {
 		super("", new Vector2f(0,0));
 		
 		this.setVisible(false);
+		
+		buyMenuRight = new BuyMenu();
+		
+		MainGAme.instance.root.addChild(buyMenuRight);
 		
 		Object[] map = Utils.loadLevel("maps/checkem.txt");
 		
@@ -77,6 +89,11 @@ public class LevelController extends Entity {
 		
 		MainGAme.currency += dt*0.001;
 		System.out.println(MainGAme.currency);
+		
+		if (selectedEntity == null) {
+			
+			entityMenuRight = null;
+		}
 		
 		if(lastUpdate > theAmountOfTicksThatItTakesToSpawnAnEnemyDuringTheCurrentWave) {
 			
@@ -153,6 +170,28 @@ public class LevelController extends Entity {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
+		
+	}
+	
+	public void renderAll(Graphics g) {
+		
+		render(g);
+		
+		for (Entity ent : children) {
+			
+			if (ent == buyMenuRight) {
+				
+				if (entityMenuRight == null) {
+					
+					ent.render(g);
+				}
+			}
+			
+			else {
+				
+				ent.render(g);
+			}
+		}
 	}
 	
 	public Vector2f[] getPath() {

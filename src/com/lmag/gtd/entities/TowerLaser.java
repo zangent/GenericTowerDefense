@@ -7,6 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
 
 public class TowerLaser extends EntityLiving {
@@ -32,10 +33,12 @@ public class TowerLaser extends EntityLiving {
 	}
 	
 	public TowerLaser(Vector2f pos) {
-		super("edgeymemes.png", pos);
+		super("tower_laser.png", pos);
 		turret = Utils.getImageFromPath("canun2.png");
 		
 		range = 500;
+		
+		addAsInputListener();
 	}
 	
 	protected TowerLaser(String spr, Vector2f pos) {
@@ -145,5 +148,13 @@ public class TowerLaser extends EntityLiving {
 			g.setLineWidth(0.5f+((float)intensity/(float)warmup)*2.5f);
 			g.drawLine(from.x, from.y, t.getX(), t.getY());
 		}
+	}
+	
+
+
+	@Override
+	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+		
+		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(this));
 	}
 }

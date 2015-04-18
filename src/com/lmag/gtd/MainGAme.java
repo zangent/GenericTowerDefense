@@ -31,7 +31,7 @@ public class MainGAme extends BasicGame {
 	public static final int GRID_SIZE = TOWER_SIZE/2;
 	public static FontRenderer badFont;
 
-	public static float currency = 90;
+	public static float currency = 9099999;
 	public static GameContainer gc;
 	
 	public Entity root;

@@ -111,10 +111,6 @@ public class MouseTracker extends Entity {
 			child.render(g);
 		}
 	}
-	@Override
-	public boolean isAcceptingInput() {
-		return true;
-	}
 	public void mousePressed(int btn, int x, int y) {
 		if(btn == 0) {
 			if(updatePos(null) && MainGAme.currency >= price) {

@@ -42,6 +42,8 @@ public class Entity implements InputListener {
 	
 	protected Entity EMPIndicator;
 	
+	private boolean acceptingInput = false;
+	
 	
 
 	public Entity(String sprite, Vector2f position) {
@@ -76,6 +78,7 @@ public class Entity implements InputListener {
 	
 	public void addAsInputListener() {
 		MainGAme.gc.getInput().addListener(this);
+		acceptingInput = true;
 	}
 	
 	public Entity addChild(Entity futureChildYo) {
@@ -343,7 +346,7 @@ public class Entity implements InputListener {
 	@Override
 	public boolean isAcceptingInput() {
 
-		return false;
+		return acceptingInput;
 	}
 	
 	

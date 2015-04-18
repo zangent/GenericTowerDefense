@@ -21,10 +21,9 @@ public class MainMenu extends Node {
 			public void run() {
 				System.out.println("OPTSHUNZ XDXDXDXD");
 				MainGAme.instance.root.removeChild((Entity)params.get("parent"));
-		    	MainGAme.instance.root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
+		    	MainGAme.instance.root.addChild(new Renderable("maps/stars.jpg", new Vector2f(0,0)));
 		    	//root.addChild(lc = new EditorController());
 		    	MainGAme.instance.root.addChild(MainGAme.instance.lc = new LevelController());
-		    	MainGAme.instance.root.addChild(new BuyMenu());
 		    	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
 			}
 			

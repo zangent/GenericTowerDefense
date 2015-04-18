@@ -15,28 +15,23 @@ import com.lmag.gtd.entities.TowerMachineGun;
 import com.lmag.gtd.entities.TowerPulseCannon;
 import com.lmag.gtd.util.Executable;
 
-public class BuyMenu extends Entity {
+public class EntityMenu extends Entity {
 	
 	public static final int width = 200;
 	public static final int height = MainGAme.HEIGHT;
 	int size = MainGAme.TOWER_SIZE, step=4;
 	int bpx=step, bpy=step;
 	
-	public BuyMenu() {
+	public Entity target;
+	
+	public EntityMenu(Entity ent) {
 		super("buy_menu.png", new Vector2f(0, 0));
-		System.out.println(this.getPos());
-		/*
-		this.addChild(new Button("topkek2015.png", new Vector2f(0,0), new Executable(){
 		
 
-			@Override
-			public void run() {
-				MainGame.instance.root.addChild(new MouseTracker(new Tower(new Vector2f(0,0))));
-		}}));
-		*/
-		addTower(new TowerMachineGun(new Vector2f(0,0)), 50);
-		addTower(new TowerPulseCannon(new Vector2f(0,0)), 100);
-		addTower(new TowerLaser(new Vector2f(0,0)), 150);
+		target = ent;
+		
+
+		addTower(ent, 7);
 	}
 	
 	public void addTower(Entity add, int price) {
@@ -64,8 +59,7 @@ public class BuyMenu extends Entity {
 				}
 			}
 		};
-		e.params.put("class", add.getClass());
-		e.params.put("price", price);
+
 		
 		this.addChild(new Button(new Vector2f(bpx, bpy), e).addChild(add));
 		bpx+=size+step;
@@ -74,11 +68,4 @@ public class BuyMenu extends Entity {
 			bpy += size + step;
 		}
 	}
-	/*
-	public void render(Graphics straightUpG) {
-		straightUpG.setColor(new Color(0.5f, 0.5f, 0.5f, 1.0f));
-		straightUpG.fillRect((int)getX(), (int)getY(), width, height);
-		super.render(straightUpG);
-	}
-	*/
 }

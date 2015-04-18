@@ -7,6 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
 
 public class TowerMachineGun extends EntityLiving {
@@ -22,10 +23,12 @@ public class TowerMachineGun extends EntityLiving {
 	}
 	
 	public TowerMachineGun(Vector2f pos) {
-		super("goodie.png", pos);
+		super("tower_machinegun.png", pos);
 		turret = Utils.getImageFromPath("canun.png");
 		
 		range = 500;
+		
+		addAsInputListener();
 	}
 	
 	protected TowerMachineGun(String spr, Vector2f pos) {
@@ -90,6 +93,13 @@ public class TowerMachineGun extends EntityLiving {
 			//g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
 		}
 		g.drawImage(turret, getX(), getY());
+	}
+
+
+	@Override
+	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+		
+		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(this));
 	}
 }
 
