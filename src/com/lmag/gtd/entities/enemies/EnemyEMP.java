@@ -30,9 +30,6 @@ public class EnemyEMP extends Enemy {
 		
 		EMPCooldown = (int) (2500 + 2500d * Math.random());
 		
-		//TODO debug
-		System.out.println(EMPCooldown);
-		
 		range = 150;
 	}
 	
@@ -45,15 +42,11 @@ public class EnemyEMP extends Enemy {
 		
 		if (sinceLastEMP >= EMPCooldown) {
 			
-			//TODO debug
-			System.out.println("Cooldown is over!");
 		
 			ArrayList<Entity> targets = Utils.getNearestEntities(Utils.sortByType(MainGAme.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), range, -1);
 			
 			if (targets != null) {
 				
-				//TODO debug
-				System.out.println("Found targets! Targets: " + targets.size());
 				
 				for (Entity target : targets) {
 					

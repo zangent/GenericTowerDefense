@@ -34,7 +34,7 @@ public class LevelController extends Entity {
 	public BuyMenu buyMenuRight;
 	public EntityMenu entityMenuRight;
 	
-	protected Entity selectedEntity;
+	public Entity selectedEntity;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -88,7 +88,6 @@ public class LevelController extends Entity {
 		lastUpdate += dt;
 		
 		MainGAme.currency += dt*0.001;
-		System.out.println(MainGAme.currency);
 		
 		if (selectedEntity == null) {
 			
@@ -144,6 +143,25 @@ public class LevelController extends Entity {
 		}
 
 		return enemy;
+	}
+	
+	public void setEntitySidebar(Entity e) {
+
+		if(entityMenuRight != null)
+			MainGAme.instance.root.removeChild(entityMenuRight);
+		
+		selectedEntity = e;
+		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(e));
+		buyMenuRight.open = false;
+	}
+	
+	public void setBuySidebar() {
+		
+		if(entityMenuRight != null)
+			MainGAme.instance.root.removeChild(entityMenuRight);
+		
+		buyMenuRight.open = true;
+		selectedEntity = null;
 	}
 	
 	@Override

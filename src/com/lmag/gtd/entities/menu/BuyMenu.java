@@ -21,6 +21,7 @@ public class BuyMenu extends Entity {
 	public static final int height = MainGAme.HEIGHT;
 	int size = MainGAme.TOWER_SIZE, step=4;
 	int bpx=step, bpy=step;
+	public boolean open = true;
 	
 	public BuyMenu() {
 		super("buy_menu.png", new Vector2f(0, 0));
@@ -51,8 +52,8 @@ public class BuyMenu extends Entity {
 				
 					try {
 						
-						MainGAme.instance.root.addChild(new MouseTracker((Entity) (((Class)params.get("class"))
-								.getConstructor(Vector2f.class).newInstance(new Vector2f(0,0))), (int)params.get("price")));
+						MainGAme.instance.root.addChild(new MouseTracker(((Entity) (((Class)params.get("class"))
+								.getConstructor(Vector2f.class).newInstance(new Vector2f(0,0)))).setUpdating(false), (int)params.get("price")));
 						
 
 					} catch (InstantiationException | IllegalAccessException
@@ -74,11 +75,13 @@ public class BuyMenu extends Entity {
 			bpy += size + step;
 		}
 	}
-	/*
+	
 	public void render(Graphics straightUpG) {
-		straightUpG.setColor(new Color(0.5f, 0.5f, 0.5f, 1.0f));
-		straightUpG.fillRect((int)getX(), (int)getY(), width, height);
-		super.render(straightUpG);
+		if(open)
+			super.render(straightUpG);
 	}
-	*/
+	public void tick(int dt) {
+		if(open)
+			super.tick(dt);
+	}
 }

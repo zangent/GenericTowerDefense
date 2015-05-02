@@ -23,8 +23,13 @@ public class MouseTracker extends Entity {
 	}
 	
 	public MouseTracker(Entity e, int fisher_price) {
-
 		super("", new Vector2f(0,0));
+		
+		if (e.isUpdating()) {
+			
+			e.setUpdating(false);
+		}
+		
 		child = e;
 		this.addChild(child);
 		addAsInputListener();
@@ -117,6 +122,7 @@ public class MouseTracker extends Entity {
 				MainGAme.instance.root.addChild(child);
 				child.setPos(lastPoint);
 				MainGAme.currency -= price;
+				child.setUpdating(true);
 				kill();
 			}
 		} else if(btn == 1) {

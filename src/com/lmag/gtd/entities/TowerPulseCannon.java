@@ -119,8 +119,10 @@ public class TowerPulseCannon extends EntityLiving {
 
 	@Override
 	public void mouseClicked(int btn, int x, int y, int clickCount)  {
-		
-		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(this));
+
+		if(this.contains(new Vector2f(x,y)) && MainGAme.instance.lc.selectedEntity==this
+				&& parent.updateChildren)
+			MainGAme.instance.lc.setEntitySidebar(this);
 	}
 }
 

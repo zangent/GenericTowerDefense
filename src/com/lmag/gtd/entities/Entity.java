@@ -30,6 +30,7 @@ public class Entity implements InputListener {
 	
 	public Entity parent;
 	
+	protected boolean shouldUpdate = true;
 	public boolean updateChildren = true;
 	
 	public boolean killed = false;
@@ -118,8 +119,10 @@ public class Entity implements InputListener {
 		
 		if (updateTime + delta >= updateRate) {
 			
+			if (shouldUpdate) {	
 				
-			update(updateTime + delta);
+				update(updateTime + delta);
+			}
 			
 			updateTime = 0;
 		}
@@ -281,6 +284,18 @@ public class Entity implements InputListener {
 		return this;
 	}
 	
+	public boolean isUpdating() {
+		
+		return shouldUpdate;
+	}
+
+	public Entity setUpdating(boolean shouldUpdate) {
+		
+		this.shouldUpdate = shouldUpdate;
+		
+		return this;
+	}
+
 	/**
 	 * Not preferred - use getCopyOfChildren() instead.
 	 * @return The actual children
@@ -339,7 +354,7 @@ public class Entity implements InputListener {
 	 * @return is it in dawg
 	 */
 	
-	public boolean isPointInside(Vector2f in) {
+	public boolean contains(Vector2f in) {
 		return (in.x>getX()&&in.x<getX()+getWidth()&&in.y>getY()&&in.y<getY()+getHeight());
 	}
 
@@ -357,7 +372,7 @@ public class Entity implements InputListener {
 
 	@Override
 	public void mouseClicked(int btn, int x, int y, int clickCount)  {
-		
+
 	}
 
 	@Override

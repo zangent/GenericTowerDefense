@@ -127,6 +127,10 @@ public class TowerLaser extends EntityLiving {
 	@Override public void render(Graphics g) {
 		super.render(g);
 		
+		//debug
+		g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		
+		
 		if(target != null) {
 			turret.setRotation(Utils.getAngle(this.getPos(), target.getPos()));
 		}
@@ -155,6 +159,32 @@ public class TowerLaser extends EntityLiving {
 	@Override
 	public void mouseClicked(int btn, int x, int y, int clickCount)  {
 		
-		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(this));
+		if (!this.isUpdating()) {
+			
+			return;
+		}
+		
+		if(this.contains(new Vector2f(x,y))) {
+			
+
+			//debug
+			System.out.println("Clicked on entity");
+		
+			if(parent.updateChildren) {
+
+				//debug
+				System.out.println("Selecting");
+			
+				MainGAme.instance.lc.setEntitySidebar(this);
+			}
+		}
+			
+		else if(MainGAme.instance.lc.selectedEntity==this) {
+			
+			//debug
+			System.out.println("Deselecting");
+		
+			MainGAme.instance.lc.setBuySidebar();
+		}
 	}
 }
