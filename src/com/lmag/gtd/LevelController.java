@@ -45,7 +45,7 @@ public class LevelController extends Entity {
 		
 		buyMenuRight = new BuyMenu();
 		
-		MainGAme.instance.root.addChild(buyMenuRight);
+		addChild(buyMenuRight);
 		
 		Object[] map = Utils.loadLevel("maps/checkem.txt");
 		
@@ -87,7 +87,7 @@ public class LevelController extends Entity {
 		lifetime += dt;
 		lastUpdate += dt;
 		
-		MainGAme.currency += dt*0.001;
+		MainGame.currency += dt*0.001;
 		
 		if (selectedEntity == null) {
 			
@@ -98,7 +98,7 @@ public class LevelController extends Entity {
 			
 			lastUpdate = 0;
 			theAmountOfEnemiesThatHaveSpawnedUnderTheJurisdictionOfTheCurrentWave++;
-			addEnemy();
+			createEnemy();
 		}
 		if(this.children.size()==0) {return;}
 		Entity c1 = this.children.get(0);
@@ -120,13 +120,14 @@ public class LevelController extends Entity {
 
 		addChild(e);
 		((Enemy)e).setPath(path);
-		enemyCount++;
 		return e;
 	}
 	
-	public EntityLiving addEnemy() {
+	public EntityLiving createEnemy() {
+		
 		String[] options = enemyData.get(waveCount);
 		EntityLiving enemy = null;
+		
 		try {
 			enemy = ((EntityLiving) (Class.forName("com.lmag.gtd.entities.enemies."
 					+ options[(int) (Math.random() * (options.length))])
@@ -141,24 +142,29 @@ public class LevelController extends Entity {
 
 			e.printStackTrace();
 		}
+		
+		enemyCount++;
 
 		return enemy;
 	}
 	
-	public void setEntitySidebar(Entity e) {
+	public void setEntitySidebar(EntityLiving e) {
 
 		if(entityMenuRight != null)
-			MainGAme.instance.root.removeChild(entityMenuRight);
+			MainGame.instance.lc.removeChild(entityMenuRight);
 		
 		selectedEntity = e;
-		MainGAme.instance.root.addChild(MainGAme.instance.lc.entityMenuRight = new EntityMenu(e));
+		
+		entityMenuRight = new EntityMenu(e);
+		
+		MainGame.instance.lc.addChild(entityMenuRight);
 		buyMenuRight.open = false;
 	}
 	
 	public void setBuySidebar() {
 		
 		if(entityMenuRight != null)
-			MainGAme.instance.root.removeChild(entityMenuRight);
+			MainGame.instance.lc.removeChild(entityMenuRight);
 		
 		buyMenuRight.open = true;
 		selectedEntity = null;
@@ -167,16 +173,17 @@ public class LevelController extends Entity {
 	@Override
 	public Entity removeChild(Entity e) {
 		
-		enemyCount--;
+		if (e instanceof EntityLiving) {
+
+			enemyCount--;
+		}
+		
 		return super.removeChild(e);
 	}
 
 	@Override
 	public void mouseReleased(int btn, int x, int y) {
 		
-		if(btn==0) {
-			//MainGame.instance.root.addChild(new DebugEnt(MainGame.instance.getMousePos()));
-		}
 	}
 	
 	@Override
@@ -185,29 +192,22 @@ public class LevelController extends Entity {
 		
 	}
 	
-	@Override
-	public void render(Graphics g) {
-		super.render(g);
-		
-	}
-	
+	@Override	
 	public void renderAll(Graphics g) {
-		
-		render(g);
 		
 		for (Entity ent : children) {
 			
 			if (ent == buyMenuRight) {
 				
 				if (entityMenuRight == null) {
-					
-					ent.render(g);
+
+					ent.renderAll(g);
 				}
 			}
 			
 			else {
 				
-				ent.render(g);
+				ent.renderAll(g);
 			}
 		}
 	}

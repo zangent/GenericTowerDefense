@@ -1,16 +1,21 @@
 package com.lmag.gtd.entities;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.MainGame;
 
 public abstract class EntityLiving extends Entity {
 	
 	protected float defaultHealth = 100;
 	protected float health = defaultHealth;
 	public short isTarget=0;
+	
+	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
+	public static final Upgrade[] elligibleUpgrades = {Upgrade.range, Upgrade.damage};
 	
 	protected int range = 500;
 
@@ -55,12 +60,26 @@ public abstract class EntityLiving extends Entity {
 			g.fillRect(p.x+padding, p.y+padding, width*per, height);
 		}
 		
-		if (MainGAme.instance.debug) {
+		if (MainGame.instance.debug) {
 			
 			g.setColor(Color.green);
 			
 			g.drawOval(this.getX()-range, this.getY()-range, range*2, range*2);
 		}
+	}
+	
+
+	public void addUpgrade(Upgrade upg) {
+		
+		if (!upgrades.contains(upg)) {
+			
+			upgrades.add(upg);
+		}
+	}
+	
+	public ArrayList<Upgrade> getUpgrades() {
+		
+		return upgrades;
 	}
 
 	

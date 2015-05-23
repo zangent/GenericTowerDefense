@@ -43,7 +43,7 @@ public class EditorController extends LevelController {
 	public void mouseReleased(int btn, int x, int y) {
 		
 		if(btn==1) {
-			pathPoints.add(MainGAme.instance.getMousePos());
+			pathPoints.add(MainGame.instance.getMousePos());
 		}
 	}
 	

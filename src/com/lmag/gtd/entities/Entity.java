@@ -8,7 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
 public class Entity implements InputListener {
@@ -74,11 +74,12 @@ public class Entity implements InputListener {
 	
 	public Entity _setParent(Entity p) {
 		parent = p;
+
 		return this;
 	}
 	
 	public void addAsInputListener() {
-		MainGAme.gc.getInput().addListener(this);
+		MainGame.gc.getInput().addListener(this);
 		acceptingInput = true;
 	}
 	
@@ -104,8 +105,6 @@ public class Entity implements InputListener {
 			
 			if (EMPTimer < EMPEndTime) {
 				
-				System.out.println("Timer: " + EMPTimer);
-				
 				EMPTimer += delta;
 				return;
 			}
@@ -119,9 +118,15 @@ public class Entity implements InputListener {
 		
 		if (updateTime + delta >= updateRate) {
 			
-			if (shouldUpdate) {	
+			if (isUpdating()) {	
 				
 				update(updateTime + delta);
+			}
+			
+			else {
+				
+				//debug
+				System.out.println("Not updating");
 			}
 			
 			updateTime = 0;
@@ -267,6 +272,7 @@ public class Entity implements InputListener {
 		if(visible&&sprite!=null) g.drawImage(sprite, getX(), getY());
 		
 	}
+	
 	public void renderAll(Graphics g) {
 		render(g);
 		for (Entity ent : children) {
@@ -286,7 +292,14 @@ public class Entity implements InputListener {
 	
 	public boolean isUpdating() {
 		
-		return shouldUpdate;
+		if (statEffects.contains(StatEffect.Constructing)) {
+			
+			this.removeStatEffect(StatEffect.Constructing);
+			
+			return false;
+		}
+		
+		return shouldUpdate && (parent == null ? true : (parent.isUpdating() && parent.updateChildren));
 	}
 
 	public Entity setUpdating(boolean shouldUpdate) {
@@ -335,14 +348,26 @@ public class Entity implements InputListener {
 	
 	public void kill() {
 		
-		if(this.isAcceptingInput()) {
-			MainGAme.gc.getInput().removeListener(this);
+		if (this.isAcceptingInput()) {
+			MainGame.gc.getInput().removeListener(this);
 		}
-		if(!killed)
+		
+		if (!killed) {
+			
 			parent.removeChild(this);
+		}
+		
+		if (MainGame.instance.lc.selectedEntity == this) {
+			
+			MainGame.instance.lc.setBuySidebar();
+		}
+		
+		
 		for(Entity e : children) {
+			
 			e.kill();
 		}
+		
 		killed = true;
 	}
 	

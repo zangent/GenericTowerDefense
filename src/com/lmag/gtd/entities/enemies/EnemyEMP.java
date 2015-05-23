@@ -6,7 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.entities.Enemy;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.StatEffect;
@@ -43,7 +43,7 @@ public class EnemyEMP extends Enemy {
 		if (sinceLastEMP >= EMPCooldown) {
 			
 		
-			ArrayList<Entity> targets = Utils.getNearestEntities(Utils.sortByType(MainGAme.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), range, -1);
+			ArrayList<Entity> targets = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), range, -1);
 			
 			if (targets != null) {
 				
@@ -66,15 +66,15 @@ public class EnemyEMP extends Enemy {
 		
 		g.setColor(new Color(.4f, .4f, 1f, EMPAlpha));
 		EMPAlpha *= EMPAlphaDecay;
-		g.fillRect(0, 0, MainGAme.WIDTH, MainGAme.HEIGHT);
+		g.fillRect(0, 0, MainGame.WIDTH, MainGame.HEIGHT);
 		
 		
 		
 		super.render(g);
 
-		if (MainGAme.instance.debug) {
+		if (MainGame.instance.debug) {
 			
-			MainGAme.badFont.render((int)this.getX(), (int)this.getY() - 8, g, " "+String.valueOf(sinceLastEMP)+" ");
+			MainGame.badFont.render((int)this.getX(), (int)this.getY() - 8, g, " "+String.valueOf(sinceLastEMP)+" ");
 		}
 	}
 }

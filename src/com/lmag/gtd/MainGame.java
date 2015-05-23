@@ -20,7 +20,7 @@ import com.lmag.gtd.util.Renderable;
 
 import java.io.File;
 
-public class MainGAme extends BasicGame {
+public class MainGame extends BasicGame {
 	
 	// Constants.
 	public static final String GAME_NAME = "Generic TD";
@@ -40,9 +40,9 @@ public class MainGAme extends BasicGame {
 	
 	public boolean debug = true;
 	
-	public static MainGAme instance;
+	public static MainGame instance;
 	
-	public MainGAme() {
+	public MainGame() {
 		super(GAME_NAME);
 	}
 	
@@ -87,7 +87,7 @@ public class MainGAme extends BasicGame {
 		
 		// Start game
 		try {
-			AppGameContainer app = new AppGameContainer(instance = new MainGAme());
+			AppGameContainer app = new AppGameContainer(instance = new MainGame());
 	        app.setDisplayMode(WIDTH, HEIGHT, false);
 	        app.setTargetFrameRate(TARGET_FPS);
 	        app.start();

@@ -1,13 +1,14 @@
 package com.lmag.gtd.entities;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGAme;
-import com.lmag.gtd.entities.menu.EntityMenu;
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
 public class TowerLaser extends EntityLiving {
@@ -15,6 +16,8 @@ public class TowerLaser extends EntityLiving {
 	Image turret;
 	
 	public EntityLiving target;
+	
+	public static final Upgrade[] elligibleUpgrades = {Upgrade.range, Upgrade.damage};
 	
 	public int timeSinceLastUpdate = 0;
 	
@@ -44,6 +47,7 @@ public class TowerLaser extends EntityLiving {
 	protected TowerLaser(String spr, Vector2f pos) {
 		super(spr, pos);
 	}
+	
 	
 	@Override
 	public void tick(int dt) {
@@ -84,37 +88,20 @@ public class TowerLaser extends EntityLiving {
 			}
 
 			ticks+=delta;
+			
 			if(ticks > fireRate) {
+				
 				target.damage((float)dmg / ((float)warmup / (float)intensity)*multiplier);
 				ticks = 0;
 			}
-				
-			
-			
-		}
-		
-		//this.setOffset(MainGame.instance.getMousePos().sub(new Vector2f(MainGame.WIDTH/2, MainGame.HEIGHT/2)));
-		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			offset.add(new Vector2f(0,-10));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			offset.add(new Vector2f(-10,0));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			offset.add(new Vector2f(0,10));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			offset.add(new Vector2f(10,0));
 		}
 
-		//debug
-		//System.out.println(target==null);
 		if (target != null) {
 
 			target.isTarget--;
 		}
 		//Entity lt = target;
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGAme.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
 		if(target == null) {
 			intensity = 0;
 		}
@@ -129,15 +116,13 @@ public class TowerLaser extends EntityLiving {
 		
 		//debug
 		g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		
-		
-		if(target != null) {
-			turret.setRotation(Utils.getAngle(this.getPos(), target.getPos()));
-		}
-		
+
 		g.drawImage(turret, getX(), getY());
 		
-		if(target != null && EMPTimer==0) {
+		
+		if(target != null && this.isUpdating()) {
+			
+			turret.setRotation(Utils.getAngle(this.getPos(), target.getPos()));
 
 			Vector2f from = this.getCenterPos();
 			Vector2f t = target.getCenterPos();
@@ -153,38 +138,26 @@ public class TowerLaser extends EntityLiving {
 			g.drawLine(from.x, from.y, t.getX(), t.getY());
 		}
 	}
-	
 
 
 	@Override
 	public void mouseClicked(int btn, int x, int y, int clickCount)  {
 		
-		if (!this.isUpdating()) {
-			
-			return;
-		}
+		if (this.isUpdating()) {
 		
-		if(this.contains(new Vector2f(x,y))) {
-			
+			if(this.contains(new Vector2f(x,y))) {
 
-			//debug
-			System.out.println("Clicked on entity");
-		
-			if(parent.updateChildren) {
-
-				//debug
-				System.out.println("Selecting");
 			
-				MainGAme.instance.lc.setEntitySidebar(this);
+				if(parent.updateChildren) {
+			
+					MainGame.instance.lc.setEntitySidebar(this);
+				}
 			}
-		}
 			
-		else if(MainGAme.instance.lc.selectedEntity==this) {
-			
-			//debug
-			System.out.println("Deselecting");
+			else if(MainGame.instance.lc.selectedEntity == this) {
 		
-			MainGAme.instance.lc.setBuySidebar();
+				MainGame.instance.lc.setBuySidebar();
+			}
 		}
 	}
 }

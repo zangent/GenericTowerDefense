@@ -1,71 +1,77 @@
 package com.lmag.gtd.entities.menu;
 
-import java.lang.reflect.InvocationTargetException;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGAme;
-import com.lmag.gtd.entities.TowerLaser;
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.EntityLiving;
-import com.lmag.gtd.entities.MouseTracker;
-import com.lmag.gtd.entities.TowerMachineGun;
-import com.lmag.gtd.entities.TowerPulseCannon;
+import com.lmag.gtd.entities.Upgrade;
 import com.lmag.gtd.util.Executable;
 
 public class EntityMenu extends Entity {
 	
 	public static final int width = 200;
-	public static final int height = MainGAme.HEIGHT;
-	int size = MainGAme.TOWER_SIZE, step=4;
-	int bpx=step, bpy=step;
+	public static final int height = MainGame.HEIGHT;
+	int size = MainGame.TOWER_SIZE, step = 4;
+	int offsetX = step, offsetY = step;
 	
-	public Entity target;
+	public EntityLiving target;
 	
-	public EntityMenu(Entity ent) {
+	public EntityMenu(EntityLiving ent) {
 		super("buy_menu.png", new Vector2f(0, 0));
 		
-
 		target = ent;
 		
+		for (Upgrade upg : ent.elligibleUpgrades) {
 
-		addTower(ent, 7);
+			//debug
+			System.out.println("|| " + upg.name());
+			
+			addUpgrade(upg, 5);
+		}
 	}
 	
-	public void addTower(Entity add, int price) {
+	public void addUpgrade(Upgrade upg, int price) {
 		
 		Executable e = new Executable() {
 			
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void run() {
 				
-				if (MainGAme.currency >= (int)params.get("price")) {
+				try {
 				
-					try {
-						
-						MainGAme.instance.root.addChild(new MouseTracker((Entity) (((Class)params.get("class"))
-								.getConstructor(Vector2f.class).newInstance(new Vector2f(0,0))), (int)params.get("price")));
-						
-
-					} catch (InstantiationException | IllegalAccessException
-							| IllegalArgumentException | InvocationTargetException
-							| NoSuchMethodException | SecurityException e) {
-
-						e.printStackTrace();
+					if (MainGame.currency >= (int)params.get("price")) {
+				
+						MainGame.instance.lc.entityMenuRight.target.addUpgrade((Upgrade) params.get("upgrade"));
 					}
+				}
+			
+				catch (Exception e) {
+					
+					e.printStackTrace();
 				}
 			}
 		};
 
+
+		e.params.put("upgrade", upg);
+		e.params.put("price", price);
 		
-		this.addChild(new Button(new Vector2f(bpx, bpy), e).addChild(add));
-		bpx+=size+step;
-		if(bpx > width) {
-			bpx = step;
-			bpy += size + step;
+		try {
+		
+			this.addChild(new Button("Upgrade Icons/" + upg.toString() +".png", new Vector2f(offsetX, offsetY), e));
+		
+			offsetX += size + step;
+			if(offsetX > width) {
+				offsetX = step;
+				offsetY += size + step;
+			}
+		}
+		
+		catch (Exception ex) {
+			
+			ex.printStackTrace();
 		}
 	}
 }

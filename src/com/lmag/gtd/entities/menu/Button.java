@@ -1,6 +1,5 @@
 package com.lmag.gtd.entities.menu;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.entities.Entity;

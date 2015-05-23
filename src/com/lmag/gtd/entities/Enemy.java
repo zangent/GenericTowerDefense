@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.MainGAme;
+import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
 public abstract class Enemy extends EntityLiving {
@@ -120,6 +120,6 @@ public abstract class Enemy extends EntityLiving {
 	@Override
 	protected void onDeath() {
 		
-		MainGAme.currency += xXx_cashMonAy_dropped_xXx;
+		MainGame.currency += xXx_cashMonAy_dropped_xXx;
 	}
 }
