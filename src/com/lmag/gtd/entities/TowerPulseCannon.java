@@ -1,24 +1,13 @@
 package com.lmag.gtd.entities;
 
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
-import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
 
-public class TowerPulseCannon extends EntityLiving {
-	
-	Image turret;
-	
-	public EntityLiving target;
-	
-	public int fireRate = 1500;
-	
-	public boolean firing = false;
+public class TowerPulseCannon extends Tower {
 	
 	public int burstFireRate = 300, currentVolley = 0, volleys = 3;
 	
@@ -28,17 +17,18 @@ public class TowerPulseCannon extends EntityLiving {
 	}
 	
 	public TowerPulseCannon(Vector2f pos) {
-		super("tower_pulsecannon.png", pos);
 		
-		turret = Utils.getImageFromPath("canun2.png");
-		
-		range = 500;
-		
-		addAsInputListener();
+		this("tower_pulsecannon.png", pos);
 	}
 	
 	protected TowerPulseCannon(String spr, Vector2f pos) {
 		super(spr, pos);
+		
+		turret = Utils.getImageFromPath("canun2.png");
+
+		baseDamage = 11;
+		baseFireRate = 1500;
+		baseRange = 500;
 	}
 	
 	public int t;
@@ -56,15 +46,16 @@ public class TowerPulseCannon extends EntityLiving {
 	public void update(int delta) {
 		
 		
-		t+=delta;
-		if((firing && t > burstFireRate || t > fireRate) && target!=null) {
+		t += delta;
+		
+		if((firing && t > burstFireRate || t > getFireRate()) && target != null) {
 			
 			if (!firing) {
 				
 				firing = true;
 			}
 			
-			t=0;
+			t = 0;
 			
 			currentVolley++;
 			
@@ -74,31 +65,15 @@ public class TowerPulseCannon extends EntityLiving {
 				firing = false;
 			}
 			
-			MainGame.instance.root.addChild(new BulletPulse(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
-		}
-		
-		//this.setOffset(MainGame.instance.getMousePos().sub(new Vector2f(MainGame.WIDTH/2, MainGame.HEIGHT/2)));
-		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			offset.add(new Vector2f(0,-10));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			offset.add(new Vector2f(-10,0));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			offset.add(new Vector2f(0,10));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			offset.add(new Vector2f(10,0));
+			MainGame.instance.root.addChild(new BulletPulse(getCenterPos(), this, Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
 		}
 
-		//debug
-		//System.out.println(target==null);
 		if (target != null) {
 
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
 
 		if (target != null) {
 			
@@ -118,7 +93,7 @@ public class TowerPulseCannon extends EntityLiving {
 
 
 	@Override
-	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
 
 		if(this.contains(new Vector2f(x,y)) && MainGame.instance.lc.selectedEntity==this
 				&& parent.updateChildren)
@@ -126,32 +101,50 @@ public class TowerPulseCannon extends EntityLiving {
 	}
 }
 
-class BulletPulse extends Entity{
+class BulletPulse extends Entity {
 	
 	Vector2f step;
 	
+	Tower owner;
+	
 	public static final int lifeTime = 10000;
+	
 	private int life = 0;
+	
 	public static final float speed = 10f;
 	
-	public BulletPulse(Vector2f position, float anglo_saxon, float barrelLength) {
-		super("pulsey.png", position);
-		setPos(position.add(new Vector2f(barrelLength*(float)Math.cos(Math.toRadians(anglo_saxon)), barrelLength*(float)Math.sin(Math.toRadians(anglo_saxon)))));
-		sprite.setRotation(anglo_saxon);
-		step = new Vector2f(speed*(float)Math.cos(Math.toRadians(anglo_saxon)), speed*(float)Math.sin(Math.toRadians(anglo_saxon)));
-	}
 	
-	public float getDamage() {
-		return 11;
+	public BulletPulse(Vector2f position, Tower Owner, float anglo_saxon, float barrelLength) {
+		super("pulsey.png", position);
+		
+		setPos(position.add(new Vector2f(barrelLength*(float)Math.cos(Math.toRadians(anglo_saxon)), barrelLength*(float)Math.sin(Math.toRadians(anglo_saxon)))));
+		
+		sprite.setRotation(anglo_saxon);
+		
+		owner = Owner;
+		
+		step = new Vector2f(speed*(float)Math.cos(Math.toRadians(anglo_saxon)), speed*(float)Math.sin(Math.toRadians(anglo_saxon)));
 	}
 	
 	@Override
 	public void update(int dt) {
 
-		
+		//TODO: Debug
+		/*
 		if (statEffects.contains(StatEffect.EMP)) {
 			
 			return;
+		}
+		*/
+		
+		//debug
+		if (parent == null) {
+			
+			System.out.println("Somehow parent is null! WTF");
+		}
+		if (owner == null) {
+			
+			System.out.println("Somehow owner is null! WTF");
 		}
 		
 		setPos(getPos().add(step));
@@ -165,8 +158,10 @@ class BulletPulse extends Entity{
 		
 		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 50);
 		
-		if(e!=null) {
-			e.damage(getDamage());
+		if(e != null) {
+			
+			e.damage(owner.getDamage());
+			
 			parent.removeChild(this);
 		}
 	}

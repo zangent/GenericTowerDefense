@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.lmag.gtd.entities.StatEffect;
 import com.lmag.gtd.entities.TowerMachineGun;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.MouseTracker;
@@ -19,6 +20,7 @@ import com.lmag.gtd.util.Executable;
 import com.lmag.gtd.util.Renderable;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainGame extends BasicGame {
 	
@@ -33,7 +35,7 @@ public class MainGame extends BasicGame {
 
 	public static float currency = 9099999;
 	public static GameContainer gc;
-	
+		
 	public Entity root;
 	public LevelController lc;
 	
@@ -58,11 +60,6 @@ public class MainGame extends BasicGame {
     	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
     	root.addChild(new MainMenu());
-    	//root.addChild(new Renderable("maps/map1.png", new Vector2f(0,0)));
-    	//root.addChild(lc = new EditorController());
-    	//root.addChild(lc = new LevelController());
-    	//root.addChild(new BuyMenu());
-    	//root.addChild(new DebugEnemy(new Vector2f(100,100)));
     }
  
     @Override

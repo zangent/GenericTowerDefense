@@ -9,7 +9,9 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.entities.Enemy;
 import com.lmag.gtd.entities.Entity;
+import com.lmag.gtd.entities.EntityLiving;
 import com.lmag.gtd.entities.StatEffect;
+import com.lmag.gtd.entities.StatEffects;
 import com.lmag.gtd.util.Utils;
 
 public class EnemyEMP extends Enemy {
@@ -50,7 +52,7 @@ public class EnemyEMP extends Enemy {
 				
 				for (Entity target : targets) {
 					
-					target.addStatEffect(StatEffect.EMP);
+					target.addStatEffect(StatEffects.EMP((EntityLiving)target, 3));
 					EMPAlpha = 0.5f;
 				}
 				

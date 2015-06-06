@@ -10,12 +10,11 @@ import com.lmag.gtd.MainGame;
 
 public abstract class EntityLiving extends Entity {
 	
-	protected float defaultHealth = 100;
-	protected float health = defaultHealth;
-	public short isTarget=0;
+	protected float maxHealth = 100;
+	protected float health = maxHealth;
+	public short isTarget = 0;
 	
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
-	public static final Upgrade[] elligibleUpgrades = {Upgrade.range, Upgrade.damage};
 	
 	protected int range = 500;
 
@@ -32,9 +31,9 @@ public abstract class EntityLiving extends Entity {
 	public void render(Graphics g) {
 		super.render(g);
 		
-		if(health != defaultHealth) {
+		if(health != maxHealth) {
 			
-			float per = ((float)health)/((float)defaultHealth);
+			float per = ((float)health)/((float)maxHealth);
 			
 			if(per < 0) per = 0;
 			

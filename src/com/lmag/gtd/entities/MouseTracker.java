@@ -116,14 +116,14 @@ public class MouseTracker extends Entity {
 			child.render(g);
 		}
 	}
-	public void mousePressed(int btn, int x, int y) {
+	public void onMousePressed(int btn, int x, int y) {
 		if(btn == 0) {
 			if(updatePos(null) && MainGame.currency >= price) {
 				this.removeChild(child);
 				MainGame.instance.root.addChild(child);
 				child.setPos(lastPoint);
 				MainGame.currency -= price;
-				child.addStatEffect(StatEffect.Constructing);
+				child.addStatEffect(StatEffects.Constructing((Tower)child, 0));
 				child.setUpdating(true);
 				kill();
 			}

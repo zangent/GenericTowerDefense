@@ -40,7 +40,7 @@ public class EditorController extends LevelController {
 	}
 
 	@Override
-	public void mouseReleased(int btn, int x, int y) {
+	public void onMouseReleased(int btn, int x, int y) {
 		
 		if(btn==1) {
 			pathPoints.add(MainGame.instance.getMousePos());
@@ -48,7 +48,7 @@ public class EditorController extends LevelController {
 	}
 	
 	@Override
-	public void keyReleased(int kc, char ch) {
+	public void onKeyReleased(int kc, char ch) {
 		
 		if(kc==Keyboard.KEY_Z) {
 			

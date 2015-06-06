@@ -1,38 +1,31 @@
 package com.lmag.gtd.entities;
 
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
-import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
 
-public class TowerMachineGun extends EntityLiving {
+public class TowerMachineGun extends Tower {
 	
-	Image turret;
-	
-	public EntityLiving target;
-	
-	protected int fireRate = 50;
 	
 	public TowerMachineGun() {
 		this(new Vector2f(0,0));
 	}
 	
 	public TowerMachineGun(Vector2f pos) {
-		super("tower_machinegun.png", pos);
-		turret = Utils.getImageFromPath("canun.png");
-		
-		range = 500;
-		
-		addAsInputListener();
+		this("tower_machinegun.png", pos);
 	}
 	
 	protected TowerMachineGun(String spr, Vector2f pos) {
 		super(spr, pos);
+		
+		turret = Utils.getImageFromPath("canun.png");
+		
+		baseRange = 500;
+		baseFireRate = 35;
+		baseDamage = 0.25f;
 	}
 	
 	public int t;
@@ -41,33 +34,24 @@ public class TowerMachineGun extends EntityLiving {
 	public void tick(int dt) {
 		super.tick(dt);
 		
-		if(EMPTimer != 0) {
+		
+		//Deprecated 
+		/*if(EMPTimer != 0) {
 			target = null;
-		}
+		}*/
 	}
 	
 	@Override
 	public void update(int delta) {
 		
 		
-		t+=delta;
-		if(t>fireRate && target!=null) {
-			t=0;
-			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
-		}
+		t += delta;
 		
-		//this.setOffset(MainGame.instance.getMousePos().sub(new Vector2f(MainGame.WIDTH/2, MainGame.HEIGHT/2)));
-		if(Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			offset.add(new Vector2f(0,-10));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			offset.add(new Vector2f(-10,0));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			offset.add(new Vector2f(0,10));
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			offset.add(new Vector2f(10,0));
+		if(t > getFireRate() && target != null) {
+			
+			t = 0;
+			
+			MainGame.instance.root.addChild(new BulletNorm(getCenterPos(), this, Utils.getAngle(this.getCenterPos(), target.getCenterPos()), getWidth()/2));
 		}
 
 		//debug
@@ -77,7 +61,7 @@ public class TowerMachineGun extends EntityLiving {
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
 
 		if (target != null) {
 			
@@ -97,7 +81,7 @@ public class TowerMachineGun extends EntityLiving {
 
 
 	@Override
-	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
 
 		if(this.contains(new Vector2f(x,y)) && MainGame.instance.lc.selectedEntity==this
 				&& parent.updateChildren)
@@ -105,24 +89,26 @@ public class TowerMachineGun extends EntityLiving {
 	}
 }
 
-class BulletNorm extends Entity{
+class BulletNorm extends Entity {
 	
 	Vector2f step;
 	
 	public static final int lifeTime = 5000;
 	private int life = 0;
-	public static final float speed = 15;
+	public static final float speed = 20;
 	
-	public BulletNorm(Vector2f position, float anglo_saxon, float barrelLength) {
+	public Tower owner;
+	
+	public BulletNorm(Vector2f position, Tower Owner, float anglo_saxon, float barrelLength) {
 		super("needasentryhere.png", position);
+		
+		owner = Owner;
+		
 		setPos(position.add(new Vector2f(-barrelLength/2+barrelLength*(float)Math.cos(Math.toRadians(anglo_saxon)), barrelLength*(float)Math.sin(Math.toRadians(anglo_saxon)))));
 		sprite.setRotation(anglo_saxon);
 		step = new Vector2f(speed*(float)Math.cos(Math.toRadians(anglo_saxon)), speed*(float)Math.sin(Math.toRadians(anglo_saxon)));
 	}
 	
-	public float getDamage() {
-		return .25f;
-	}
 	
 	@Override
 	public void update(int dt) {
@@ -138,8 +124,9 @@ class BulletNorm extends Entity{
 		
 		EntityLiving e = (EntityLiving)Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), 50);
 		
-		if(e!=null) {
-			e.damage(getDamage());
+		if(e != null) {
+			
+			e.damage(owner.getDamage());
 			parent.removeChild(this);
 		}
 	}

@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.entities.Enemy;
 import com.lmag.gtd.entities.Entity;
 import com.lmag.gtd.entities.EntityLiving;
-import com.lmag.gtd.entities.Node;
+import com.lmag.gtd.entities.Tower;
 import com.lmag.gtd.entities.menu.BuyMenu;
 import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
@@ -148,7 +148,7 @@ public class LevelController extends Entity {
 		return enemy;
 	}
 	
-	public void setEntitySidebar(EntityLiving e) {
+	public void setEntitySidebar(Tower e) {
 
 		if(entityMenuRight != null)
 			MainGame.instance.lc.removeChild(entityMenuRight);
@@ -182,12 +182,12 @@ public class LevelController extends Entity {
 	}
 
 	@Override
-	public void mouseReleased(int btn, int x, int y) {
+	public void onMouseReleased(int btn, int x, int y) {
 		
 	}
 	
 	@Override
-	public void keyReleased(int kc, char ch) {
+	public void onKeyReleased(int kc, char ch) {
 		
 		
 	}

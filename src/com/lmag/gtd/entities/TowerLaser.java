@@ -1,29 +1,20 @@
 package com.lmag.gtd.entities;
 
-import java.util.ArrayList;
 
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
 
-public class TowerLaser extends EntityLiving {
+public class TowerLaser extends Tower {
 	
-	Image turret;
-	
-	public EntityLiving target;
-	
-	public static final Upgrade[] elligibleUpgrades = {Upgrade.range, Upgrade.damage};
+	//public static final Upgrade[] elligibleUpgrades = {Upgrade.range, Upgrade.damage};
 	
 	public int timeSinceLastUpdate = 0;
 	
-	public boolean firing = false;
-	
-	public int ticks = 0, fireRate = 175;
+	public int ticks = 0;
 	
 	public int intensity = 0, warmup = 600;
 	
@@ -36,16 +27,18 @@ public class TowerLaser extends EntityLiving {
 	}
 	
 	public TowerLaser(Vector2f pos) {
-		super("tower_laser.png", pos);
-		turret = Utils.getImageFromPath("canun2.png");
 		
-		range = 500;
-		
-		addAsInputListener();
+		this("tower_laser.png", pos);
 	}
 	
 	protected TowerLaser(String spr, Vector2f pos) {
 		super(spr, pos);
+		
+		turret = Utils.getImageFromPath("canun2.png");
+		
+		baseFireRate = 175;
+		baseDamage = 3;
+		baseRange = 500;
 	}
 	
 	
@@ -61,7 +54,7 @@ public class TowerLaser extends EntityLiving {
 	@Override
 	public void update(int delta) {
 		
-		int dmg = 3;
+		float dmg = getDamage();
 		
 		timeSinceLastUpdate += delta;
 		
@@ -87,9 +80,9 @@ public class TowerLaser extends EntityLiving {
 				}
 			}
 
-			ticks+=delta;
+			ticks += delta;
 			
-			if(ticks > fireRate) {
+			if(ticks > getFireRate()) {
 				
 				target.damage((float)dmg / ((float)warmup / (float)intensity)*multiplier);
 				ticks = 0;
@@ -101,7 +94,7 @@ public class TowerLaser extends EntityLiving {
 			target.isTarget--;
 		}
 		//Entity lt = target;
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), range);
+		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
 		if(target == null) {
 			intensity = 0;
 		}
@@ -138,14 +131,17 @@ public class TowerLaser extends EntityLiving {
 			g.drawLine(from.x, from.y, t.getX(), t.getY());
 		}
 	}
-
-
+	
 	@Override
-	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
+
 		
 		if (this.isUpdating()) {
 		
-			if(this.contains(new Vector2f(x,y))) {
+			if(this.contains(new Vector2f(x,y)) ||
+					(!MainGame.instance.lc.buyMenuRight.open &&
+							MainGame.instance.lc.entityMenuRight.
+							contains(new Vector2f(x,y)))) {
 
 			
 				if(parent.updateChildren) {

@@ -101,7 +101,7 @@ public class Entity implements InputListener {
 		if(EMPIndicator != null)
 		EMPIndicator.tick(delta);
 		
-		if (statEffects.contains(StatEffect.EMP)) {
+		if (statEffects.contains(hasStatEffect(StatEffects.EMP))) {
 			
 			if (EMPTimer < EMPEndTime) {
 				
@@ -112,7 +112,7 @@ public class Entity implements InputListener {
 			if (EMPTimer >= EMPEndTime) {
 				
 				EMPTimer = 0;
-				removeStatEffect(StatEffect.EMP);
+				removeStatEffect(StatEffects.EMP);
 			}
 		}
 		
@@ -121,12 +121,6 @@ public class Entity implements InputListener {
 			if (isUpdating()) {	
 				
 				update(updateTime + delta);
-			}
-			
-			else {
-				
-				//debug
-				System.out.println("Not updating");
 			}
 			
 			updateTime = 0;
@@ -238,27 +232,25 @@ public class Entity implements InputListener {
 	
 	public void addStatEffect(StatEffect effect) {
 		
-		if(effect == StatEffect.EMP) {
-			EMPTimer = 0;
-			EMPEndTime = (short) (1500 + (Math.random()*1000f));
-			
-			if(EMPIndicator == null)
-				addChild(EMPIndicator = new com.lmag.gtd.util.Animation("spark.png", new Vector2f(0,0), 32, 32, 50, true));
-		}
-		
 		if (!statEffects.contains(effect)) {
 			
 			statEffects.add(effect);
+			effect.onAdded();
 		}
 	}
 	
 	public void removeStatEffect(StatEffect effect) {
-		if(effect == StatEffect.EMP) {
-			
-			removeChild(EMPIndicator);
-			EMPIndicator = null;
-		}
+		effect.onRemoved();
 		statEffects.remove(effect);
+	}
+	
+	public void removeStatEffect(String effect) {
+		for(StatEffect se : statEffects) {
+			if(se.name.matches(effect)) {
+				se.onRemoved();
+				statEffects.remove(se);
+			}
+		}
 	}
 	
 	public boolean hasStatEffect(StatEffect effect) {
@@ -291,14 +283,14 @@ public class Entity implements InputListener {
 	}
 	
 	public boolean isUpdating() {
-		
-		if (statEffects.contains(StatEffect.Constructing)) {
+
+		if (hasStatEffect(StatEffects.constructing)) {
 			
-			this.removeStatEffect(StatEffect.Constructing);
+			
+			this.removeStatEffect(StatEffects.constructing);
 			
 			return false;
 		}
-		
 		return shouldUpdate && (parent == null ? true : (parent.isUpdating() && parent.updateChildren));
 	}
 
@@ -383,10 +375,18 @@ public class Entity implements InputListener {
 		return (in.x>getX()&&in.x<getX()+getWidth()&&in.y>getY()&&in.y<getY()+getHeight());
 	}
 
-	@Override
+	
 	public boolean isAcceptingInput() {
 
 		return acceptingInput;
+	}
+	
+	public boolean hasStatEffect(String name) {
+		
+		for(StatEffect se : this.statEffects) {
+			if(se.name.matches(name)) return true;
+		}
+		return false;
 	}
 	
 	
@@ -395,34 +395,119 @@ public class Entity implements InputListener {
 	 * YE OLDE INPUT LISTENER LIST O' INPUTS
 	 */
 
-	@Override
-	public void mouseClicked(int btn, int x, int y, int clickCount)  {
+	
+	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
 
+	}
+
+	
+	public void onMouseDragged(int x1, int y1, int x2, int y2) {
+		
+	}
+
+	
+	public void onMouseMoved(int x1, int y1, int x2, int y2) {
+		
+	}
+
+	
+	public void onMousePressed(int btn, int x, int y) {
+		
+	}
+
+	
+	public void onMouseReleased(int btn, int x, int y) {
+		
+	}
+
+	
+	public void onMouseWheelMoved(int amt) {
+		
+	}
+
+	
+	public void onInputEnded() {
+		
+	}
+
+	
+	public void onInputStarted() {
+		
+	}
+
+	
+	public void setInputEntity(Input arg0) {
+		
+	}
+
+	
+	public void onKeyPressed(int kc, char ch) {
+		
+	}
+
+	
+	public void onKeyReleased(int kc, char ch) {
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void mouseClicked(int btn, int x, int y, int clickCount) {
+
+		if (this.isUpdating()) {
+			
+			onMouseClicked(btn, x, y, clickCount);
+		}
 	}
 
 	@Override
 	public void mouseDragged(int x1, int y1, int x2, int y2) {
-		
+		if (this.isUpdating()) {
+			
+			onMouseDragged(x1, y1, x2, y2);
+		}
 	}
 
 	@Override
 	public void mouseMoved(int x1, int y1, int x2, int y2) {
-		
+
+		if (this.isUpdating()) {
+			
+			onMouseMoved(x1, y1, x2, y2);
+		}
 	}
 
 	@Override
 	public void mousePressed(int btn, int x, int y) {
-		
+
+		if (this.isUpdating()) {
+			
+			onMousePressed(btn, x, y);
+		}
 	}
 
 	@Override
 	public void mouseReleased(int btn, int x, int y) {
-		
+
+		if (this.isUpdating()) {
+			
+			onMouseReleased(btn, x, y);
+		}
 	}
 
 	@Override
 	public void mouseWheelMoved(int amt) {
-		
+
+		if (this.isUpdating()) {
+			
+			onMouseWheelMoved(amt);
+		}
 	}
 
 	@Override
@@ -442,60 +527,88 @@ public class Entity implements InputListener {
 
 	@Override
 	public void keyPressed(int kc, char ch) {
-		
+
+		if (this.isUpdating()) {
+			
+			onKeyPressed(kc, ch);
+		}
 	}
 
 	@Override
 	public void keyReleased(int kc, char ch) {
-		
-	}
 
-	@Override
+		if (this.isUpdating()) {
+			
+			onKeyReleased(kc, ch);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void controllerButtonPressed(int arg0, int arg1) {
 		
 	}
 
-	@Override
+	
 	public void controllerButtonReleased(int arg0, int arg1) {
 		
 	}
 
-	@Override
+	
 	public void controllerDownPressed(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerDownReleased(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerLeftPressed(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerLeftReleased(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerRightPressed(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerRightReleased(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerUpPressed(int arg0) {
 		
 	}
 
-	@Override
+	
 	public void controllerUpReleased(int arg0) {
 		
 	}

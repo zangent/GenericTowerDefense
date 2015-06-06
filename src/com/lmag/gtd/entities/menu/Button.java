@@ -64,13 +64,13 @@ public class Button extends Entity {
 	boolean buttonDown = false;
 	
 	@Override
-	public void mousePressed(int btn, int x, int y) {
+	public void onMousePressed(int btn, int x, int y) {
 		
 		buttonDown = (btn==0)&&contains(new Vector2f(x,y));
 	}
 	
 	@Override
-	public void mouseReleased(int btn, int x, int y) {
+	public void onMouseReleased(int btn, int x, int y) {
 		
 		if(buttonDown && contains(new Vector2f(x,y))) {
 			execFunc();

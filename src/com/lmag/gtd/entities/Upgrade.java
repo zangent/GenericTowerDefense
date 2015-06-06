@@ -1,6 +1,19 @@
 package com.lmag.gtd.entities;
 
-public enum Upgrade {
+public class Upgrade {
+	
+	public String iconName = "default.png";
+	
+	public String name = "Unnamed";
+	
+	Tower parent;
 
-	range, damage, fireRate
+	public Upgrade(Tower Parent) {
+		
+		parent = Parent;
+	}
+	
+	public void onAdded() {}
+	
+	public void onRemoved() {}
 }

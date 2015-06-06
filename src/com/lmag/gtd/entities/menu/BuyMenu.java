@@ -17,8 +17,10 @@ public class BuyMenu extends Entity {
 	
 	public static final int width = 200;
 	public static final int height = MainGame.HEIGHT;
+	
 	int size = MainGame.TOWER_SIZE, step=4;
 	int offsetX = step, offsetY = step;
+	
 	public boolean open = true;
 	
 	public BuyMenu() {
@@ -40,7 +42,6 @@ public class BuyMenu extends Entity {
 				if (MainGame.currency >= (int)params.get("price")) {
 				
 					try {
-						
 						MainGame.instance.root.addChild(new MouseTracker(((Entity) (((Class)params.get("class"))
 								.getConstructor(Vector2f.class).newInstance(new Vector2f(0,0)))).setUpdating(false), (int)params.get("price")));
 						
@@ -54,23 +55,36 @@ public class BuyMenu extends Entity {
 				}
 			}
 		};
+		
 		e.params.put("class", add.getClass());
 		e.params.put("price", price);
 		
 		this.addChild(new Button(new Vector2f(offsetX, offsetY), e).addChild(add));
 		offsetX += size+step;
+		
 		if(offsetX > width) {
+			
 			offsetX = step;
 			offsetY += size + step;
 		}
 	}
 	
+	@Override
+	public boolean isUpdating() {
+		
+		return super.isUpdating() && open;
+	}
+	
 	public void renderAll(Graphics straightUpG) {
+		
 		if(open)
 			super.renderAll(straightUpG);
 	}
+	
+	
+	/*/
 	public void tick(int dt) {
 		if(open)
 			super.tick(dt);
-	}
+	}/**/
 }
