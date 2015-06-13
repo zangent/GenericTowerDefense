@@ -53,6 +53,7 @@ public class TowerLaser extends Tower {
 	
 	@Override
 	public void update(int delta) {
+		super.update(delta);
 		
 		float dmg = getDamage();
 		
@@ -129,31 +130,6 @@ public class TowerLaser extends Tower {
 			g.setColor(new Color(0.9f, 0.1f, 0.1f, 0.75f));
 			g.setLineWidth(0.5f+((float)intensity/(float)warmup)*2.5f);
 			g.drawLine(from.x, from.y, t.getX(), t.getY());
-		}
-	}
-	
-	@Override
-	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
-
-		
-		if (this.isUpdating()) {
-		
-			if(this.contains(new Vector2f(x,y)) ||
-					(!MainGame.instance.lc.buyMenuRight.open &&
-							MainGame.instance.lc.entityMenuRight.
-							contains(new Vector2f(x,y)))) {
-
-			
-				if(parent.updateChildren) {
-			
-					MainGame.instance.lc.setEntitySidebar(this);
-				}
-			}
-			
-			else if(MainGame.instance.lc.selectedEntity == this) {
-		
-				MainGame.instance.lc.setBuySidebar();
-			}
 		}
 	}
 }

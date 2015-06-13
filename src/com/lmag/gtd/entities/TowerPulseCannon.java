@@ -44,7 +44,7 @@ public class TowerPulseCannon extends Tower {
 	
 	@Override
 	public void update(int delta) {
-		
+		super.update(delta);
 		
 		t += delta;
 		
@@ -89,15 +89,6 @@ public class TowerPulseCannon extends Tower {
 			//g.fillOval(target.getX()-10, target.getY()-10, target.getWidth()+20, target.getHeight()+20);
 		}
 		g.drawImage(turret, getX(), getY());
-	}
-
-
-	@Override
-	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
-
-		if(this.contains(new Vector2f(x,y)) && MainGame.instance.lc.selectedEntity==this
-				&& parent.updateChildren)
-			MainGame.instance.lc.setEntitySidebar(this);
 	}
 }
 

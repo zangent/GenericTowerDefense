@@ -93,5 +93,10 @@ public class StatEffect {
 				duration--;
 			}
 		}
+		
+		if (duration != -1 && duration <= 0) {
+			
+			parent.removeStatEffect(this);
+		}
 	}
 }

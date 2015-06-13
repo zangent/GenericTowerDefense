@@ -15,6 +15,7 @@ public abstract class EntityLiving extends Entity {
 	public short isTarget = 0;
 	
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
+	public ArrayList<String> availableUpgrades = new ArrayList<String>();
 	
 	protected int range = 500;
 
@@ -70,9 +71,36 @@ public abstract class EntityLiving extends Entity {
 
 	public void addUpgrade(Upgrade upg) {
 		
-		if (!upgrades.contains(upg)) {
+		for (String upgName : (ArrayList<String>)availableUpgrades.clone()) {
 			
-			upgrades.add(upg);
+			if (upg.internalName.matches(upgName)) {
+				
+				if (!upgrades.contains(upg)) {
+					
+					upgrades.add(upg);
+					
+					availableUpgrades.remove(upgName);
+					
+					//debug
+					System.out.println("Upgrade added!");
+					
+					upg.onAdded();
+				}
+				
+				return;
+			}
+		}
+	}
+	
+	public void removeUpgrade(Upgrade upg) {
+		
+		if (upgrades.contains(upg)) {
+			
+			upgrades.remove(upg);
+			
+			availableUpgrades.add(upg.internalName);
+			
+			upg.onRemoved();
 		}
 	}
 	

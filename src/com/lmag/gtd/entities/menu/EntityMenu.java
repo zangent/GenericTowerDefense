@@ -12,6 +12,7 @@ import com.lmag.gtd.entities.Tower;
 import com.lmag.gtd.entities.Upgrade;
 import com.lmag.gtd.entities.Upgrades;
 import com.lmag.gtd.util.Executable;
+import com.lmag.gtd.util.Utils;
 
 public class EntityMenu extends Entity {
 	
@@ -27,18 +28,24 @@ public class EntityMenu extends Entity {
 		
 		target = ent;
 		
-		//for (Upgrade upg : ent.elligibleUpgrades) {
+		Utils.printStackTrace();
 
 			//debug
-		//	System.out.println("|| " + upg.name());
-			
-		//	addUpgrade(upg, 5);
-		//}
+			System.out.println("Beginning list...");
 		
-		addUpgrade(Upgrades.UBERDamage(target), 0);
+		for (String upgName : ent.availableUpgrades) {
+
+			//debug
+			System.out.println("|| " + upgName);
+			
+			addUpgrade(upgName, 5);
+		}
+		
+		//debug
+		System.out.println("Ending list...");
 	}
 	
-	public void addUpgrade(Upgrade upg, int price) {
+	public void addUpgrade(String upgName, int price) {
 		
 		Executable e = new Executable() {
 			
@@ -46,11 +53,11 @@ public class EntityMenu extends Entity {
 			@Override
 			public void run() {
 				
-				if (MainGame.currency >= (int)params.get("price")) {
-				
+				if (/*debug*/ true || MainGame.currency >= (int)params.get("price")) {
+					
 					try {
-						
-						((Tower)params.get("parent")).addUpgrade((Upgrade)(Upgrades.class.getDeclaredMethod((String)params.get("name"), params.get("parent").getClass())).invoke(params.get("parent")));
+						Upgrades u = new Upgrades();
+						((Tower)params.get("parent")).addUpgrade((Upgrade)(Upgrades.class.getDeclaredMethod((String)params.get("name"), Tower.class)).invoke(u, (Tower)params.get("parent")));
 
 					} catch (IllegalAccessException
 							| IllegalArgumentException | InvocationTargetException
@@ -84,17 +91,13 @@ public class EntityMenu extends Entity {
 		};*/
 
 
-		e.params.put("name", upg.name);
+		e.params.put("name", upgName);
 		e.params.put("parent", target);
 		e.params.put("price", price);
 		
-		//debug
-		System.out.println("Name1: " + upg.name);
-		System.out.println("Name2: " + Upgrades.UBERDamage(target).name);
-		
 		try {
 		
-			this.addChild(new Button("upgrade_icons/" + upg.iconName, new Vector2f(offsetX, offsetY), e));
+			this.addChild(new Button("upgrade_icons/" + upgName + ".png", new Vector2f(offsetX, offsetY), e));
 		
 			offsetX += size + step;
 			if(offsetX > width) {

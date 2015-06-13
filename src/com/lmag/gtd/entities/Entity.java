@@ -101,26 +101,19 @@ public class Entity implements InputListener {
 		if(EMPIndicator != null)
 		EMPIndicator.tick(delta);
 		
-		if (statEffects.contains(hasStatEffect(StatEffects.EMP))) {
-			
-			if (EMPTimer < EMPEndTime) {
-				
-				EMPTimer += delta;
-				return;
-			}
-			
-			if (EMPTimer >= EMPEndTime) {
-				
-				EMPTimer = 0;
-				removeStatEffect(StatEffects.EMP);
-			}
-		}
-		
 		if (updateTime + delta >= updateRate) {
 			
 			if (isUpdating()) {	
 				
 				update(updateTime + delta);
+			}
+			
+			else if (!statEffects.isEmpty()) {
+					
+				for (StatEffect effect : statEffects) {
+					
+					effect.update(updateTime + delta);
+				}
 			}
 			
 			updateTime = 0;
@@ -286,11 +279,9 @@ public class Entity implements InputListener {
 
 		if (hasStatEffect(StatEffects.constructing)) {
 			
-			
-			this.removeStatEffect(StatEffects.constructing);
-			
 			return false;
 		}
+		
 		return shouldUpdate && (parent == null ? true : (parent.isUpdating() && parent.updateChildren));
 	}
 
@@ -381,11 +372,29 @@ public class Entity implements InputListener {
 		return acceptingInput;
 	}
 	
+	public StatEffect getStatEffect(String name) {
+		
+		for(StatEffect se : this.statEffects) {
+
+			if(se.name.matches(name)) {
+				
+				return se;
+			}
+		}
+		
+		return null;
+	}
+	
 	public boolean hasStatEffect(String name) {
 		
 		for(StatEffect se : this.statEffects) {
-			if(se.name.matches(name)) return true;
+			
+			if(se.name.matches(name)) {
+				
+				return true;
+			}
 		}
+		
 		return false;
 	}
 	

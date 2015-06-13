@@ -9,15 +9,12 @@ public class Upgrades {
 			public UBER(Tower parent) {
 				super(parent);
 				
-				iconName = "damage.png";
+				displayName = "UBER damage upgrade";
 				
-				name = "UBER damage upgrade";
+				internalName = "UBERDamage";
 			}
 				
 			public void onAdded() {
-				
-				//debug 
-				System.out.println("\n\n\n\nworking\n\n\n");
 					
 				parent.damagePercMod += 100f;
 			}

@@ -40,7 +40,6 @@ public class StatEffects {
 				parent.removeChild(parent.EMPIndicator);
 				parent.EMPIndicator = null;
 			}
-			
 		};
 	};
 
