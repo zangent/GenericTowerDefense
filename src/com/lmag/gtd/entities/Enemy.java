@@ -21,19 +21,17 @@ public abstract class Enemy extends EntityLiving {
 	protected Image targetIcon;
 	
 	public Enemy(Vector2f position) {
+		
 		this("enemytst.png", position);
-		maxHealth = 30;
-		health = maxHealth;
 	}
 	
 	protected Enemy(String spritePath, Vector2f position) {
 		super(spritePath, position);
 		
 		targetIcon = Utils.getImageFromPath("trgit.png");
-		
-		//endTime = 0; //Utils.getDist(path[0], path[1]) / speedMod * 10f;
-		maxHealth = 30;
-		health = maxHealth;
+
+		baseHealth = 30;
+		health = getMaxHealth();
 	}
 	
 	public Enemy setPath(Vector2f[] p) {

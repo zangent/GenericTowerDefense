@@ -59,7 +59,7 @@ public class BuyMenu extends Entity {
 		e.params.put("class", add.getClass());
 		e.params.put("price", price);
 		
-		this.addChild(new Button(new Vector2f(offsetX, offsetY), e).addChild(add));
+		this.addChild(((Button)new Button(new Vector2f(offsetX, offsetY), e).addChild(add)).useChildBB());
 		offsetX += size+step;
 		
 		if(offsetX > width) {

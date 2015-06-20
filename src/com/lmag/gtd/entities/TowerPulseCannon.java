@@ -34,15 +34,6 @@ public class TowerPulseCannon extends Tower {
 	public int t;
 	
 	@Override
-	public void tick(int dt) {
-		super.tick(dt);
-		
-		if(EMPTimer != 0) {
-			target = null;
-		}
-	}
-	
-	@Override
 	public void update(int delta) {
 		super.update(delta);
 		
@@ -73,7 +64,7 @@ public class TowerPulseCannon extends Tower {
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
+		target = getTarget();
 
 		if (target != null) {
 			

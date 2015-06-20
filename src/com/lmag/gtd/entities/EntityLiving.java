@@ -9,9 +9,81 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.MainGame;
 
 public abstract class EntityLiving extends Entity {
+
+	/**
+	 * Base health value; Shouldn't be modified directly.
+	 */
+	protected float baseHealth = 100;
+	/**
+	 * The current health of the unit
+	 */
+	protected float health = baseHealth;
+	/**
+	 * Value added directly to base health.
+	 */
+	public float healthMod = 0;
+	/**
+	 * Base health is multiplied by this percentage.
+	 */
+	public float healthPercMod = 1.0f;
 	
-	protected float maxHealth = 100;
-	protected float health = maxHealth;
+
+	/**
+	 * Base regen value; Shouldn't be modified.
+	 */
+	protected float baseRegen = 0;
+	/**
+	 * Value added directly to base stat.
+	 */
+	public float regenMod = 0;
+	/**
+	 * Regen is multiplied by this percentage.
+	 */
+	public float regenPercMod = 1.0f;
+	
+
+	/**
+	 * Base damage value; Shouldn't be modified.
+	 */
+	protected float baseDamage = 0;
+	/**
+	 * Value added directly to base stat.
+	 */
+	public float damageMod = 0;
+	/**
+	 * Damage is multiplied by this percentage.
+	 */
+	public float damagePercMod = 1.0f;
+
+
+	/**
+	 * Base detection range; Shouldn't be modified.
+	 */
+	protected int baseRange = 0;
+	/**
+	 * Value added directly to base stat.
+	 */
+	public int rangeMod = 0;
+	/**
+	 * Range is multiplied by this percentage.
+	 */
+	public float rangePercMod = 1.0f;
+	
+
+	/**
+	 * Base fire rate; Shouldn't be modified.
+	 */
+	protected int baseFireRate = 0;
+	/**
+	 * Value added directly to base stat.
+	 */
+	public int fireRateMod = 0;
+	/**
+	 * fireRate is multiplied by this percentage.
+	 */
+	public float fireRatePercMod = 1.0f;
+	
+	
 	public short isTarget = 0;
 	
 	private ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
@@ -23,8 +95,30 @@ public abstract class EntityLiving extends Entity {
 		super(sprite, position);
 	}
 	
+	
+	public float getMaxHealth() {
+		
+		return (baseHealth * healthPercMod) + healthMod;
+	}
+	
 	public float getHealth() {
+		
 		return health;
+	}
+	
+	
+	@Override
+	public void update(int dt) {
+		super.update(dt);
+		
+		heal((baseRegen * regenPercMod) + regenMod);
+	}
+	
+	
+	@Override 
+	public void tick (int dt) {
+		super.tick(dt);
+		
 	}
 	
 	
@@ -32,9 +126,9 @@ public abstract class EntityLiving extends Entity {
 	public void render(Graphics g) {
 		super.render(g);
 		
-		if(health != maxHealth) {
+		if(health != getMaxHealth()) {
 			
-			float per = ((float)health)/((float)maxHealth);
+			float per = ((float)health)/((float)getMaxHealth());
 			
 			if(per < 0) per = 0;
 			
@@ -104,6 +198,24 @@ public abstract class EntityLiving extends Entity {
 		}
 	}
 	
+	
+	public void heal(float healAmt) {
+		
+		if (health <= 0) {
+			
+			this.kill();
+		}
+		
+		health += healAmt;
+		
+		float maxHealth = getMaxHealth();
+		
+		if (health > maxHealth) {
+			
+			health = maxHealth;
+		}
+	}
+	
 	public ArrayList<Upgrade> getUpgrades() {
 		
 		return upgrades;
@@ -111,17 +223,18 @@ public abstract class EntityLiving extends Entity {
 
 	
 	public void setHealth(float health) {
+		
 		this.health = health;
+		
 		if(health <= 0) {
-			onDeath();
-			parent.removeChild(this);
+			
+			this.kill();
 		}
 	}
-	
-	protected void onDeath() {}
 
 
 	public void damage(float amt) {
+		
 		setHealth(health - amt);
 	}
 }

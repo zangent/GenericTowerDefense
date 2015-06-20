@@ -32,7 +32,7 @@ public class Animation extends Entity {
 		m_accumTicks += dt;
 		if(m_accumTicks >= m_msPerFrame) {
 			m_frameX++;
-			System.out.println("upd");
+
 			if(m_frameX*m_frameWidth>=m_sprite.getWidth()) {
 				m_frameX=0;
 				m_frameY++;

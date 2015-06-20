@@ -61,7 +61,7 @@ public class TowerMachineGun extends Tower {
 			target.isTarget--;
 		}
 		
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
+		target = getTarget();
 
 		if (target != null) {
 			

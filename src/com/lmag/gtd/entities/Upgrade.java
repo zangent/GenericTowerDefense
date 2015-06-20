@@ -2,8 +2,6 @@ package com.lmag.gtd.entities;
 
 public class Upgrade {
 
-	public String iconName = "default.png";
-
 	public String displayName = "Unnamed";
 
 	public String internalName = "LOL YOU MESSED UP YOU SHOULD NEVER SEE THIS STRING OH GOD YOU'RE BEING DUMB FIX THIS BUG RIGHT NOW OR I'LL KILL YOU IN YOUR SLEEP";
@@ -16,6 +14,7 @@ public class Upgrade {
 	}
 
 	public void onAdded() {
+		
 	}
 
 	public void onRemoved() {

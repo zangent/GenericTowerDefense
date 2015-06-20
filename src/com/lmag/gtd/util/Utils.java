@@ -3,7 +3,10 @@ package com.lmag.gtd.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
+import com.lmag.gtd.entities.Tower;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -68,57 +71,104 @@ public class Utils {
 		
 		ArrayList<Float> results = new ArrayList<Float>();
 		ArrayList<Entity> entResults = new ArrayList<Entity>();
-		
+
+        //debug
+        int numTowers = 0;
+
+        System.out.println("-------------\nMax: "+maxDist+"\n");
+
 		for (Entity ent : in) {
-			
+
+            //debug
+            if (ent instanceof Tower) {
+
+                numTowers++;
+            }
+
 			/*if (ent.getCopyOfChildren().size() > 0) {
-				
-				
+
+
 			}*/
-			
-			float dist = getDist(pos, ent.getCenterPos());
-			if (dist >= maxDist) {
-				
-				continue;
-			}
-			
-			
-			if (results.isEmpty()) {
-				
-				results.add(dist);
-				entResults.add(ent);
-				
-				continue;
-			}
-			
-			
-			for (float compare : results) {
 
-				if (dist < compare) {
+            float dist = getDist(pos, ent.getCenterPos());
+            if(ent instanceof Tower) System.out.println(dist);
+            if (dist >= maxDist) {
 
-					int index = results.indexOf(compare);
-				
-					results.add(index, dist);
-					entResults.add(index, ent);
-					
-					if (results.size() >= entLimit && entLimit != -1) {
-						
-						results.remove(entLimit);
-						entResults.remove(entLimit);
-					}
-					
-					break;
-				}
-				
-				if (results.indexOf(compare) == results.size() && (results.size() <= entLimit || entLimit == -1)) {
-						
-						results.add(results.indexOf(compare), dist);
-						entResults.add(results.indexOf(compare), ent);
-					}
-				}
-			}
+                continue;
+            }
+
+
+            //if (results.isEmpty()) {
+
+                results.add(dist);
+                entResults.add(ent);
+
+            //    continue;
+            //}
+
+
+            /*
+            for (float compare : (ArrayList<Float>)results.clone()) {
+                System.out.println("comp: " + compare);
+                    if (dist < compare) {
+
+                        int index = results.indexOf(compare);
+
+                        results.add(index, dist);
+                        entResults.add(index, ent);
+
+                        //TODO Clean this up!
+                        if (results.indexOf(compare) == results.size() && (results.size() <= entLimit || entLimit == -1)) {
+
+                            results.add(results.indexOf(compare), dist);
+                            entResults.add(results.indexOf(compare), ent);
+                        }
+
+                        else if (results.indexOf(compare) == results.size() && (results.size() == entLimit && entLimit != -1)) {
+
+                            results.add(results.indexOf(compare), dist);
+                            entResults.add(results.indexOf(compare), ent);
+                            //debug
+                            System.out.println("HEEEEEYYYYYYYYYYY");
+                            entResults.remove(results.indexOf(compare));
+                            results.remove(compare);
+                        }
+
+                        break;
+                    }
+
+                else if (results.indexOf(compare) == results.size() && (results.size() <= entLimit || entLimit == -1)) {
+
+                        results.add(results.indexOf(compare), dist);
+                        entResults.add(results.indexOf(compare), ent);
+                }
+            }
+            */
+            ArrayList<Object[]> iHaveToCombineTheseToSortThemSoYeah = new ArrayList<Object[]>();
+            for(int i=0;i<results.size();i++) {
+                iHaveToCombineTheseToSortThemSoYeah.add(new Object[]{results.get(i), entResults.get(i)});
+            }
+            Object[][] iHaveToTurnThisIntoAnObjectArrayArraySoYeah = new Object[][]{};
+            iHaveToTurnThisIntoAnObjectArrayArraySoYeah = iHaveToCombineTheseToSortThemSoYeah.toArray(iHaveToTurnThisIntoAnObjectArrayArraySoYeah);
+
+            Arrays.sort(iHaveToTurnThisIntoAnObjectArrayArraySoYeah, new Comparator<Object[]>() {
+                @Override
+                public int compare(Object[] o1, Object[] o2) {
+                    return Float.compare((float) o2[0], (float) o1[0]);
+                }
+            });
+            System.out.println(Arrays.deepToString(iHaveToTurnThisIntoAnObjectArrayArraySoYeah));
+        }
+
+
+        //debug
+        if (numTowers > 1) {
+            System.out.println("Towers: " + numTowers);
+
+            System.out.println("Results: " + entResults.size());
+        }
 		
-		return flipEntArray(entResults);
+		return entResults;
 	}
 	public static ArrayList<Entity> flipEntArray(ArrayList<Entity> in) {
 		ArrayList<Entity> n = new ArrayList<Entity>();

@@ -12,8 +12,6 @@ public class TowerLaser extends Tower {
 	
 	//public static final Upgrade[] elligibleUpgrades = {Upgrade.range, Upgrade.damage};
 	
-	public int timeSinceLastUpdate = 0;
-	
 	public int ticks = 0;
 	
 	public int intensity = 0, warmup = 600;
@@ -41,35 +39,16 @@ public class TowerLaser extends Tower {
 		baseRange = 500;
 	}
 	
-	
-	@Override
-	public void tick(int dt) {
-		super.tick(dt);
-		
-		if(EMPTimer != 0) {
-			target = null;
-		}
-	}
-	
 	@Override
 	public void update(int delta) {
 		super.update(delta);
 		
-		float dmg = getDamage();
-		
-		timeSinceLastUpdate += delta;
-		
 		if(target != null) {
-			if(EMPTimer != 0) {
-				target = null;
-			}
 			
 			if (!firing) {
 				
 				firing = true;
 			}
-			
-			timeSinceLastUpdate = 0;
 			
 			if (intensity < warmup) {
 				
@@ -85,7 +64,7 @@ public class TowerLaser extends Tower {
 			
 			if(ticks > getFireRate()) {
 				
-				target.damage((float)dmg / ((float)warmup / (float)intensity)*multiplier);
+				target.damage(getDamage() / ((float)warmup / (float)intensity)*multiplier);
 				ticks = 0;
 			}
 		}
@@ -95,7 +74,7 @@ public class TowerLaser extends Tower {
 			target.isTarget--;
 		}
 		//Entity lt = target;
-		target = (EntityLiving) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
+		target = getTarget();
 		if(target == null) {
 			intensity = 0;
 		}

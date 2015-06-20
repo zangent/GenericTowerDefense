@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL13;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
@@ -68,22 +69,17 @@ public class MouseTracker extends Entity {
 		// and try to place a tower between them, you
 		// can clip into the bottom-right tower's top-left corner.
 
-		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(MainGame.instance.root.getCopyOfChildren(), "Tower"), this.getPos(), MainGame.GRID_SIZE*4, -1);
-		
+		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(
+                MainGame.instance.root.getCopyOfChildren(), "Tower"),
+                this.getPos(), MainGame.GRID_SIZE*10, 100);
+
+        System.out.println("pls y u not workin d00d "+neighbors.size());
+		Rectangle new_bb = new Rectangle(tp.getX(), tp.getY(), child.getWidth(), child.getHeight());
 		for(Entity e:neighbors) {
 			
-			int mx = (int)tp.x, my = (int)tp.y, mw = child.getWidth(), mh = child.getHeight();
-			Vector2f op = Utils.snapToGrid(e.getPos());
-			int ox = (int)op.x, oy = (int)op.y, ow = e.getWidth(), oh = e.getHeight();
-			if(
-					//(mx+mw>ox||ox+ow<=mx) ||
-					//(my+mh<=oy||oy+oh<=my)
-					((mx<=ox&&mx+mw>ox)||
-					(ox<=mx&&ox+ow>mx))&&(
-					(my<=oy&&my+mh>oy)||
-					(oy<=my&&oy+oh>my))
-			   ) {
+			if(new_bb.intersects(e.get_bb())) {
 				good = false;
+                break;
 			}
 			
 		}
@@ -123,7 +119,7 @@ public class MouseTracker extends Entity {
 				MainGame.instance.root.addChild(child);
 				child.setPos(lastPoint);
 				MainGame.currency -= price;
-				child.addStatEffect(StatEffects.Constructing((Tower)child, 0));
+				child.addStatEffect(StatEffects.Constructing((Tower)child, 5000));
 				child.setUpdating(true);
 				kill();
 			}

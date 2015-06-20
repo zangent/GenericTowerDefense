@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
@@ -14,9 +15,24 @@ import com.lmag.gtd.util.Utils;
 public class Entity implements InputListener {
 	
 	public static int UPDATE_EVERY_EON = 500, UPDATE_SLOW = 200, UPDATE_MEDIUM = 75, UPDATE_FAST = 20;
+
+
+
+	/**
+	 * Base update rate; Shouldn't be modified.
+	 */
+	protected int baseUpdateRate;
+	/**
+	 * Value added directly to base stat.
+	 */
+	public int updateRateMod = 0;
+	/**
+	 * Update rate is multiplied by this percentage.
+	 */
+	public float updateRatePercMod = 1.0f;
 	
-	public int  updateRate;
-	private int updateTime=0;
+	private int updateTime = 0;
+	
 	
 	public boolean visible = true;
 	
@@ -27,23 +43,19 @@ public class Entity implements InputListener {
 	protected Image sprite;
 	
 	protected Vector2f offset;
-	
+
 	public Entity parent;
 	
-	protected boolean shouldUpdate = true;
+	protected boolean shouldUpdate;
 	public boolean updateChildren = true;
 	
 	public boolean killed = false;
 	
 	protected ArrayList<StatEffect> statEffects = new ArrayList<StatEffect>();
 	
-	protected int EMPTimer = 0;
-	
-	public short EMPEndTime = 1500;
-	
-	protected Entity EMPIndicator;
-	
 	private boolean acceptingInput = false;
+
+    protected Rectangle bounding_box;
 	
 	
 
@@ -60,12 +72,14 @@ public class Entity implements InputListener {
 	}
 	
 	private Entity(Vector2f position, Image sprite) {
+		
+		shouldUpdate = true;
 
 		this.sprite = sprite;
 		
 		setPos(position);
 		
-		updateRate = UPDATE_FAST;
+		baseUpdateRate = UPDATE_FAST;
 		
 		children = new ArrayList<Entity>();
 		addChild = new ArrayList<Entity>();
@@ -74,6 +88,8 @@ public class Entity implements InputListener {
 	
 	public Entity _setParent(Entity p) {
 		parent = p;
+
+        update_bb();
 
 		return this;
 	}
@@ -93,30 +109,45 @@ public class Entity implements InputListener {
 		remChild.add(futureChildYo);
 		return this;
 	}
+
+    protected void update_bb() {
+        try {
+            bounding_box = new Rectangle(this.getX()+1, this.getY()+1, this.getWidth()-2, this.getHeight()-2);
+        } catch (Exception e) {
+            bounding_box = new Rectangle(this.getX(), this.getY(), 1, 1);
+        }
+    }
+
+    public Rectangle get_bb() {
+        return new Rectangle (
+                bounding_box.getX(),bounding_box.getY(),
+                bounding_box.getWidth(),bounding_box.getHeight()
+        );
+    }
 	
 	public void update(int dt) {}
 	
+	
 	public void tick(int delta) {
 		
-		if(EMPIndicator != null)
-		EMPIndicator.tick(delta);
+		float finalUpdateRate = getUpdateRate();
 		
-		if (updateTime + delta >= updateRate) {
+		if (updateTime + delta >= finalUpdateRate) {
 			
 			if (isUpdating()) {	
 				
 				update(updateTime + delta);
 			}
 			
-			else if (!statEffects.isEmpty()) {
+			if (!statEffects.isEmpty()) {
 					
-				for (StatEffect effect : statEffects) {
+				for (StatEffect effect : ((ArrayList<StatEffect>)statEffects.clone())) {
 					
 					effect.update(updateTime + delta);
 				}
 			}
 			
-			updateTime = 0;
+			updateTime -= finalUpdateRate;
 		}
 		
 		else {
@@ -126,28 +157,35 @@ public class Entity implements InputListener {
 		
 
 		for (Entity ent : addChild) {
+			
 			this.children.add(ent);
 		}
+		
 		for (Entity ent : remChild) {
+			
 			this.children.remove(ent);
+			
 			if(!ent.killed) {
+				
 				ent.killed = true;
 				ent.kill();
 			}
 		}
+		
 		addChild.clear();
 		remChild.clear();
 
-		if(updateChildren)
-		for (Entity ent : children) {
+		if(updateChildren) {
 			
-			if(ent != EMPIndicator)
+			for (Entity ent : children) {
+			
 				ent.tick(delta);
+			}
 		}
 	}
 	
 	public float getX() {
-		return getPos().x;
+		return getPos().getX();
 	}
 
 	public Entity setX(float x) {
@@ -156,7 +194,7 @@ public class Entity implements InputListener {
 	}
 
 	public float getY() {
-		return getPos().y;
+        return getPos().getY();
 	}
 
 	public Entity setY(float y) {
@@ -170,7 +208,10 @@ public class Entity implements InputListener {
 	
 	public Entity setPos(Vector2f newPos) {
 		offset = newPos.sub( (parent != null) ? parent.getPos() : new Vector2f(0,0));
-		return this;
+
+        update_bb();
+
+        return this;
 	}
 	
 	
@@ -198,6 +239,7 @@ public class Entity implements InputListener {
 	
 	public Entity setOffset(Vector2f newPos) {
 		offset = newPos;
+        update_bb();
 		return this;
 	}
 	
@@ -225,11 +267,13 @@ public class Entity implements InputListener {
 	
 	public void addStatEffect(StatEffect effect) {
 		
-		if (!statEffects.contains(effect)) {
-			
-			statEffects.add(effect);
-			effect.onAdded();
+		if (statEffects.contains(effect)) {
+			StatEffect ose = getStatEffect(effect.internalName);
+			effect.replaces(ose);
+			statEffects.remove(ose);
 		}
+		statEffects.add(effect);
+		effect.onAdded();
 	}
 	
 	public void removeStatEffect(StatEffect effect) {
@@ -239,7 +283,7 @@ public class Entity implements InputListener {
 	
 	public void removeStatEffect(String effect) {
 		for(StatEffect se : statEffects) {
-			if(se.name.matches(effect)) {
+			if(se.internalName.matches(effect)) {
 				se.onRemoved();
 				statEffects.remove(se);
 			}
@@ -259,13 +303,13 @@ public class Entity implements InputListener {
 	}
 	
 	public void renderAll(Graphics g) {
+		
 		render(g);
+		
 		for (Entity ent : children) {
-			if(ent != EMPIndicator)
-				ent.renderAll(g);
+
+			ent.renderAll(g);
 		}
-		if(EMPIndicator != null)
-			EMPIndicator.renderAll(g);
 	}
 	
 	public Entity setVisible(boolean visible) {
@@ -276,20 +320,20 @@ public class Entity implements InputListener {
 	}
 	
 	public boolean isUpdating() {
-
-		if (hasStatEffect(StatEffects.constructing)) {
-			
-			return false;
-		}
 		
 		return shouldUpdate && (parent == null ? true : (parent.isUpdating() && parent.updateChildren));
 	}
 
 	public Entity setUpdating(boolean shouldUpdate) {
-		
+
 		this.shouldUpdate = shouldUpdate;
 		
 		return this;
+	}
+	
+	public float getUpdateRate() {
+		
+		return (baseUpdateRate * updateRatePercMod) + updateRateMod;
 	}
 
 	/**
@@ -352,7 +396,11 @@ public class Entity implements InputListener {
 		}
 		
 		killed = true;
+		
+		this.onDeath();
 	}
+	
+	protected void onDeath() {}
 	
 	/**
 	 * 
@@ -363,7 +411,7 @@ public class Entity implements InputListener {
 	 */
 	
 	public boolean contains(Vector2f in) {
-		return (in.x>getX()&&in.x<getX()+getWidth()&&in.y>getY()&&in.y<getY()+getHeight());
+		return get_bb().contains(in.getX(), in.getY());
 	}
 
 	
@@ -376,7 +424,7 @@ public class Entity implements InputListener {
 		
 		for(StatEffect se : this.statEffects) {
 
-			if(se.name.matches(name)) {
+			if(se.internalName.matches(name)) {
 				
 				return se;
 			}
@@ -389,7 +437,7 @@ public class Entity implements InputListener {
 		
 		for(StatEffect se : this.statEffects) {
 			
-			if(se.name.matches(name)) {
+			if(se.internalName.matches(name)) {
 				
 				return true;
 			}
@@ -551,7 +599,7 @@ public class Entity implements InputListener {
 			onKeyReleased(kc, ch);
 		}
 	}
-	
+
 	
 	
 	

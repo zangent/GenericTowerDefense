@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
+import com.lmag.gtd.util.Utils;
 
 public abstract class Tower extends EntityLiving {
 	
@@ -15,61 +16,15 @@ public abstract class Tower extends EntityLiving {
 	
 	public boolean constructing = false;
 	
-	boolean openMenuNextTick = false;
+	public boolean openMenuNextTick = false;
 	
-
-	/**
-	 * Base damage value; Shouldn't be modified.
-	 */
-	protected float baseDamage = 0;
-	/**
-	 * Value added directly to base stat.
-	 */
-	public float damageMod = 0;
-	/**
-	 * Damage is multiplied by this percentage.
-	 */
-	public float damagePercMod = 1.0f;
-
-
-	/**
-	 * Base detection range; Shouldn't be modified.
-	 */
-	protected int baseRange = 0;
-	/**
-	 * Value added directly to base stat.
-	 */
-	public int rangeMod = 0;
-	/**
-	 * Range is multiplied by this percentage.
-	 */
-	public float rangePercMod = 1.0f;
-	
-
-	/**
-	 * Base fire rate; Shouldn't be modified.
-	 */
-	protected int baseFireRate = 0;
-	/**
-	 * Value added directly to base stat.
-	 */
-	public int fireRateMod = 0;
-	/**
-	 * fireRate is multiplied by this percentage.
-	 */
-	public float fireRatePercMod = 1.0f;
+	public short targetingDisablers = 0;
 	
 	
 	public Tower(String sprite, Vector2f position) {
 		super(sprite, position);
 		
 		availableUpgrades.add("UBERDamage");
-		
-		//debug
-		System.out.println("Array contains: ");
-		for (String thing : availableUpgrades) {
-			System.out.println(thing);
-		}
 		
 		this.addAsInputListener();
 	}
@@ -78,11 +33,20 @@ public abstract class Tower extends EntityLiving {
 	@Override 
 	public void update(int delta) {
 		super.update(delta);
-		
+				
 		if(openMenuNextTick) {
+			
 			MainGame.instance.lc.setEntitySidebar(this);
 			openMenuNextTick = false;
 		}
+		
+		
+	}
+	
+	
+	@Override
+	public void tick(int dt) {
+		super.tick(dt);
 	}
 	
 	
@@ -103,27 +67,30 @@ public abstract class Tower extends EntityLiving {
 		return (int) ((baseFireRate * fireRatePercMod) + fireRateMod);
 	}
 	
+	
+	public Enemy getTarget() {
+		
+		if (targetingDisablers!=0) {
+			
+			return null;
+		}
+		
+		return (Enemy) Utils.getNearestEntity(Utils.sortByType(MainGame.instance.lc.getCopyOfChildren(), "Enemy"), this.getCenterPos(), getRange());
+	}
+	
+	
 	@Override
 	public void onMouseClicked(int btn, int x, int y, int clickCount)  {
-
-		//debug
-		System.out.println("Step 1");
 		
 		if (this.isUpdating()) {
-			//debug
-			System.out.println("Step 2");
 		
 			if(this.contains(new Vector2f(x,y)) ||
 					(!MainGame.instance.lc.buyMenuRight.open &&
 							MainGame.instance.lc.entityMenuRight.
 							contains(new Vector2f(x,y)))) {
-				//debug
-				System.out.println("Step 3");
 
 			
 				if(parent.updateChildren) {
-					//debug
-					System.out.println("Step 4");
 			
 					openMenuNextTick = true;
 				}

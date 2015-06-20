@@ -28,11 +28,6 @@ public class EntityMenu extends Entity {
 		
 		target = ent;
 		
-		Utils.printStackTrace();
-
-			//debug
-			System.out.println("Beginning list...");
-		
 		for (String upgName : ent.availableUpgrades) {
 
 			//debug
@@ -40,9 +35,6 @@ public class EntityMenu extends Entity {
 			
 			addUpgrade(upgName, 5);
 		}
-		
-		//debug
-		System.out.println("Ending list...");
 	}
 	
 	public void addUpgrade(String upgName, int price) {

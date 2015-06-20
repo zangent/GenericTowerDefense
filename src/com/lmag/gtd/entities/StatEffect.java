@@ -1,16 +1,24 @@
 package com.lmag.gtd.entities;
 
+import org.newdawn.slick.Graphics;
+
 
 public class StatEffect {
 	
-	public final String name = "YouDunGoofed";
+	public final String internalName = "YouDunGoofed";
+	public final String displayName = "YouDunGoofed";
+	
+	public int  updateRate = Entity.UPDATE_MEDIUM;
+	private int updateTime = 0;
 
 	/**
-	 * How long, in seconds, the effect should last. -1 is infinite.
+	 * How long, in milliseconds, the effect should last. -1 is infinite.
 	 */
 	public int duration = -1;
-	protected int sinceLastUpdate = 0;
 	
+	/**
+	 * The entity this effect is applied to.
+	 */
 	protected EntityLiving parent = null;
 	
 	/**
@@ -43,24 +51,14 @@ public class StatEffect {
 	/**
 	 * Percent of health regenerated every update
 	 */
-	public float percRegen = 0;
-
-	/**
-	 * Health lost every update
-	 */
-	public int DoT = 0;
-	
-	/**
-	 * Percent of health lost every update
-	 */
-	public float percDoT = 0;
+	public float regenPercMod = 0;
 	
 	
-	public StatEffect(EntityLiving Parent, int Duration) {
+	public StatEffect(EntityLiving parent, int duration) {
 		
-		duration = Duration;
+		this.duration = duration;
 		
-		parent = Parent;
+		this.parent = parent;
 	}
 	
 	public StatEffect(EntityLiving Parent) {
@@ -75,28 +73,33 @@ public class StatEffect {
 	}
 	
 	public void onRemoved() {
-		
-		
+
 	}
-	
+
+    public void onUpdate(int dt) {
+
+    }
 	
 	public void update(int dt) {
-		
-		sinceLastUpdate += dt;
-		
-		if (sinceLastUpdate >= 1000) {
-			
-			sinceLastUpdate -= 1000;
-			
-			if (duration != -1) {
-				
-				duration--;
-			}
-		}
+
+        onUpdate(dt);
+
+        if (duration != -1) {
+            duration -= dt;
+
+            if(duration == -1)
+                duration = -2;
+        }
 		
 		if (duration != -1 && duration <= 0) {
 			
 			parent.removeStatEffect(this);
 		}
+
+	}
+
+	public void replaces(StatEffect old) {
+		
+		
 	}
 }
