@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="gtd:jar">
+    <output-path>$PROJECT_DIR$/</output-path>
+    <root id="archive" name="Generic Tower Defence.jar">
+      <element id="module-output" name="Generic Tower Defence" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/slick.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lwjgl_util.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jinput.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jogg-0.0.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lwjgl.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jorbis-0.0.15.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_generic_tower_defence" default="compile.module.generic_tower_defence">
+  <dirname property="module.generic_tower_defence.basedir" file="${ant.file.module_generic_tower_defence}"/>
+  
+  <property name="module.jdk.home.generic_tower_defence" value="${jdk.home.1.7}"/>
+  <property name="module.jdk.bin.generic_tower_defence" value="${jdk.bin.1.7}"/>
+  <property name="module.jdk.classpath.generic_tower_defence" value="jdk.classpath.1.7"/>
+  
+  <property name="compiler.args.generic_tower_defence" value="-encoding UTF-8 -source 1.7 ${compiler.args}"/>
+  
+  <property name="generic_tower_defence.output.dir" value="${module.generic_tower_defence.basedir}/bin"/>
+  <property name="generic_tower_defence.testoutput.dir" value="${module.generic_tower_defence.basedir}/bin"/>
+  
+  <path id="generic_tower_defence.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="generic_tower_defence.module.production.classpath">
+    <path refid="${module.jdk.classpath.generic_tower_defence}"/>
+    <pathelement location="${basedir}/lib/jinput.jar"/>
+    <pathelement location="${basedir}/lib/jogg-0.0.7.jar"/>
+    <pathelement location="${basedir}/lib/jorbis-0.0.15.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl_util.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/slick.jar"/>
+  </path>
+  
+  <path id="generic_tower_defence.runtime.production.module.classpath">
+    <pathelement location="${generic_tower_defence.output.dir}"/>
+    <pathelement location="${basedir}/lib/jinput.jar"/>
+    <pathelement location="${basedir}/lib/jogg-0.0.7.jar"/>
+    <pathelement location="${basedir}/lib/jorbis-0.0.15.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl_util.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/slick.jar"/>
+  </path>
+  
+  <path id="generic_tower_defence.module.classpath">
+    <pathelement location="${generic_tower_defence.output.dir}"/>
+    <path refid="${module.jdk.classpath.generic_tower_defence}"/>
+    <pathelement location="${basedir}/lib/jinput.jar"/>
+    <pathelement location="${basedir}/lib/jogg-0.0.7.jar"/>
+    <pathelement location="${basedir}/lib/jorbis-0.0.15.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl_util.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/slick.jar"/>
+  </path>
+  
+  <path id="generic_tower_defence.runtime.module.classpath">
+    <pathelement location="${generic_tower_defence.output.dir}"/>
+    <pathelement location="${basedir}/lib/jinput.jar"/>
+    <pathelement location="${basedir}/lib/jogg-0.0.7.jar"/>
+    <pathelement location="${basedir}/lib/jorbis-0.0.15.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl_util.jar"/>
+    <pathelement location="${basedir}/lib/lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/slick.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.generic_tower_defence">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.generic_tower_defence">
+    <patternset refid="excluded.from.module.generic_tower_defence"/>
+  </patternset>
+  
+  <path id="generic_tower_defence.module.sourcepath">
+    <dirset dir="${module.generic_tower_defence.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.generic_tower_defence" depends="compile.module.generic_tower_defence.production,compile.module.generic_tower_defence.tests" description="Compile module Generic Tower Defence"/>
+  
+  <target name="compile.module.generic_tower_defence.production" depends="register.custom.compilers" description="Compile module Generic Tower Defence; production classes">
+    <mkdir dir="${generic_tower_defence.output.dir}"/>
+    <javac2 destdir="${generic_tower_defence.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.generic_tower_defence}/javac">
+      <compilerarg line="${compiler.args.generic_tower_defence}"/>
+      <bootclasspath refid="generic_tower_defence.module.bootclasspath"/>
+      <classpath refid="generic_tower_defence.module.production.classpath"/>
+      <src refid="generic_tower_defence.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.generic_tower_defence"/>
+    </javac2>
+    
+    <copy todir="${generic_tower_defence.output.dir}">
+      <fileset dir="${module.generic_tower_defence.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.generic_tower_defence.tests" depends="register.custom.compilers,compile.module.generic_tower_defence.production" description="compile module Generic Tower Defence; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.generic_tower_defence" description="cleanup module">
+    <delete dir="${generic_tower_defence.output.dir}"/>
+    <delete dir="${generic_tower_defence.testoutput.dir}"/>
+  </target>
+</project>
