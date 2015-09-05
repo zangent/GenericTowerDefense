@@ -1,5 +1,6 @@
 package com.lmag.gtd;
 
+import com.lmag.gtd.entities.menu.BuyMenu;
 import org.lwjgl.LWJGLUtil;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.AppGameContainer;
@@ -9,28 +10,21 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.entities.StatEffect;
-import com.lmag.gtd.entities.TowerMachineGun;
 import com.lmag.gtd.entities.Entity;
-import com.lmag.gtd.entities.MouseTracker;
-import com.lmag.gtd.entities.menu.Button;
-import com.lmag.gtd.entities.menu.BuyMenu;
 import com.lmag.gtd.entities.menu.MainMenu;
-import com.lmag.gtd.util.Executable;
-import com.lmag.gtd.util.Renderable;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class MainGame extends BasicGame {
 	
 	// Constants.
 	public static final String GAME_NAME = "Generic TD";
 	public static final int TARGET_FPS = 60;
-	public static final int WIDTH  = 800;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH  = 872;
+	public static final int HEIGHT = 672;
 	public static final int TOWER_SIZE = 32;
-	public static final int GRID_SIZE = TOWER_SIZE/2;
+    public static final int WIDTH_IN_TILES = (WIDTH-BuyMenu.width)/TOWER_SIZE;
+    public static final int HEIGHT_IN_TILES = HEIGHT/TOWER_SIZE;
 	public static FontRenderer badFont;
 
 	public static float currency = 9099999;

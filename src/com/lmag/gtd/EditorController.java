@@ -3,16 +3,11 @@ package com.lmag.gtd;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.lmag.gtd.entities.Enemy;
-import com.lmag.gtd.entities.Entity;
-import com.lmag.gtd.util.Utils;
-
-public class EditorController extends LevelController {
+public class EditorController extends LegacyLevelController {
 	
 	ArrayList<Vector2f> pathPoints = new ArrayList<Vector2f>();
 	

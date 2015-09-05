@@ -40,12 +40,17 @@ public class Utils {
 	}
 	
 	public static ArrayList<Entity> sortByType(ArrayList<Entity> in, String type) {
-		
+
+        String[] types = type.split("\\|\\|");
+        System.out.println(Arrays.toString(types));
 		ArrayList<Entity> newArray = new ArrayList<Entity>();
 		for(int i=0;i<in.size();i++) {
-			if(in.get(i).getType().contains(type)) {
-				newArray.add(in.get(i));
-			}
+            for(int j=0;j<types.length;j++) {
+                if (in.get(i).getType().contains(types[j])) {
+                    newArray.add(in.get(i));
+                    break;
+                }
+            }
 		}
 		
 		return newArray;
@@ -72,18 +77,7 @@ public class Utils {
 		ArrayList<Float> results = new ArrayList<Float>();
 		ArrayList<Entity> entResults = new ArrayList<Entity>();
 
-        //debug
-        int numTowers = 0;
-
-        System.out.println("-------------\nMax: "+maxDist+"\n");
-
 		for (Entity ent : in) {
-
-            //debug
-            if (ent instanceof Tower) {
-
-                numTowers++;
-            }
 
 			/*if (ent.getCopyOfChildren().size() > 0) {
 
@@ -91,12 +85,9 @@ public class Utils {
 			}*/
 
             float dist = getDist(pos, ent.getCenterPos());
-            if(ent instanceof Tower) System.out.println(dist);
             if (dist >= maxDist) {
-
                 continue;
             }
-
 
             //if (results.isEmpty()) {
 
@@ -158,14 +149,6 @@ public class Utils {
                 }
             });
             System.out.println(Arrays.deepToString(iHaveToTurnThisIntoAnObjectArrayArraySoYeah));
-        }
-
-
-        //debug
-        if (numTowers > 1) {
-            System.out.println("Towers: " + numTowers);
-
-            System.out.println("Results: " + entResults.size());
         }
 		
 		return entResults;
@@ -242,23 +225,23 @@ public class Utils {
 	
 	public static Vector2f snapToGrid(Vector2f in) {
 		
-		float x = (float) (Math.floor(in.x/MainGame.GRID_SIZE));
-		float y = (float) (Math.floor(in.y/MainGame.GRID_SIZE));
+		float x = (float) (Math.floor(in.x/MainGame.TOWER_SIZE));
+		float y = (float) (Math.floor(in.y/MainGame.TOWER_SIZE));
 		
-		if (in.x >= MainGame.WIDTH - MainGame.GRID_SIZE) {
+		if (in.x >= MainGame.WIDTH - MainGame.TOWER_SIZE) {
 			x--;
 		}
 		
-		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
+		if (y >= Math.floor(MainGame.HEIGHT/MainGame.TOWER_SIZE) - 1) {
 			y--;
 		}
-		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
+		if (y >= Math.floor(MainGame.HEIGHT/MainGame.TOWER_SIZE) - 1) {
 			y--;
 		}
 		
 		return new Vector2f(
-				(float) (MainGame.GRID_SIZE * x),
-				(float) (MainGame.GRID_SIZE * y)
+				(float) (MainGame.TOWER_SIZE * x),
+				(float) (MainGame.TOWER_SIZE * y)
 		);
 	}
 	/**

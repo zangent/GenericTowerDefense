@@ -19,7 +19,8 @@ public abstract class Tower extends EntityLiving {
 	public boolean openMenuNextTick = false;
 	
 	public short targetingDisablers = 0;
-	
+
+    private boolean first_update = true;
 	
 	public Tower(String sprite, Vector2f position) {
 		super(sprite, position);
@@ -33,7 +34,12 @@ public abstract class Tower extends EntityLiving {
 	@Override 
 	public void update(int delta) {
 		super.update(delta);
-				
+
+        if(first_update) {
+            MainGame.instance.lc.heatmap.update_heatmap();
+            first_update = false;
+        }
+
 		if(openMenuNextTick) {
 			
 			MainGame.instance.lc.setEntitySidebar(this);

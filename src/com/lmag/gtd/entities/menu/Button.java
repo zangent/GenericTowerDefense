@@ -9,6 +9,9 @@ import com.lmag.gtd.util.Executable;
 public class Button extends Entity {
 	
 	protected Executable onPress;
+
+    //debug
+    public boolean debug = false;
 	
 	protected Entity renderEnt;
 	
@@ -76,11 +79,17 @@ public class Button extends Entity {
 	
 	@Override
 	public void onMouseReleased(int btn, int x, int y) {
-        System.out.println("--------------------");
-        System.out.println(get_bb());
-        System.out.println("vs");
-        System.out.println(new Vector2f(x,y));
-        System.out.println("--------------------");
+
+        //debug
+        if (debug) {
+            System.out.println("X: " + x + " Y: " + y);
+            System.out.println("button X: " + this.get_bb().getX() + " Y: " + this.get_bb().getY() + " W: "+this.get_bb().getWidth()+" H: "+this.get_bb().getHeight());
+            if (buttonDown && contains(new Vector2f(x, y))) {
+
+                System.out.println("Clicked!!!");
+            }
+        }
+
 		if(buttonDown && contains(new Vector2f(x,y))) {
 			execFunc();
 		}

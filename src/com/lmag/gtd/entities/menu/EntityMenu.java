@@ -24,7 +24,7 @@ public class EntityMenu extends Entity {
 	public Tower target;
 	
 	public EntityMenu(Tower ent) {
-		super("buy_menu.png", new Vector2f(0, 0));
+		super("buy_menu.png", new Vector2f(MainGame.WIDTH-width, 0));
 		
 		target = ent;
 		

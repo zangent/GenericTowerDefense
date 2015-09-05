@@ -24,7 +24,7 @@ public class BuyMenu extends Entity {
 	public boolean open = true;
 	
 	public BuyMenu() {
-		super("buy_menu.png", new Vector2f(0, 0));
+		super("buy_menu.png", new Vector2f(MainGame.WIDTH-width, 0));
 		
 		addTower(new TowerMachineGun(new Vector2f(0,0)), 50);
 		addTower(new TowerPulseCannon(new Vector2f(0,0)), 100);
@@ -58,8 +58,20 @@ public class BuyMenu extends Entity {
 		
 		e.params.put("class", add.getClass());
 		e.params.put("price", price);
-		
-		this.addChild(((Button)new Button(new Vector2f(offsetX, offsetY), e).addChild(add)).useChildBB());
+
+        //debug
+
+        Button b = (Button)new Button(new Vector2f(offsetX, offsetY), e).useChildBB();
+
+        addChild(b);
+
+        b.addChild(add);
+
+        if (add instanceof TowerLaser) {
+            b.debug = true;
+        }
+
+		//this.addChild(((Button)new Button(new Vector2f(offsetX, offsetY), e).addChild(add)).useChildBB());
 		offsetX += size+step;
 		
 		if(offsetX > width) {

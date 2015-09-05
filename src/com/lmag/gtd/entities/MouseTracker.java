@@ -45,6 +45,7 @@ public class MouseTracker extends Entity {
 	public boolean updatePos(Graphics g) {
 		Vector2f tp = (Utils.snapToGrid(MainGame.instance.getMousePos()));
 		boolean good = true;
+        /*
 		Vector2f[] pth = MainGame.instance.lc.getPath();
 		for(int i=0;i<pth.length-1;i++) {
 			Vector2f a = pth[i];
@@ -60,20 +61,12 @@ public class MouseTracker extends Entity {
 				break;
 			}
 		}
-
-		//TODO: There is a clipping issue here.
-		// If you place towers like this:
-		// 				  X
-		//
-		//				    X
-		// and try to place a tower between them, you
-		// can clip into the bottom-right tower's top-left corner.
+		*/
 
 		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(
-                MainGame.instance.root.getCopyOfChildren(), "Tower"),
-                this.getPos(), MainGame.GRID_SIZE*10, 100);
+                MainGame.instance.root.getCopyOfChildren(), "Tower||Wall"),
+                this.getPos(), MainGame.TOWER_SIZE*5, 100);
 
-        System.out.println("pls y u not workin d00d "+neighbors.size());
 		Rectangle new_bb = new Rectangle(tp.getX(), tp.getY(), child.getWidth(), child.getHeight());
 		for(Entity e:neighbors) {
 			
@@ -121,6 +114,7 @@ public class MouseTracker extends Entity {
 				MainGame.currency -= price;
 				child.addStatEffect(StatEffects.Constructing((Tower)child, 5000));
 				child.setUpdating(true);
+
 				kill();
 			}
 		} else if(btn == 1) {

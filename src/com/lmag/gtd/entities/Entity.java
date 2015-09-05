@@ -42,7 +42,7 @@ public class Entity implements InputListener {
 	
 	protected Image sprite;
 	
-	protected Vector2f offset;
+	protected Vector2f offset = new Vector2f(0);
 
 	public Entity parent;
 	
@@ -77,13 +77,15 @@ public class Entity implements InputListener {
 
 		this.sprite = sprite;
 		
-		setPos(position);
-		
 		baseUpdateRate = UPDATE_FAST;
 		
 		children = new ArrayList<Entity>();
 		addChild = new ArrayList<Entity>();
 		remChild = new ArrayList<Entity>();
+
+        this._setParent(MainGame.instance.root);
+
+        setPos(position);
 	}
 	
 	public Entity _setParent(Entity p) {
@@ -111,14 +113,22 @@ public class Entity implements InputListener {
 	}
 
     protected void update_bb() {
-        try {
-            bounding_box = new Rectangle(this.getX()+1, this.getY()+1, this.getWidth()-2, this.getHeight()-2);
-        } catch (Exception e) {
-            bounding_box = new Rectangle(this.getX(), this.getY(), 1, 1);
+
+        if (parent == null) {
+
+            return;
         }
+
+        if(this instanceof com.lmag.gtd.entities.TowerLaser &&
+                this.parent instanceof com.lmag.gtd.entities.menu.Button) {
+
+        }
+
+        bounding_box = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
     public Rectangle get_bb() {
+
         return new Rectangle (
                 bounding_box.getX(),bounding_box.getY(),
                 bounding_box.getWidth(),bounding_box.getHeight()
@@ -129,6 +139,11 @@ public class Entity implements InputListener {
 	
 	
 	public void tick(int delta) {
+        try {
+            bounding_box = new Rectangle(this.getX()+1, this.getY()+1, this.getWidth()-2, this.getHeight()-2);
+        } catch (Exception e) {
+            bounding_box = new Rectangle(this.getX(), this.getY(), 1, 1);
+        }
 		
 		float finalUpdateRate = getUpdateRate();
 		
@@ -187,18 +202,30 @@ public class Entity implements InputListener {
 	public float getX() {
 		return getPos().getX();
 	}
+    public int getTileX() {
+        return (int)(getX()/MainGame.TOWER_SIZE);
+    }
 
 	public Entity setX(float x) {
+
 		setPos(new Vector2f(x,getY()));
+        this.update_bb();
+
 		return this;
 	}
 
 	public float getY() {
         return getPos().getY();
 	}
+    public int getTileY() {
+        return (int)(getY()/MainGame.TOWER_SIZE);
+    }
 
 	public Entity setY(float y) {
+
 		setPos(new Vector2f(getX(),y));
+        this.update_bb();
+
 		return this;
 	}
 	
