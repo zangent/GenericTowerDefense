@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import com.lmag.gtd.entities.Tower;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -148,7 +147,6 @@ public class Utils {
                     return Float.compare((float) o2[0], (float) o1[0]);
                 }
             });
-            System.out.println(Arrays.deepToString(iHaveToTurnThisIntoAnObjectArrayArraySoYeah));
         }
 		
 		return entResults;
@@ -225,23 +223,23 @@ public class Utils {
 	
 	public static Vector2f snapToGrid(Vector2f in) {
 		
-		float x = (float) (Math.floor(in.x/MainGame.TOWER_SIZE));
-		float y = (float) (Math.floor(in.y/MainGame.TOWER_SIZE));
+		float x = (float) (Math.floor(in.x/MainGame.GRID_SIZE));
+		float y = (float) (Math.floor(in.y/MainGame.GRID_SIZE));
 		
-		if (in.x >= MainGame.WIDTH - MainGame.TOWER_SIZE) {
+		if (in.x >= MainGame.WIDTH - MainGame.GRID_SIZE) {
 			x--;
 		}
 		
-		if (y >= Math.floor(MainGame.HEIGHT/MainGame.TOWER_SIZE) - 1) {
+		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
 			y--;
 		}
-		if (y >= Math.floor(MainGame.HEIGHT/MainGame.TOWER_SIZE) - 1) {
+		if (y >= Math.floor(MainGame.HEIGHT/MainGame.GRID_SIZE) - 1) {
 			y--;
 		}
 		
 		return new Vector2f(
-				(float) (MainGame.TOWER_SIZE * x),
-				(float) (MainGame.TOWER_SIZE * y)
+				(float) (MainGame.GRID_SIZE * x),
+				(float) (MainGame.GRID_SIZE * y)
 		);
 	}
 	/**

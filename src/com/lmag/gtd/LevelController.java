@@ -12,7 +12,6 @@ import org.newdawn.slick.geom.Vector2f;
 import com.lmag.gtd.entities.menu.BuyMenu;
 import com.lmag.gtd.entities.menu.EntityMenu;
 import com.lmag.gtd.util.Utils;
-import sun.applet.Main;
 
 public class LevelController extends Entity {
 
@@ -20,6 +19,8 @@ public class LevelController extends Entity {
     int lifetime = 0;
     int waveCount = 0;
     int enemyCount = 0;
+
+    //public ArrayList<Vector2f> path = new ArrayList<Vector2f>();
 
     // Self-documenting code...
     int currentMaxEnemyCountForThePresentWaveThatIsOccuring = 1;
@@ -37,6 +38,14 @@ public class LevelController extends Entity {
     public Heatmap heatmap;
 
     public Wall[] walls;
+    /**
+     * The exit
+     */
+    public Entity the_holy_grail = null;
+    /**
+     * The entrance
+     */
+    public Entity the_powerhouse_of_the_map = null;
 
     @SuppressWarnings("unchecked")
     public LevelController() {
@@ -52,14 +61,12 @@ public class LevelController extends Entity {
         Image map_img = Utils.getImageFromPath("maps/coryinthehouse.png");
 
         ArrayList<Wall> walls = new ArrayList<Wall>();
-        Entity the_holy_grail = null;
-        Entity where_they_come_from;
         for(int x=0,imgw=map_img.getWidth();x<imgw;x++) {
             for(int y=0,imgh=map_img.getHeight();y<imgh;y++) {
                 Color pixel_color = map_img.getColor(x,y);
                 int r=pixel_color.getRed(),g=pixel_color.getGreen(),b=pixel_color.getBlue(),a=pixel_color.getAlpha();
                 //System.out.println("X: "+x+" Y: "+y+" "+r+","+g+","+b+","+a);
-                int tx = x * MainGame.TOWER_SIZE, ty = y * MainGame.TOWER_SIZE;
+                int tx = x * MainGame.GRID_SIZE, ty = y * MainGame.GRID_SIZE;
                 if(r==0&&g==0&&b==0) { // Black
                     Wall wall = new Wall("asteroid.png", new Vector2f(tx,ty));
                     //MainGame.instance.root.addChild(wall);
@@ -68,6 +75,8 @@ public class LevelController extends Entity {
                     walls.add(wall);
                 } else if(r==0&&g==255&&b==0) {
                     the_holy_grail = new Entity(new Vector2f(tx,ty));
+                } else if(r==255&&g==0&&b==0) {
+                    the_powerhouse_of_the_map = new Entity(new Vector2f(tx,ty));
                 }
             }
         }
@@ -147,6 +156,10 @@ public class LevelController extends Entity {
 
         addChild(e);
         //((Enemy)e).setPath(path);
+        if(e instanceof Enemy) {
+            e.setPos(the_powerhouse_of_the_map.getPos());
+            ((Enemy)e).updatePath();
+        }
         return e;
     }
 
@@ -173,6 +186,14 @@ public class LevelController extends Entity {
         enemyCount++;
 
         return enemy;
+    }
+
+    public void on_thing_placed() {
+        heatmap.update_heatmap();
+        ArrayList<Entity> enemies = Utils.sortByType(Utils.getNearestEntities(MainGame.instance.root.getCopyOfChildren(), new Vector2f(0,0), Integer.MAX_VALUE, -1), "Enemy");
+        for(int i=0;i<enemies.size();i++) {
+            ((Enemy)enemies.get(i)).updatePath();
+        }
     }
 
     public void setEntitySidebar(Tower e) {
@@ -222,6 +243,7 @@ public class LevelController extends Entity {
     @Override
     public void renderAll(Graphics g) {
 
+        //heatmap.render_heatmap(g);
         for (Entity ent : children) {
 
             if (ent == buyMenuRight) {
@@ -238,6 +260,5 @@ public class LevelController extends Entity {
             }
         }
 
-        heatmap.render_heatmap(g);
     }
 }

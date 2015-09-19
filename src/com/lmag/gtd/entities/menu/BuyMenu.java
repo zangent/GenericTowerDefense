@@ -18,7 +18,7 @@ public class BuyMenu extends Entity {
 	public static final int width = 200;
 	public static final int height = MainGame.HEIGHT;
 	
-	int size = MainGame.TOWER_SIZE, step=4;
+	int size = MainGame.GRID_SIZE, step=4;
 	int offsetX = step, offsetY = step;
 	
 	public boolean open = true;

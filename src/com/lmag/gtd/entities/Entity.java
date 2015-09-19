@@ -203,7 +203,7 @@ public class Entity implements InputListener {
 		return getPos().getX();
 	}
     public int getTileX() {
-        return (int)(getX()/MainGame.TOWER_SIZE);
+        return (int)(getX()/MainGame.GRID_SIZE);
     }
 
 	public Entity setX(float x) {
@@ -218,7 +218,7 @@ public class Entity implements InputListener {
         return getPos().getY();
 	}
     public int getTileY() {
-        return (int)(getY()/MainGame.TOWER_SIZE);
+        return (int)(getY()/MainGame.GRID_SIZE);
     }
 
 	public Entity setY(float y) {
@@ -240,6 +240,11 @@ public class Entity implements InputListener {
 
         return this;
 	}
+
+    public Vector2f getPosOnGrid() {
+
+        return new Vector2f(getPos().x / MainGame.GRID_SIZE, getPos().y / MainGame.GRID_SIZE);
+    }
 	
 	
 	public float getXOffset() {

@@ -22,9 +22,9 @@ public class MainGame extends BasicGame {
 	public static final int TARGET_FPS = 60;
 	public static final int WIDTH  = 872;
 	public static final int HEIGHT = 672;
-	public static final int TOWER_SIZE = 32;
-    public static final int WIDTH_IN_TILES = (WIDTH-BuyMenu.width)/TOWER_SIZE;
-    public static final int HEIGHT_IN_TILES = HEIGHT/TOWER_SIZE;
+	public static final int GRID_SIZE = 32;
+    public static final int WIDTH_IN_TILES = (WIDTH-BuyMenu.width)/ GRID_SIZE;
+    public static final int HEIGHT_IN_TILES = HEIGHT/ GRID_SIZE;
 	public static FontRenderer badFont;
 
 	public static float currency = 9099999;

@@ -36,7 +36,7 @@ public abstract class Tower extends EntityLiving {
 		super.update(delta);
 
         if(first_update) {
-            MainGame.instance.lc.heatmap.update_heatmap();
+            MainGame.instance.lc.on_thing_placed();
             first_update = false;
         }
 
@@ -45,8 +45,6 @@ public abstract class Tower extends EntityLiving {
 			MainGame.instance.lc.setEntitySidebar(this);
 			openMenuNextTick = false;
 		}
-		
-		
 	}
 	
 	

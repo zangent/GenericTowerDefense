@@ -2,7 +2,6 @@ package com.lmag.gtd.entities;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL13;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -65,7 +64,7 @@ public class MouseTracker extends Entity {
 
 		ArrayList<Entity> neighbors = Utils.getNearestEntities(Utils.sortByType(
                 MainGame.instance.root.getCopyOfChildren(), "Tower||Wall"),
-                this.getPos(), MainGame.TOWER_SIZE*5, 100);
+                this.getPos(), MainGame.GRID_SIZE *5, 100);
 
 		Rectangle new_bb = new Rectangle(tp.getX(), tp.getY(), child.getWidth(), child.getHeight());
 		for(Entity e:neighbors) {

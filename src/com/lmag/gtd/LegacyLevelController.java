@@ -119,7 +119,6 @@ public class LegacyLevelController extends Entity {
 	public EntityLiving addBuffWithChance(EntityLiving e) {
 
 		addChild(e);
-		((Enemy)e).setPath(path);
 		return e;
 	}
 	
