@@ -15,24 +15,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/enemies/EnemyC.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/enemies/EnemyC.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu$1.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Generic Tower Defence.jar" afterPath="$PROJECT_DIR$/Generic Tower Defence.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/LevelController.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/LevelController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/MainGame.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/MainGame.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/MouseTracker.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/MouseTracker.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/Tower.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/Tower.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils$1.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/BuyMenu.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/BuyMenu.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/EntityMenu.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/EntityMenu.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Heatmap.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Heatmap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/LegacyLevelController.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/LegacyLevelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/LevelController.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/LevelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/MainGame.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/MainGame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/MouseTracker.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/MouseTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Tower.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Tower.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/util/Utils.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/util/Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Generic Tower Defence.iws" />
@@ -678,7 +666,7 @@
       <workItem from="1440815880181" duration="3559000" />
       <workItem from="1441421347105" duration="11150000" />
       <workItem from="1442026715481" duration="7221000" />
-      <workItem from="1442631885365" duration="5452000" />
+      <workItem from="1442631885365" duration="5466000" />
     </task>
     <task id="LOCAL-00001" summary="[23] - More statEffect goodness&#10;">
       <created>1439622660411</created>
@@ -692,11 +680,17 @@
       <option name="project" value="LOCAL" />
       <updated>1441432234953</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="[30] - Pathing finished! (... Kinda)&#10;">
+      <created>1442637347986</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1442637347986</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47896000" />
+    <option name="totallyTimeSpent" value="47910000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="32" width="1064" height="735" extended-state="0" />
