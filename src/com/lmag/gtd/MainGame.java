@@ -32,9 +32,11 @@ public class MainGame extends BasicGame {
 		
 	public Entity root;
 	public LevelController lc;
-	
-	
-	public boolean debug = true;
+
+    /**
+     * Enables debug mode. Duh.
+     */
+	public boolean debug = false;
 	
 	public static MainGame instance;
 	

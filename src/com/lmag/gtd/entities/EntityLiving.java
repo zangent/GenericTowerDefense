@@ -175,9 +175,6 @@ public abstract class EntityLiving extends Entity {
 					
 					availableUpgrades.remove(upgName);
 					
-					//debug
-					System.out.println("Upgrade added!");
-					
 					upg.onAdded();
 				}
 				

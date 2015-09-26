@@ -329,6 +329,12 @@ public class Entity implements InputListener {
 	
 	
 	public void render(Graphics g) {
+
+        if (this.getPos() == null || this.getX() < 0 || this.getX() > MainGame.WIDTH
+                || this.getY() < 0 || this.getY() > MainGame.HEIGHT) {
+
+            return;
+        }
 		
 		if(visible&&sprite!=null) g.drawImage(sprite, getX(), getY());
 		

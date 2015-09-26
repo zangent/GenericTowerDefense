@@ -36,8 +36,7 @@ public class MainMenu extends Node {
 
 			@Override
 			public void run() {
-				
-				System.out.println("OPTSHUNZ XDXDXDXD");
+
 			}
 			
 		}).forceSize(MainGame.WIDTH/2, MainGame.HEIGHT/2));

@@ -61,12 +61,15 @@ public class LevelController extends Entity {
         Image map_img = Utils.getImageFromPath("maps/coryinthehouse.png");
 
         ArrayList<Wall> walls = new ArrayList<Wall>();
+
         for(int x=0,imgw=map_img.getWidth();x<imgw;x++) {
+
             for(int y=0,imgh=map_img.getHeight();y<imgh;y++) {
+
                 Color pixel_color = map_img.getColor(x,y);
                 int r=pixel_color.getRed(),g=pixel_color.getGreen(),b=pixel_color.getBlue(),a=pixel_color.getAlpha();
-                //System.out.println("X: "+x+" Y: "+y+" "+r+","+g+","+b+","+a);
                 int tx = x * MainGame.GRID_SIZE, ty = y * MainGame.GRID_SIZE;
+
                 if(r==0&&g==0&&b==0) { // Black
                     Wall wall = new Wall("asteroid.png", new Vector2f(tx,ty));
                     //MainGame.instance.root.addChild(wall);
@@ -190,7 +193,7 @@ public class LevelController extends Entity {
 
     public void on_thing_placed() {
         heatmap.update_heatmap();
-        ArrayList<Entity> enemies = Utils.sortByType(Utils.getNearestEntities(MainGame.instance.root.getCopyOfChildren(), new Vector2f(0,0), Integer.MAX_VALUE, -1), "Enemy");
+        ArrayList<Entity> enemies = Utils.sortByType(Utils.getNearestEntities(MainGame.instance.lc.getCopyOfChildren(), new Vector2f(0,0), -1, -1), "Enemy");
         for(int i=0;i<enemies.size();i++) {
             ((Enemy)enemies.get(i)).updatePath();
         }

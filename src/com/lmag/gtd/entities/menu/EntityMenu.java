@@ -27,9 +27,6 @@ public class EntityMenu extends Entity {
 		target = ent;
 		
 		for (String upgName : ent.availableUpgrades) {
-
-			//debug
-			System.out.println("|| " + upgName);
 			
 			addUpgrade(upgName, 5);
 		}

@@ -15,7 +15,7 @@ public abstract class Enemy extends EntityLiving {
 	protected int currentSegment = 0;
 
 	protected float endTime = 0;
-	protected float speedMod = 0.005f;
+	protected float speedMod = 0.5f;
 	public int xXx_cashMonAy_dropped_xXx = 420;
 
     protected byte dir = 0;
@@ -40,7 +40,6 @@ public abstract class Enemy extends EntityLiving {
 	
 	@Override
 	public void render(Graphics g) {
-		
 		super.render(g);
 		
 		if(this.isTarget>0) {
@@ -49,6 +48,7 @@ public abstract class Enemy extends EntityLiving {
 	}
 
     public void updatePath() {
+
         ArrayList<Vector2f> newPath = new ArrayList<Vector2f>();
 
         if (MainGame.instance.lc.heatmap == null || MainGame.instance.lc.heatmap.getWalls() == null) {
@@ -57,7 +57,9 @@ public abstract class Enemy extends EntityLiving {
         }
 
         Vector2f currentPos = this.getPosOnGrid();
+
         byte facing = -1;
+
         int currentTemp = MainGame.instance.lc.heatmap.getTemp(MainGame.instance.lc.the_powerhouse_of_the_map.getPos());
 
         int count = MainGame.HEIGHT_IN_TILES * MainGame.WIDTH_IN_TILES;
@@ -66,9 +68,6 @@ public abstract class Enemy extends EntityLiving {
 
             //Right
             if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x + 1, (int) currentPos.y) < currentTemp) {
-
-                //debug
-                System.out.println("CurrentPos: " + currentPos + "\nnewPos: \nx: " + currentPos.x + "y: " + (currentPos.y - 1));
 
                 currentPos = new Vector2f(currentPos.x + 1, currentPos.y);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
@@ -85,9 +84,6 @@ public abstract class Enemy extends EntityLiving {
             //Up
             else if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x, (int) currentPos.y + 1) < currentTemp) {
 
-                //debug
-                System.out.println("CurrentPos: " + currentPos + "\nnewPos: \nx: " + currentPos.x + "y: " + (currentPos.y - 1));
-
                 currentPos = new Vector2f(currentPos.x, currentPos.y + 1);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
 
@@ -103,9 +99,6 @@ public abstract class Enemy extends EntityLiving {
             //Left
             else if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x - 1, (int) currentPos.y) < currentTemp) {
 
-                //debug
-                System.out.println("CurrentPos: " + currentPos + "\nnewPos: \nx: " + currentPos.x + "y: " + (currentPos.y - 1));
-
                 currentPos = new Vector2f(currentPos.x - 1, currentPos.y);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
 
@@ -120,9 +113,6 @@ public abstract class Enemy extends EntityLiving {
             }
             //Down
             else if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x, (int) currentPos.y - 1) < currentTemp) {
-
-                //debug
-                System.out.println("CurrentPos: " + currentPos + "\nnewPos: \nx: " + currentPos.x + "y: " + (currentPos.y - 1));
 
                 currentPos = new Vector2f(currentPos.x, currentPos.y - 1);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
@@ -140,7 +130,11 @@ public abstract class Enemy extends EntityLiving {
 
         newPath.add(MainGame.instance.lc.the_holy_grail.getPosOnGrid());
 
-        path = (ArrayList<Vector2f>)newPath.clone();
+        path = new ArrayList<Vector2f>();
+        path.add(getPos());
+        for(int i=0;i<newPath.size();i++) {
+            path.add(newPath.get(i).copy().scale(MainGame.GRID_SIZE));
+        }
         endTime = Utils.getDist(path.get(0), path.get(1)) / speedMod;
         currentSegment = 0;
         t = 0;
@@ -153,12 +147,6 @@ public abstract class Enemy extends EntityLiving {
 
             return;
         }
-
-        //debug
-        for (Vector2f p : path) {
-
-            System.out.println(p);
-        }
 		
 		targetIcon.rotate(.1f*dt);
 		
@@ -168,16 +156,22 @@ public abstract class Enemy extends EntityLiving {
 			
 			currentSegment++;
 			t = 0;
-			
-			if (currentSegment >= path.size() - 1) {
+
+            ///////////////////////////////////////////////////////////////////
+            //////////////////////// WARNING: BAD CODE ////////////////////////
+            ///////////////////////////////////////////////////////////////////
+            //   DO NOT EVER EVER EVER TOUCH THIS IT MAKES NO SENSE I KNOW   //
+            //  BUT WE ARE INCOMPETENT PROGRAMMERS, WE DO NOT UNDERSTAND WHY //
+            //     THIS ALGORITHM DO LIKE IT DO BUT IT DOES SO WE LET IT.    //
+            ///////////////////////////////////////////////////////////////////
+			if (currentSegment >= path.size() - 2) {
 				
 				currentSegment = 0;
-			}
+                endTime = Utils.getDist(path.get(currentSegment), path.get(currentSegment + 1)) / speedMod;
+                return;
+            }
 			
 			endTime = Utils.getDist(path.get(currentSegment), path.get(currentSegment + 1)) / speedMod;
-
-            //debug
-            System.out.println("path1: " + path.get(currentSegment) + " \npath2: " + path.get(currentSegment + 1));
 		}
 		
 		Vector2f a = path.get(currentSegment);
@@ -190,39 +184,10 @@ public abstract class Enemy extends EntityLiving {
 		Vector2f np = new Vector2f(
 				(a.x*(1-stp))+(b.x*(stp)),
 				(a.y*(1-stp))+(b.y*(stp))
-		).scale(MainGame.GRID_SIZE);
-
-        //debug
-		System.out.println("np: " + np);
-        System.out.println("t: " + t);
-
-
-		setPos(np);
-
-		/*
-
-		if ((int)Math.floor(t/percentJump)>=path.length-1) {
-
-			t=1;
-		}
-
-		int slot = (int)Math.floor(t / percentJump);
-
-		Vector2f a = path[slot];
-		Vector2f b = path[slot + 1];
-
-		float stp = t - (slot) * percentJump;
-
-		stp *= (100 / percentJump) * 0.01f;
-
-		Vector2f np = new Vector2f(
-				(a.x*(1-stp))+(b.x*(stp)),
-				(a.y*(1-stp))+(b.y*(stp))
 		);
 
-		setPos(np);
 
-		*/
+		setPos(np);
 	}
 
 

@@ -41,11 +41,15 @@ public class Utils {
 	public static ArrayList<Entity> sortByType(ArrayList<Entity> in, String type) {
 
         String[] types = type.split("\\|\\|");
-        System.out.println(Arrays.toString(types));
+
 		ArrayList<Entity> newArray = new ArrayList<Entity>();
+
 		for(int i=0;i<in.size();i++) {
+
             for(int j=0;j<types.length;j++) {
+
                 if (in.get(i).getType().contains(types[j])) {
+
                     newArray.add(in.get(i));
                     break;
                 }
@@ -84,7 +88,7 @@ public class Utils {
 			}*/
 
             float dist = getDist(pos, ent.getCenterPos());
-            if (dist >= maxDist) {
+            if (dist >= maxDist && maxDist != -1) {
                 continue;
             }
 
