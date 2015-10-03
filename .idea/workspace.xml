@@ -6,33 +6,13 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" line="137" mnemonic="0" />
+    <bookmark url="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" line="140" mnemonic="0" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f2a5cb4-737b-4df6-b658-d66a858ba154" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/Button.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/Button.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/Enemy.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/Enemy.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/Entity.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/Entity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/EntityLiving.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/EntityLiving.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu$1.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/EntityMenu.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Generic Tower Defence.jar" afterPath="$PROJECT_DIR$/Generic Tower Defence.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/LevelController.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/LevelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/MainGame.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/MainGame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/MainMenu$2.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/MainMenu$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/MainMenu$3.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/MainMenu$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/MainMenu.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/entities/menu/MainMenu.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils$1.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils.class" afterPath="$PROJECT_DIR$/bin/com/lmag/gtd/util/Utils.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/Button.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/Button.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/EntityLiving.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/EntityLiving.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/EntityMenu.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/EntityMenu.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/LevelController.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/LevelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/MainGame.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/MainGame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/MainMenu.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/MainMenu.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lmag/gtd/util/Utils.java" afterPath="$PROJECT_DIR$/src/com/lmag/gtd/util/Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Generic Tower Defence.iws" />
@@ -102,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/EntityLiving.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="144" column="12" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
+              <caret line="121" column="5" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -111,9 +91,25 @@
       <file leaf-file-name="Enemy.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31441048">
-              <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
-              <folding />
+            <state vertical-scroll-proportion="0.24942264">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding>
+                <element signature="e#1218#1228#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Entity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.0">
+              <caret line="263" column="42" selection-start-line="263" selection-start-column="42" selection-end-line="263" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4968#4969#0" expanded="true" />
+                <element signature="e#4995#4996#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -175,7 +171,6 @@
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/LegacyLevelController.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/Tower.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/Heatmap.java" />
-        <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/EntityLiving.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/EntityMenu.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/MainMenu.java" />
@@ -184,6 +179,7 @@
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/menu/Button.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/util/Utils.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/LevelController.java" />
+        <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java" />
         <option value="$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java" />
       </list>
     </option>
@@ -204,7 +200,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="32" />
-    <option name="width" value="1064" />
+    <option name="width" value="1362" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -230,9 +226,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -381,6 +374,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -690,7 +686,8 @@
       <workItem from="1441421347105" duration="11150000" />
       <workItem from="1442026715481" duration="7221000" />
       <workItem from="1442631885365" duration="5518000" />
-      <workItem from="1443236379109" duration="4319000" />
+      <workItem from="1443236379109" duration="4926000" />
+      <workItem from="1443841113161" duration="4735000" />
     </task>
     <task id="LOCAL-00001" summary="[23] - More statEffect goodness&#10;">
       <created>1439622660411</created>
@@ -716,14 +713,20 @@
       <option name="project" value="LOCAL" />
       <updated>1442637368038</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="[31] - Hey, They're Not Flickering Anymore&#10;">
+      <created>1443240705803</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1443240705803</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52281000" />
+    <option name="totallyTimeSpent" value="57623000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="32" width="1064" height="735" extended-state="0" />
+    <frame x="0" y="32" width="1362" height="735" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -731,7 +734,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.010989011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -743,13 +745,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31578946" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2354788" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24669604" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22762951" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -769,13 +772,20 @@
     <MESSAGE value="[28] - The Debug Code Was The Problem.  /spoiler&#10;" />
     <MESSAGE value="[30] - Pathing finished! (... Kinda)&#10;" />
     <MESSAGE value="[31] - Hey, They're Not Flickering Anymore&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="[31] - Hey, They're Not Flickering Anymore&#10;" />
+    <MESSAGE value="[32] - The Weeaboo Shuffle :^)" />
+    <option name="LAST_COMMIT_MESSAGE" value="[32] - The Weeaboo Shuffle :^)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="6" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="pixel_pos" language="JAVA" custom="" />
+        <watch expression="pixel_pos.scale(1f/(float)MainGame.GRID_SIZE)" language="JAVA" custom="" />
+        <watch expression="(1f/(float)MainGame.GRID_SIZE)" language="JAVA" custom="" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -820,7 +830,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="83" column="70" selection-start-line="83" selection-start-column="70" selection-end-line="83" selection-end-column="70" />
-          <folding />
+          <folding>
+            <element signature="e#1218#1228#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -923,10 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-          <folding>
-            <element signature="e#153#154#0" expanded="false" />
-            <element signature="e#186#187#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -934,9 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="65" column="20" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -970,9 +975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="67" column="9" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1075,9 +1077,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33182845">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1085,10 +1084,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-          <folding>
-            <element signature="e#153#154#0" expanded="false" />
-            <element signature="e#186#187#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1116,17 +1111,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5666666">
-          <caret line="336" column="9" selection-start-line="336" selection-start-column="9" selection-end-line="336" selection-end-column="9" />
-          <folding>
-            <element signature="e#4523#4524#0" expanded="true" />
-            <element signature="e#4611#4612#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/MainGame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.48908296">
@@ -1141,7 +1125,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44978166">
           <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1187,14 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/EntityLiving.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="144" column="12" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/util/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1211,11 +1186,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.0">
+          <caret line="263" column="42" selection-start-line="263" selection-start-column="42" selection-end-line="263" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4968#4969#0" expanded="true" />
+            <element signature="e#4995#4996#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/EntityLiving.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="121" column="5" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lmag/gtd/entities/Enemy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31441048">
-          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
-          <folding />
+        <state vertical-scroll-proportion="0.24942264">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="e#1218#1228#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

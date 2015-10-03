@@ -1,5 +1,6 @@
 package com.lmag.gtd.entities;
 
+import com.lmag.gtd.entities.enemies.EnemyEMP;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
@@ -11,11 +12,13 @@ import java.util.ArrayList;
 
 public abstract class Enemy extends EntityLiving {
 
+    // TODO: MAKE FACING DO THE THING BECAUSE ENEMIES DO A FANCY SHUFFLE ON PLACE :^)
+
 	protected int t = 0;
 	protected int currentSegment = 0;
 
 	protected float endTime = 0;
-	protected float speedMod = 0.5f;
+	protected float speedMod = 0.05f;
 	public int xXx_cashMonAy_dropped_xXx = 420;
 
     protected byte dir = 0;
@@ -60,10 +63,10 @@ public abstract class Enemy extends EntityLiving {
 
         byte facing = -1;
 
-        int currentTemp = MainGame.instance.lc.heatmap.getTemp(MainGame.instance.lc.the_powerhouse_of_the_map.getPos());
+        int currentTemp = MainGame.instance.lc.heatmap.getTemp(currentPos);
 
         int count = MainGame.HEIGHT_IN_TILES * MainGame.WIDTH_IN_TILES;
-
+        Vector2f lastPos = currentPos.copy();
         for (; currentPos != MainGame.instance.lc.the_holy_grail.getPosOnGrid() && count > 1; count--) {
 
             //Right
@@ -72,14 +75,11 @@ public abstract class Enemy extends EntityLiving {
                 currentPos = new Vector2f(currentPos.x + 1, currentPos.y);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
 
-                //temp
-                newPath.add(currentPos);
-
-                /*if (facing != 0) {
+                if (facing != 0) {
 
                     facing = 0;
-                    newPath.add(currentPos.copy());
-                }*/
+                    newPath.add(lastPos.copy());
+                }
             }
             //Up
             else if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x, (int) currentPos.y + 1) < currentTemp) {
@@ -87,14 +87,11 @@ public abstract class Enemy extends EntityLiving {
                 currentPos = new Vector2f(currentPos.x, currentPos.y + 1);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
 
-                //temp
-                newPath.add(currentPos);
-
-                /*if (facing != 1) {
+                if (facing != 1) {
 
                     facing = 1;
-                    newPath.add(currentPos.copy());
-                }*/
+                    newPath.add(lastPos.copy());
+                }
             }
             //Left
             else if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x - 1, (int) currentPos.y) < currentTemp) {
@@ -102,14 +99,11 @@ public abstract class Enemy extends EntityLiving {
                 currentPos = new Vector2f(currentPos.x - 1, currentPos.y);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
 
-                //temp
-                newPath.add(currentPos);
-
-                /*if (facing != 2) {
+                if (facing != 2) {
 
                     facing = 2;
-                    newPath.add(currentPos.copy());
-                }*/
+                    newPath.add(lastPos.copy());
+                }
             }
             //Down
             else if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x, (int) currentPos.y - 1) < currentTemp) {
@@ -117,22 +111,31 @@ public abstract class Enemy extends EntityLiving {
                 currentPos = new Vector2f(currentPos.x, currentPos.y - 1);
                 currentTemp = MainGame.instance.lc.heatmap.getTemp((int)currentPos.x, (int)currentPos.y);
 
-                //temp
-                newPath.add(currentPos);
-
-                /*if (facing != 3) {
+                if (facing != 3) {
 
                     facing = 3;
-                    newPath.add(currentPos.copy());
-                }*/
+                    newPath.add(lastPos.copy());
+                }
             }
+
+            lastPos = currentPos.copy();
         }
 
         newPath.add(MainGame.instance.lc.the_holy_grail.getPosOnGrid());
 
         path = new ArrayList<Vector2f>();
         path.add(getPos());
+
         for(int i=0;i<newPath.size();i++) {
+
+            //debug
+            if (this instanceof EnemyEMP) {
+
+                Vector2f debug = newPath.get(i);
+
+                System.out.println("X: " + debug.getX() + "Y: " + debug.getY());
+            }
+
             path.add(newPath.get(i).copy().scale(MainGame.GRID_SIZE));
         }
         endTime = Utils.getDist(path.get(0), path.get(1)) / speedMod;
@@ -176,12 +179,10 @@ public abstract class Enemy extends EntityLiving {
 		
 		Vector2f a = path.get(currentSegment);
 		Vector2f b = path.get(currentSegment + 1);
-
-
 		
 		float stp = t/endTime;
 
-		Vector2f np = new Vector2f(
+        Vector2f np = new Vector2f(
 				(a.x*(1-stp))+(b.x*(stp)),
 				(a.y*(1-stp))+(b.y*(stp))
 		);
