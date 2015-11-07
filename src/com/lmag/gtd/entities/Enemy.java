@@ -1,12 +1,14 @@
 package com.lmag.gtd.entities;
 
 import com.lmag.gtd.entities.enemies.EnemyEMP;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.lmag.gtd.MainGame;
 import com.lmag.gtd.util.Utils;
+import sun.applet.Main;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,8 @@ public abstract class Enemy extends EntityLiving {
 	protected int t = 0;
 	protected int currentSegment = 0;
 
+    byte currentFacing = -1;
+
 	protected float endTime = 0;
 	protected float speedMod = 0.05f;
 	public int xXx_cashMonAy_dropped_xXx = 420;
@@ -26,6 +30,9 @@ public abstract class Enemy extends EntityLiving {
 	protected Image targetIcon;
 
     protected ArrayList<Vector2f> path = new ArrayList<Vector2f>();
+
+    //debug
+    public ArrayList<Integer> heatList = new ArrayList<Integer>();
 
 	public Enemy(Vector2f position) {
 		
@@ -45,12 +52,33 @@ public abstract class Enemy extends EntityLiving {
 	public void render(Graphics g) {
 		super.render(g);
 		
-		if(this.isTarget>0) {
+		if (this.isTarget>0) {
+
 			g.drawImage(targetIcon, getX()-5, getY()-5);
 		}
+
+        if (MainGame.instance.debug && this instanceof EnemyEMP) {
+
+            int counter = -2;
+            for (Vector2f node : path) {
+
+                counter++;
+
+                g.setColor(Color.red);
+                g.drawRect(node.x, node.y, 32, 32);
+
+                if (counter < heatList.size() && counter > -1) {
+                    MainGame.badFont.render((int) node.x + 16, (int) node.y + 16, g,
+                            heatList.get(counter).toString());
+                }
+            }
+        }
 	}
 
     public void updatePath() {
+
+        //debug
+        heatList.clear();
 
         ArrayList<Vector2f> newPath = new ArrayList<Vector2f>();
 
@@ -59,15 +87,34 @@ public abstract class Enemy extends EntityLiving {
             return;
         }
 
-        Vector2f currentPos = this.getPosOnGrid();
-
         byte facing = -1;
+
+        byte the_first_value_of_facingStored_in_byte_FORMAT = -1;
+
+        Vector2f currentPos = this.getPos();
+        Vector2f currentPosOnGrid = this.getPosOnGrid();
+        if (currentPos.x % (float)MainGame.GRID_SIZE != 0 && currentFacing==0) {
+            currentPos = new Vector2f(currentPosOnGrid.x+1, currentPosOnGrid.y);
+        } else if (currentPos.y % (float)MainGame.GRID_SIZE != 0 && currentFacing==3) {
+            currentPos = new Vector2f(currentPosOnGrid.x, currentPosOnGrid.y+1);
+        } else {
+            currentPos = currentPosOnGrid;
+        }
+
+
+        Vector2f lastPos = currentPos.copy();
 
         int currentTemp = MainGame.instance.lc.heatmap.getTemp(currentPos);
 
         int count = MainGame.HEIGHT_IN_TILES * MainGame.WIDTH_IN_TILES;
-        Vector2f lastPos = currentPos.copy();
-        for (; currentPos != MainGame.instance.lc.the_holy_grail.getPosOnGrid() && count > 1; count--) {
+        for (; (currentPos.x != MainGame.instance.lc.the_holy_grail.getPosOnGrid().x
+                || currentPos.y != MainGame.instance.lc.the_holy_grail.getPosOnGrid().y)
+                && count > 1; count--) {
+            // TODO: This should go away.  Really.
+            int dbg_right  = MainGame.instance.lc.heatmap.getTemp((int) currentPos.x + 1, (int) currentPos.y);
+            int dbg_left   = MainGame.instance.lc.heatmap.getTemp((int) currentPos.x - 1, (int) currentPos.y);
+            int dbg_top    = MainGame.instance.lc.heatmap.getTemp((int) currentPos.x, (int) currentPos.y + 1);
+            int dbg_bottom = MainGame.instance.lc.heatmap.getTemp((int) currentPos.x, (int) currentPos.y - 1);
 
             //Right
             if (MainGame.instance.lc.heatmap.getTemp((int) currentPos.x + 1, (int) currentPos.y) < currentTemp) {
@@ -79,6 +126,8 @@ public abstract class Enemy extends EntityLiving {
 
                     facing = 0;
                     newPath.add(lastPos.copy());
+
+                    heatList.add(currentTemp);
                 }
             }
             //Up
@@ -91,6 +140,8 @@ public abstract class Enemy extends EntityLiving {
 
                     facing = 1;
                     newPath.add(lastPos.copy());
+
+                    heatList.add(currentTemp);
                 }
             }
             //Left
@@ -103,6 +154,8 @@ public abstract class Enemy extends EntityLiving {
 
                     facing = 2;
                     newPath.add(lastPos.copy());
+
+                    heatList.add(currentTemp);
                 }
             }
             //Down
@@ -115,7 +168,16 @@ public abstract class Enemy extends EntityLiving {
 
                     facing = 3;
                     newPath.add(lastPos.copy());
+
+                    heatList.add(currentTemp);
                 }
+            }
+
+            System.out.println("X: " + lastPos.x + "Y: " + lastPos.y);
+
+            if(the_first_value_of_facingStored_in_byte_FORMAT==-1) {
+
+                the_first_value_of_facingStored_in_byte_FORMAT = facing;
             }
 
             lastPos = currentPos.copy();
@@ -128,16 +190,14 @@ public abstract class Enemy extends EntityLiving {
 
         for(int i=0;i<newPath.size();i++) {
 
-            //debug
-            if (this instanceof EnemyEMP) {
+            if(currentFacing==the_first_value_of_facingStored_in_byte_FORMAT&&i==0) {
 
-                Vector2f debug = newPath.get(i);
-
-                System.out.println("X: " + debug.getX() + "Y: " + debug.getY());
+                continue;
             }
 
-            path.add(newPath.get(i).copy().scale(MainGame.GRID_SIZE));
+            /* Code over here --> */ path.add(newPath.get(i).copy().scale(MainGame.GRID_SIZE));
         }
+
         endTime = Utils.getDist(path.get(0), path.get(1)) / speedMod;
         currentSegment = 0;
         t = 0;
@@ -179,6 +239,30 @@ public abstract class Enemy extends EntityLiving {
 		
 		Vector2f a = path.get(currentSegment);
 		Vector2f b = path.get(currentSegment + 1);
+
+        //Right
+        if (a.x < b.x) {
+
+           currentFacing = 0;
+        }
+
+        //Up
+        else if (a.y < b.y) {
+
+            currentFacing = 1;
+        }
+
+        //Left
+        else if (a.x > b.x) {
+
+            currentFacing = 2;
+        }
+
+        //Down
+        else if (a.y > b.y) {
+
+            currentFacing = 3;
+        }
 		
 		float stp = t/endTime;
 

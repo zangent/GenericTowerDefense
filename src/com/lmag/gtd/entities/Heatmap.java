@@ -85,7 +85,7 @@ public class Heatmap {
                 //float value = 255 - heatmap[x][y];
                 g.setColor(new org.newdawn.slick.Color(value,value,value));
                 g.fillRect(x*MainGame.GRID_SIZE,y*MainGame.GRID_SIZE,MainGame.GRID_SIZE,MainGame.GRID_SIZE);
-                //if(heatmap[x][y]!=Integer.MAX_VALUE)MainGame.badFont.render(x*MainGame.GRID_SIZE,y*MainGame.GRID_SIZE,g,heatmap[x][y]+"");
+                if(heatmap[x][y]!=Integer.MAX_VALUE)MainGame.badFont.render(x*MainGame.GRID_SIZE,y*MainGame.GRID_SIZE,g,heatmap[x][y]+"");
             }
         }
     }

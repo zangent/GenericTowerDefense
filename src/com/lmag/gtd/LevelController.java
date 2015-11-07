@@ -47,6 +47,8 @@ public class LevelController extends Entity {
      */
     public Entity the_powerhouse_of_the_map = null;
 
+    boolean HOLY_GOD_THIS_ISA_BADTH_ING = false;
+
     @SuppressWarnings("unchecked")
     public LevelController() {
         super("", new Vector2f(0, 0));
@@ -137,7 +139,7 @@ public class LevelController extends Entity {
 
             lastUpdate = 0;
             theAmountOfEnemiesThatHaveSpawnedUnderTheJurisdictionOfTheCurrentWave++;
-            createEnemy();
+            if(!HOLY_GOD_THIS_ISA_BADTH_ING) {createEnemy();HOLY_GOD_THIS_ISA_BADTH_ING=true;}
         }
         if(this.children.size()==0) {return;}
         Entity c1 = this.children.get(0);
@@ -246,7 +248,11 @@ public class LevelController extends Entity {
     @Override
     public void renderAll(Graphics g) {
 
-        //heatmap.render_heatmap(g);
+        if (MainGame.instance.debug) {
+
+            heatmap.render_heatmap(g);
+        }
+
         for (Entity ent : children) {
 
             if (ent == buyMenuRight) {

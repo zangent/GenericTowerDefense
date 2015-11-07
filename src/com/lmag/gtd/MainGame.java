@@ -36,7 +36,7 @@ public class MainGame extends BasicGame {
     /**
      * Enables debug mode. Duh.
      */
-	public boolean debug = false;
+	public boolean debug = true;
 	
 	public static MainGame instance;
 	

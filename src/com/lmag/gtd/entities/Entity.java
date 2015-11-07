@@ -243,7 +243,10 @@ public class Entity implements InputListener {
 
     public Vector2f getPosOnGrid() {
 
-        return new Vector2f((int)(getPos().x / MainGame.GRID_SIZE), (int)(getPos().y / MainGame.GRID_SIZE));
+        float x = getPos().x - (getPos().x % MainGame.GRID_SIZE);
+        float y = getPos().y - (getPos().y % MainGame.GRID_SIZE);
+
+        return new Vector2f(x / MainGame.GRID_SIZE, y / MainGame.GRID_SIZE);
     }
 	
 	

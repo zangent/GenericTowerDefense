@@ -76,7 +76,7 @@ public class EnemyEMP extends Enemy {
 
 		if (MainGame.instance.debug) {
 			
-			MainGame.badFont.render((int)this.getX(), (int)this.getY() - 8, g, " "+String.valueOf(sinceLastEMP)+" ");
+			//MainGame.badFont.render((int)this.getX(), (int)this.getY() - 8, g, " "+String.valueOf(sinceLastEMP)+" ");
 		}
 	}
 }
