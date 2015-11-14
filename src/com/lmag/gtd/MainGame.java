@@ -28,7 +28,7 @@ public class MainGame extends BasicGame {
 	public static FontRenderer badFont;
 
 	public static float currency = 9099999;
-	public static GameContainer gc;
+	public static GameContainer gc = null;
 		
 	public Entity root;
 	public LevelController lc;
@@ -37,6 +37,8 @@ public class MainGame extends BasicGame {
      * Enables debug mode. Duh.
      */
 	public boolean debug = true;
+
+    NumberRepresentationalSymbols number_representatunal_symbuls;
 	
 	public static MainGame instance;
 	
@@ -56,7 +58,8 @@ public class MainGame extends BasicGame {
     	
     	root = new Entity("", new Vector2f(0, 0)).setVisible(false);
     	root.addChild(new MainMenu());
-    	
+
+        number_representatunal_symbuls = new NumberRepresentationalSymbols();
     	
     	/*private boolean initialize(boolean reboot) { boolean retry = false; temp = new File("mods/tmp"); if (!mods.isDirectory()) mods.mkdir(); try { if (reboot) { modList = new File("mods").listFiles(); modList = filterFileArray(modList); } else if (!temp.isFile()) { temp.createNewFile(); temp.deleteOnExit(); modList = new File("mods").listFiles(); modList = filterFileArray(modList); } else { int answer = JOptionPane.showConfirmDialog(null, "An instance of this program may already be running!\n\nIf you wish to start anyway press OK. (WARNING: MAY CAUSE ERRORS)\nOtherwise, click CANCEL.", "Warning!", JOptionPane.OK_CANCEL_OPTION); if (answer == JOptionPane.OK_OPTION) { temp.delete(); retry = true; } else System.exit(0); } } catch (IOException e) { e.printStackTrace(); } return retry; }*/
     }
@@ -71,6 +74,7 @@ public class MainGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
     	
     	root.renderAll(g);
+        number_representatunal_symbuls.draw_Number(5,g,new Vector2f(50,50));
     	//badFont.render(50, 50, g, "Ayyy lamooo");
     }
     

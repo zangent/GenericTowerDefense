@@ -75,6 +75,19 @@ public abstract class Enemy extends EntityLiving {
         }
 	}
 
+    private char[] ohno = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    public void get_thing() {
+        for(int y=0;y<MainGame.HEIGHT_IN_TILES;y++) {
+            String youre_a_disgusting_weeaboo = "";
+            for(int x=0;x<MainGame.WIDTH_IN_TILES;x++) {
+                int t = MainGame.instance.lc.heatmap.getTemp(x,y);
+                char r = '#';
+                if(t != Integer.MAX_VALUE) r = ohno[MainGame.instance.lc.heatmap.getTemp(x,y)];
+                youre_a_disgusting_weeaboo += r;
+            }
+            System.err.println(youre_a_disgusting_weeaboo);
+        }
+    }
     public void updatePath() {
 
         //debug
@@ -172,6 +185,8 @@ public abstract class Enemy extends EntityLiving {
                     heatList.add(currentTemp);
                 }
             }
+
+            //MainGame.
 
             System.out.println("X: " + lastPos.x + "Y: " + lastPos.y);
 
